@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>试卷|考试管理系统</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		html,body{
+			padding: 0;
+			margin: 0;
+			height:100%;
+
+		}
+		
+		body{
+			/*background: round url(./src/bg3.jpg);*/
+			background-color: #d7d7d7;
+		}
+		
+		#navigation{
+			/*width:100%;*/
+			/*background-color: #010131;*/
+			position: fixed;
+			top: 0;
+			left: 0;
+			/*bottom:0;*/
+			right:0;
+			/*width: 98%;*/
+
+			background-color: #000;
+			color:#fff;
+			padding: 15px 15px;
+			overflow: hidden;
+			box-shadow: 0 10px 10px -8px #555;
+
+			z-index: 99;
+		}
+		
+		#navigation>div:first-child{
+			float:left;
+			font-weight: 1000;
+			font-size: x-large;
+			letter-spacing: 5px;
+		}
+		#navigation>div:last-child{
+			margin:0 50px;
+		}
+		#navigation>div:first-child + div , #navigation>div:last-child{
+			float:right;
+		}
+		#navigation>div:last-child>span{
+			color:#777;
+		}
+		#navigation>div:last-child>span:first-child + span{
+			color:#fff;
+		}
+		#navigation>div:last-child>span:hover{
+			color: #fff;
+		}
+		#navigation span{
+			padding:0 10px;
+			cursor:pointer;
+		}
+		#navigation>div:first-child + div > div{
+			float:right;
+			margin-top:5px;
+			border-left:7px solid  transparent;
+			border-right:7px solid  transparent;
+			border-top:10px solid #777;
+			width:0;
+			height: 0;
+		}
+		#navigation>div:first-child + div > div:hover{
+			
+			border-top:10px solid #fff;
+			
+		}
+
+		#mainBody{
+			box-shadow: 0 0 5px 0 #acacac; 
+			background-color: #fff;
+			width:80%;
+			margin-left: 10%;
+			margin-top: 7%;
+			padding: 10px;
+
+			/*height:1000px;*/
+		}
+		#toolBar{
+			margin: 15px 5px;
+			overflow: hidden;
+		}
+		#toolBar>div{
+			float:right;
+			margin-right: 10px;
+
+			display: inline;
+			padding:5px;
+			color:#3485FD;
+			border: solid 2px #3485FD;
+			border-radius: 4px;
+			cursor: pointer;
+
+
+		}
+		#toolBar>div:hover{
+			background-color: #3485FD;
+			color:#fff;
+		}
+		#showSpace{
+			padding: 10px;
+		}
+		.quest{
+			padding:8px;
+			/*border: solid 2px #000;*/
+
+		}
+		
+
+		.questMsg{
+			margin:10px;
+			color:#5c5c5c;
+		}
+		.questMsg>span{
+			padding:0 5px;
+		}
+		.title{
+			margin-left:4%;
+			margin-bottom: 10px;
+		}
+		.optionItem{
+			overflow: hidden;
+
+			margin:10px 0;
+			margin-left:10%;
+
+		}
+		.optionItem>div:first-child{
+			float:left;
+			width:7px;
+			height: 12px;
+			margin: 0px 10px;
+		}
+		.checkRight{
+			width:7px;
+			height: 12px;
+			border-top:solid 2px green ;
+			border-left:solid 2px green ;
+			transform: rotate(225deg);
+		}
+
+		.pageNavigative{
+			text-align: center;
+		}
+		.pageNavigative>span:hover{
+			color:#3485FD;
+			cursor: pointer;
+		}
+		.pageNavigative>span:first-child{
+			margin-right:20px;
+		}
+		.pageNavigative>span:last-child{
+			margin-left:20px;
+		}
+
+
+
+		.quest>hr{
+			width:90%;
+		}
+
+
+		.questId,.questType{
+			background-color: #88C2E4;
+			border:solid 1px #67A7F0;
+			padding:2px 2px;
+			font-size: smaller;
+			border-radius: 2px;
+			color:#333;
+			display: inline-block;
+			width: auto;
+			text-align: center;
+		}
+
+		.test{
+			padding: 10px 10px;
+			/*border:solid 2px #ff0;*/
+			box-shadow: 0 -10px 10px -10px #222 inset;
+			position: relative;
+			
+
+		}
+		/*.test:hover{
+			box-shadow: 10px 0px 10px -10px #3485FD inset;
+
+		}*/
+		.testHidden{
+			height:100px;
+			overflow: hidden;
+		}
+
+		.showBtn{
+			position: absolute;
+
+			color:#3485FD;
+			background-color: rgba(255,255,255,.9);
+			box-shadow: 0 0 10px 5px #fff;
+			cursor: pointer;
+			bottom: 0;
+			right: 30px;
+
+
+		}
+		.showBtn::after{
+			position: absolute;
+			width: 10px;
+			height: 10px;
+			border-top:solid 2px #3485FD;
+			border-left:solid 2px #3485FD;
+			transform: rotate(225deg);
+			content: "";
+			bottom:7px;
+			left: 70px;
+		}
+
+		.hiddenBtn{
+			position: absolute;
+
+			color:#3485FD;
+			background-color: rgba(255,255,255,.9);
+			box-shadow: 0 0 10px 5px #fff;
+			cursor: pointer;
+			bottom: 0;
+			right: 30px;
+		}
+
+		.hiddenBtn::after{
+			position: absolute;
+			width: 10px;
+			height: 10px;
+			border-top:solid 2px #3485FD;
+			border-left:solid 2px #3485FD;
+			transform: rotate(45deg);
+			content: "";
+			bottom:1px;
+			left: 40px;
+		}
+	</style>
+</head>
+<body>
+<!-- 导航条 -->
+
+<div id="navigation">
+	<div >
+	<span>考试管理系统</span>
+		
+	</div>
+
+
+	<div>
+		<span>用户名</span>
+		<div></div>
+	</div>
+
+	<div>
+		<span>题库</span>
+		<span>试卷</span>
+		<span>成绩</span>
+	</div>
+	
+</div>
+
+<!-- 主体 -->
+<div id="mainBody">
+	<div id="toolBar">
+		<div>新建试卷</div>
+	</div>
+
+	<hr/>
+
+	<div id="showSpace">
+
+
+
+<!-- one shijuan  -->
+		
+
+	<div class="test testHidden">
+			<div id="triggleBtn" class="showBtn">
+				显示全部
+			</div>
+			<div class = "testTitle">
+				<h1>
+					噼里啪啦摸仙语九级考试
+				</h1>
+			</div>
+		
+<!-- one question -->
+		<div class="quest" data-id="123">
+				
+			
+			<div class="title">
+				<span class="questId">
+					ID:12231
+				</span>
+				<span class="questType">
+					多选
+				</span>
+				<span class="questScore">
+					（2分）
+				</span>虚拟现实技术是一种运用计算机仿真系统创建多源信息融合的交互式三维动态实景以及动作仿真的技术，可以给使用者提供沉浸性、多感知性、交互性的互动体验，虚拟现实技术所构造的虚拟环境说明（   ） 
+			</div>
+			<div class="option">
+				<div class="optionItem">
+					<div></div>
+					<div>物质世界不再具有客观实在性 </div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>物质世界的存在形式具有多样性</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>信息是独立于物质和意识的第三种存在状态</div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>人们可以通过实践创造出自然界原本不存在的现实状态 
+
+					</div>
+				</div>
+			</div>
+
+
+			
+
+			<hr/>
+		</div>
+<!-- one question -->
+		<div class="quest" data-id="123">
+			
+			<div class="title">
+				<span class="questId">
+					ID:131
+				</span>
+				<span class="questType">
+					单选
+				</span>
+				<span class="questScore">
+					（2分）
+				</span>“二十四史”编著使用的体例是()。
+			</div>
+			<div class="option">
+				<div class="optionItem">
+					<div></div>
+					<div>记纂体</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>编年体</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>小说</div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>纪传体</div>
+				</div>
+			</div>
+
+
+		
+			
+
+			<hr/>
+		</div>
+
+		<!-- one question -->
+		<div class="quest" data-id="123">
+			
+				
+			
+			<div class="title">
+				<span class="questId">
+					ID:12231
+				</span>
+				<span class="questType">
+					多选
+				</span>
+				<span class="questScore">
+					（2分）
+				</span>虚拟现实技术是一种运用计算机仿真系统创建多源信息融合的交互式三维动态实景以及动作仿真的技术，可以给使用者提供沉浸性、多感知性、交互性的互动体验，虚拟现实技术所构造的虚拟环境说明（   ） 
+			</div>
+			<div class="option">
+				<div class="optionItem">
+					<div></div>
+					<div>物质世界不再具有客观实在性 </div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>物质世界的存在形式具有多样性</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>信息是独立于物质和意识的第三种存在状态</div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>人们可以通过实践创造出自然界原本不存在的现实状态 
+
+</div>
+				</div>
+			</div>
+
+
+			
+
+			<hr/>
+		</div>
+<!-- one question -->
+		<div class="quest" data-id="123">
+		
+			
+			<div class="title">
+				<span class="questId">
+					ID:131
+				</span>
+				<span class="questType">
+					单选
+				</span>
+				<span class="questScore">
+					（2分）
+				</span>“二十四史”编著使用的体例是()。
+			</div>
+			<div class="option">
+				<div class="optionItem">
+					<div></div>
+					<div>记纂体</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>编年体</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>小说</div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>纪传体</div>
+				</div>
+			</div>
+
+
+			
+			
+
+			<hr/>
+		</div>
+
+			<div class="questMsg">
+				<span>开始时间：2019-2-22&nbsp;10:20:33</span><span>
+					限时：50分钟
+				</span>
+				<span>
+					满分：20分
+				</span>
+				<span>出题人：李小小</span>
+				<span>试卷ID：1234</span>
+			</div>
+
+		
+		
+	</div>
+	<!-- a test over -->
+
+
+
+	<!-- one shijuan  -->
+		
+
+	<div class="test">
+			<div id="triggleBtn" class="hiddenBtn">
+				收起
+			</div>
+			<div class = "testTitle">
+				<h1>
+					噼里啪啦摸仙语四级考试
+				</h1>
+			</div>
+		
+<!-- one question -->
+		<div class="quest" data-id="123">
+				
+			
+			<div class="title">
+				<span class="questId">
+					ID:12231
+				</span>
+				<span class="questType">
+					多选
+				</span>
+				<span class="questScore">
+					（2分）
+				</span>虚拟现实技术是一种运用计算机仿真系统创建多源信息融合的交互式三维动态实景以及动作仿真的技术，可以给使用者提供沉浸性、多感知性、交互性的互动体验，虚拟现实技术所构造的虚拟环境说明（   ） 
+			</div>
+			<div class="option">
+				<div class="optionItem">
+					<div></div>
+					<div>物质世界不再具有客观实在性 </div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>物质世界的存在形式具有多样性</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>信息是独立于物质和意识的第三种存在状态</div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>人们可以通过实践创造出自然界原本不存在的现实状态 
+
+					</div>
+				</div>
+			</div>
+
+
+			
+
+			<hr/>
+		</div>
+<!-- one question -->
+		<div class="quest" data-id="123">
+			
+			<div class="title">
+				<span class="questId">
+					ID:131
+				</span>
+				<span class="questType">
+					单选
+				</span>
+				<span class="questScore">
+					（2分）
+				</span>“二十四史”编著使用的体例是()。
+			</div>
+			<div class="option">
+				<div class="optionItem">
+					<div></div>
+					<div>记纂体</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>编年体</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>小说</div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>纪传体</div>
+				</div>
+			</div>
+
+
+		
+			
+
+			<hr/>
+		</div>
+
+		<!-- one question -->
+		<div class="quest" data-id="123">
+			
+				
+			
+			<div class="title">
+				<span class="questId">
+					ID:12231
+				</span>
+				<span class="questType">
+					多选
+				</span>
+				<span class="questScore">
+					（2分）
+				</span>虚拟现实技术是一种运用计算机仿真系统创建多源信息融合的交互式三维动态实景以及动作仿真的技术，可以给使用者提供沉浸性、多感知性、交互性的互动体验，虚拟现实技术所构造的虚拟环境说明（   ） 
+			</div>
+			<div class="option">
+				<div class="optionItem">
+					<div></div>
+					<div>物质世界不再具有客观实在性 </div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>物质世界的存在形式具有多样性</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>信息是独立于物质和意识的第三种存在状态</div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>人们可以通过实践创造出自然界原本不存在的现实状态 
+
+</div>
+				</div>
+			</div>
+
+
+			
+
+			<hr/>
+		</div>
+<!-- one question -->
+		<div class="quest" data-id="123">
+		
+			
+			<div class="title">
+				<span class="questId">
+					ID:131
+				</span>
+				<span class="questType">
+					单选
+				</span>
+				<span class="questScore">
+					（2分）
+				</span>“二十四史”编著使用的体例是()。
+			</div>
+			<div class="option">
+				<div class="optionItem">
+					<div></div>
+					<div>记纂体</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>编年体</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>小说</div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>纪传体</div>
+				</div>
+			</div>
+
+
+			
+			
+
+			<hr/>
+		</div>
+
+			<div class="questMsg">
+				<span>开始时间：2019-2-22&nbsp;10:20:33</span><span>
+					限时：50分钟
+				</span>
+				<span>
+					满分：20分
+				</span>
+				<span>出题人：李小小</span>
+				<span>试卷ID：1234</span>
+			</div>
+
+		
+		
+	</div>
+	<!-- a test over -->
+
+
+
+	<!-- one shijuan  -->
+		
+
+	<div class="test testHidden">
+			<div id="triggleBtn" class="showBtn">
+				显示全部
+			</div>
+			<div class = "testTitle">
+				<h1>
+					噼里啪啦摸仙语八级考试
+				</h1>
+			</div>
+		
+<!-- one question -->
+		<div class="quest" data-id="123">
+				
+			
+			<div class="title">
+				<span class="questId">
+					ID:12231
+				</span>
+				<span class="questType">
+					多选
+				</span>
+				<span class="questScore">
+					（2分）
+				</span>虚拟现实技术是一种运用计算机仿真系统创建多源信息融合的交互式三维动态实景以及动作仿真的技术，可以给使用者提供沉浸性、多感知性、交互性的互动体验，虚拟现实技术所构造的虚拟环境说明（   ） 
+			</div>
+			<div class="option">
+				<div class="optionItem">
+					<div></div>
+					<div>物质世界不再具有客观实在性 </div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>物质世界的存在形式具有多样性</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>信息是独立于物质和意识的第三种存在状态</div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>人们可以通过实践创造出自然界原本不存在的现实状态 
+
+					</div>
+				</div>
+			</div>
+
+
+			
+
+			<hr/>
+		</div>
+<!-- one question -->
+		<div class="quest" data-id="123">
+			
+			<div class="title">
+				<span class="questId">
+					ID:131
+				</span>
+				<span class="questType">
+					单选
+				</span>
+				<span class="questScore">
+					（2分）
+				</span>“二十四史”编著使用的体例是()。
+			</div>
+			<div class="option">
+				<div class="optionItem">
+					<div></div>
+					<div>记纂体</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>编年体</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>小说</div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>纪传体</div>
+				</div>
+			</div>
+
+
+		
+			
+
+			<hr/>
+		</div>
+
+		<!-- one question -->
+		<div class="quest" data-id="123">
+			
+				
+			
+			<div class="title">
+				<span class="questId">
+					ID:12231
+				</span>
+				<span class="questType">
+					多选
+				</span>
+				<span class="questScore">
+					（2分）
+				</span>虚拟现实技术是一种运用计算机仿真系统创建多源信息融合的交互式三维动态实景以及动作仿真的技术，可以给使用者提供沉浸性、多感知性、交互性的互动体验，虚拟现实技术所构造的虚拟环境说明（   ） 
+			</div>
+			<div class="option">
+				<div class="optionItem">
+					<div></div>
+					<div>物质世界不再具有客观实在性 </div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>物质世界的存在形式具有多样性</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>信息是独立于物质和意识的第三种存在状态</div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>人们可以通过实践创造出自然界原本不存在的现实状态 
+
+</div>
+				</div>
+			</div>
+
+
+			
+
+			<hr/>
+		</div>
+<!-- one question -->
+		<div class="quest" data-id="123">
+		
+			
+			<div class="title">
+				<span class="questId">
+					ID:131
+				</span>
+				<span class="questType">
+					单选
+				</span>
+				<span class="questScore">
+					（2分）
+				</span>“二十四史”编著使用的体例是()。
+			</div>
+			<div class="option">
+				<div class="optionItem">
+					<div></div>
+					<div>记纂体</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>编年体</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>小说</div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>纪传体</div>
+				</div>
+			</div>
+
+
+			
+			
+
+			<hr/>
+		</div>
+
+			<div class="questMsg">
+				<span>开始时间：2019-2-22&nbsp;10:20:33</span><span>
+					限时：50分钟
+				</span>
+				<span>
+					满分：20分
+				</span>
+				<span>出题人：李小小</span>
+				<span>试卷ID：1234</span>
+			</div>
+
+		
+		
+	</div>
+	<!-- a test over -->
+
+
+
+<!-- one shijuan  -->
+		
+
+	<div class="test testHidden">
+			<div id="triggleBtn" class="showBtn">
+				显示全部
+			</div>
+			<div class = "testTitle">
+				<h1>
+					噼里啪啦摸仙语九级考试
+				</h1>
+			</div>
+		
+<!-- one question -->
+		<div class="quest" data-id="123">
+				
+			
+			<div class="title">
+				<span class="questId">
+					ID:12231
+				</span>
+				<span class="questType">
+					多选
+				</span>
+				<span class="questScore">
+					（2分）
+				</span>虚拟现实技术是一种运用计算机仿真系统创建多源信息融合的交互式三维动态实景以及动作仿真的技术，可以给使用者提供沉浸性、多感知性、交互性的互动体验，虚拟现实技术所构造的虚拟环境说明（   ） 
+			</div>
+			<div class="option">
+				<div class="optionItem">
+					<div></div>
+					<div>物质世界不再具有客观实在性 </div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>物质世界的存在形式具有多样性</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>信息是独立于物质和意识的第三种存在状态</div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>人们可以通过实践创造出自然界原本不存在的现实状态 
+
+					</div>
+				</div>
+			</div>
+
+
+			
+
+			<hr/>
+		</div>
+<!-- one question -->
+		<div class="quest" data-id="123">
+			
+			<div class="title">
+				<span class="questId">
+					ID:131
+				</span>
+				<span class="questType">
+					单选
+				</span>
+				<span class="questScore">
+					（2分）
+				</span>“二十四史”编著使用的体例是()。
+			</div>
+			<div class="option">
+				<div class="optionItem">
+					<div></div>
+					<div>记纂体</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>编年体</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>小说</div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>纪传体</div>
+				</div>
+			</div>
+
+
+		
+			
+
+			<hr/>
+		</div>
+
+		<!-- one question -->
+		<div class="quest" data-id="123">
+			
+				
+			
+			<div class="title">
+				<span class="questId">
+					ID:12231
+				</span>
+				<span class="questType">
+					多选
+				</span>
+				<span class="questScore">
+					（2分）
+				</span>虚拟现实技术是一种运用计算机仿真系统创建多源信息融合的交互式三维动态实景以及动作仿真的技术，可以给使用者提供沉浸性、多感知性、交互性的互动体验，虚拟现实技术所构造的虚拟环境说明（   ） 
+			</div>
+			<div class="option">
+				<div class="optionItem">
+					<div></div>
+					<div>物质世界不再具有客观实在性 </div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>物质世界的存在形式具有多样性</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>信息是独立于物质和意识的第三种存在状态</div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>人们可以通过实践创造出自然界原本不存在的现实状态 
+
+</div>
+				</div>
+			</div>
+
+
+			
+
+			<hr/>
+		</div>
+<!-- one question -->
+		<div class="quest" data-id="123">
+		
+			
+			<div class="title">
+				<span class="questId">
+					ID:131
+				</span>
+				<span class="questType">
+					单选
+				</span>
+				<span class="questScore">
+					（2分）
+				</span>“二十四史”编著使用的体例是()。
+			</div>
+			<div class="option">
+				<div class="optionItem">
+					<div></div>
+					<div>记纂体</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>编年体</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>小说</div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>纪传体</div>
+				</div>
+			</div>
+
+
+			
+			
+
+			<hr/>
+		</div>
+
+			<div class="questMsg">
+				<span>开始时间：2019-2-22&nbsp;10:20:33</span><span>
+					限时：50分钟
+				</span>
+				<span>
+					满分：20分
+				</span>
+				<span>出题人：李小小</span>
+				<span>试卷ID：1234</span>
+			</div>
+
+		
+		
+	</div>
+	<!-- a test over -->
+	
+</div>
+<!-- showSpace over -->
+	<div class="pageNavigative">
+		<span>上一页</span>
+		<span>1</span>
+		...
+		<span>21</span>
+		<span>下一页</span>
+	</div>
+</div>
+
+</body>
+</html>

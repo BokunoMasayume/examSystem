@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>黏糊糊</title>
+
+	<style type="text/css">
+		body{
+			background-color: black;
+		}
+		
+		.wrapper{
+			filter: url("#sticky");
+		}
+		.box{
+			position: absolute;
+
+			width:10px;
+			height:60px;
+
+			/*clip-path: circle(30px at center) ;*/
+
+			background-color: seagreen;
+		}
+
+		.right{
+
+			position: absolute;
+
+			width:60px;
+			height:60px;
+
+			clip-path: circle(30px at center) ;
+
+			background-color: seagreen;
+
+
+			margin-left: 0px;
+		}
+		.right{
+			/*margin-left: 30px;*/
+
+			animation: 1s mov infinite alternate  cubic-bezier(.18,.62,.43,.82);
+		}
+
+		@keyframes mov{
+			0% {margin-left: 00px;}
+
+			100% {margin-left: 70px;}
+
+		}
+	</style>
+</head>
+<body>
+<div class="wrapper">
+	<div class="box left"></div>
+	<div class="box right"></div>
+	
+</div>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+
+	<defs>
+		<filter id="sticky">
+			<feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"></feGaussianBlur>
+
+			<feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0   0 0 1 0 0   0 0 0 18 -7 "
+
+			result="colorBlur"></feColorMatrix>
+
+			<!-- <feBlend in="SourceGraphic" in2="colorBlur"></feBlend> -->
+		</filter>
+	</defs>
+</svg>
+</body>
+</html>

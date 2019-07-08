@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>新建试题|考试管理系统</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		html,body{
+			padding: 0;
+			margin: 0;
+			height:100%;
+
+		}
+		
+		body{
+			/*background: round url(./src/bg3.jpg);*/
+			background-color: #d7d7d7;
+		}
+		
+		#navigation{
+			/*width:100%;*/
+			/*background-color: #010131;*/
+			position: fixed;
+			top: 0;
+			left: 0;
+			/*bottom:0;*/
+			right:0;
+			/*width: 98%;*/
+
+			background-color: #000;
+			color:#fff;
+			padding: 15px 15px;
+			overflow: hidden;
+			box-shadow: 0 10px 10px -8px #555;
+
+			z-index: 99;
+		}
+		
+		#navigation>div:first-child{
+			float:left;
+			font-weight: 1000;
+			font-size: x-large;
+			letter-spacing: 5px;
+		}
+		#navigation>div:last-child{
+			margin:0 50px;
+		}
+		#navigation>div:first-child + div , #navigation>div:last-child{
+			float:right;
+		}
+		#navigation>div:last-child>span{
+			color:#777;
+		}
+		/*#navigation>div:last-child>span:first-child{
+			color:#fff;
+		}*/
+		#navigation>div:last-child>span:hover{
+			color: #fff;
+		}
+		#navigation span{
+			padding:0 10px;
+			cursor:pointer;
+		}
+		#navigation>div:first-child + div > div{
+			float:right;
+			margin-top:5px;
+			border-left:7px solid  transparent;
+			border-right:7px solid  transparent;
+			border-top:10px solid #777;
+			width:0;
+			height: 0;
+		}
+		#navigation>div:first-child + div > div:hover{
+			
+			border-top:10px solid #fff;
+			
+		}
+
+		#mainBody{
+			box-shadow: 0 0 5px 0 #acacac; 
+			background-color: #fff;
+			width:80%;
+			margin-left: 10%;
+			margin-top: 7%;
+			padding: 10px;
+
+			/*height:1000px;*/
+		}
+		
+		.formItem{
+			overflow: hidden;
+			padding:10px 30px;
+		}
+
+		label{
+			margin-left: 30px;
+		}
+
+		.optionItem{
+			position: relative;
+			/*background-color: #ff0;*/
+		}
+	
+
+		#title{
+			/*border: solid 2px #000;
+			border-radius: 10px;*/
+			box-shadow: 0 -15px 6px -15px #111 inset;
+
+			width:80%;
+			/*display: inline-block;*/
+			float:right;
+			margin-right: 10%;
+
+			padding:10px;
+		}
+		#title:focus{
+			/*border: solid 2px #ff0;*/
+			box-shadow: 0 -15px 6px -15px #3485FD inset;
+
+			outline: none;
+
+		}
+
+		#type{
+			width:100px;
+			margin-left: 20px;
+			padding: 0 10px;
+
+			border-radius: 10px;
+		}
+		#type:focus{
+			outline: none;
+			border: solid 2px #3485FD;
+		}
+		#type>option:hover{
+			border-radius: 10px;
+			border: solid 1px #ff0;
+		}
+		.checkwrapper , .optionContent{
+			display: inline-block;
+		}
+
+		#optionWrapper{
+			/*box-shadow: 0 0 4px 0 #111 inset;*/
+			margin-top:10px;
+			float:right;
+			margin-right: 10%;
+			width: 80%;
+			padding: 5px 10px;
+		}
+		.optionItem{
+			padding: 10px 15px;
+			position: relative;
+		}
+
+		.close{
+			position: absolute;
+			top:7px;
+			right:130px;
+
+			/*width:10px;*/
+			height:15px;
+
+			border-left: solid 2px #3485FD; 
+			transform:rotate(45deg);
+		}
+		.close::after{
+			content: "";
+			position: absolute;
+			top:0px;
+			right:0px;
+
+			/*width:10px;*/
+			height:15px;
+
+			border-left: solid 2px #3485FD; 
+			transform:rotate(90deg);
+		}
+
+		.optionFuncWrapper{
+			position: relative;
+			height:80px;
+			overflow: hidden;
+
+			/*border: solid 2px #000;*/
+			margin-top: 30px;
+		}
+		.optionFuncWrapper>div{
+			/*transition: 300ms top ;*/
+			transition: 300ms top cubic-bezier(.61,1.95,.51,.68);
+
+
+		}
+		#navigation:hover{
+			animation: 1s rainbow infinite alternate;
+		}
+		@keyframes rainbow{
+		  0% { background: #c00; }
+		  50% { background: orange; }
+		  100% { background: yellowgreen; }
+		}
+		.funcBlock{
+			/*border: solid 2px #000;*/
+
+			width:100%;
+			position: absolute;
+			top:0px;
+			left:0;
+
+		}
+		.move{
+			top:-80px;
+		}
+		.addBtnWrapper{
+			height:80px;
+
+		}
+		#addBtn{
+			margin-left:5%;
+			width:45%;
+			letter-spacing: 10px;
+			font-size: large;
+
+			background-color: #fff;
+			color:#3485FD;
+			border: solid 1px #3485FD;
+			border-radius: 5px;
+
+			cursor: pointer;
+
+			outline:none;
+
+		}
+		#addBtn:hover{
+			color:#fff;
+			background-color: #3485fd;
+		}
+
+		.addContentWrapper{
+			padding-left:30px;
+
+			position: relative;
+
+		}
+		#content{
+			display: inline-block;
+			width:50%;
+			max-height:65px;
+			overflow: auto;
+
+			border: solid 1px #ccc;
+			outline: none;
+
+			padding:6px;
+			border-radius: 4px;
+		}
+		#sureAdd,#cancelAdd{
+			position: absolute;
+
+
+			width:10%;
+			letter-spacing: 5px;
+			margin-left: 10px;
+
+			height:35px;
+
+			background-color: #fff;
+			color:#3485FD;
+			border: solid 1px #3485FD;
+			border-radius: 5px;
+
+			cursor: pointer;
+
+			outline:none;
+		}
+		#sureAdd:hover,#cancelAdd:hover{
+			color:#fff;
+			background-color: #3485fd;
+		}
+		#sureAdd{
+			top:0px;
+			right:30%;
+		}
+		#cancelAdd{
+			top:0px;
+			right:15%;
+		}
+
+		#finish{
+			background-color: #fff;
+			color:#3485FD;
+			border: solid 1px #3485FD;
+			border-radius: 5px;
+
+			cursor: pointer;
+
+			outline:none;
+
+			letter-spacing: 15px;
+			font-weight: bolder;
+			font-size: larger;
+
+			width:50%;
+			margin-left: 25%;
+		}
+		#finish:hover{
+			color:#fff;
+			background-color: #3485fd;
+		}
+	</style>
+</head>
+<body>
+<!-- 导航条 -->
+
+<div id="navigation">
+	<div >
+	<span>考试管理系统</span>
+		
+	</div>
+
+
+	<div>
+		<span>用户名</span>
+		<div></div>
+	</div>
+
+	<div>
+		<span>题库</span>
+		<span>试卷</span>
+		<span>成绩</span>
+	</div>
+	
+</div>
+
+<!-- 主体 -->
+<div id="mainBody">
+	<div class="formItem">
+		<label for="title">
+			题目
+		</label>
+		<div contenteditable="true"  id="title" >
+		</div>
+	</div>
+
+	<div class="formItem">
+		<label for="type">题型</label>
+		<select id="type">
+			<option value="单选">单选</option>
+			<option value="多选">多选</option>
+			<option value="判断">判断</option>
+		</select>
+	</div>
+
+	<div class="formItem">
+		<label> 选项</label>
+
+		<div id="optionWrapper">
+
+			<div class="optionItem">
+				<div class="checkwrapper">
+					<input type="radio" name="answer">
+				</div>
+				<div class="optionContent">
+				人们可以通过实践创造出自然界原本不存在的现实状态 
+				</div>
+				<div class="closeBox "></div>
+			</div>
+
+			<div class="optionItem">
+				<div class="checkwrapper">
+					<input type="radio" name="answer">
+				</div>
+				<div class="optionContent">
+				信息是独立于物质和意识的第三种存在状态
+				</div>
+
+				<div class="closeBox "></div>
+
+			</div>
+
+
+
+
+
+			<div class="optionFuncWrapper">
+				<div class="funcBlock">
+					<div class="addBtnWrapper">
+						<button id="addBtn">添加选项</button>
+					</div>
+					<div class="addContentWrapper">
+						<div contenteditable="true" id="content" ></div>
+						<button id="sureAdd">确定</button>
+						<button id="cancelAdd">取消</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="formItem">
+		<button id="finish">完成</button>
+	</div>
+</div>
+
+
+
+
+<script type="text/javascript">
+	var addBtn = document.getElementById("addBtn");
+	var moveWrapper = document.getElementsByClassName("funcBlock")[0];
+	var cancelAdd = document.getElementById("cancelAdd");
+
+	let optionList = document.getElementsByClassName("optionItem");
+	addBtn.onclick =  function(){
+		moveWrapper.classList.add("move");
+	};
+
+	cancelAdd.onclick = function(){
+		moveWrapper.classList.remove("move");
+	}
+
+	Array.prototype.forEach.call(optionList , function(ele){
+		ele.onmouseover = function(e){
+			let clo = e.target.getElementsByClassName("closeBox")[0];
+
+			// console.log(clo);
+			clo.classList.add("close");
+		}
+
+		ele.onmouseout = function(e){
+			let clo = e.target.getElementsByClassName("closeBox")[0];
+			clo.classList.remove("close");
+		}
+	});
+</script>
+</body>
+</html>

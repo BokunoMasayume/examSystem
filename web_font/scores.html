@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>成绩|考试管理系统</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		html,body{
+			padding: 0;
+			margin: 0;
+			height:100%;
+
+		}
+		
+		body{
+			/*background: round url(./src/bg3.jpg);*/
+			background-color: #d7d7d7;
+		}
+		
+		#navigation{
+			/*width:100%;*/
+			/*background-color: #010131;*/
+			position: fixed;
+			top: 0;
+			left: 0;
+			/*bottom:0;*/
+			right:0;
+			/*width: 98%;*/
+
+			background-color: #000;
+			color:#fff;
+			padding: 15px 15px;
+			overflow: hidden;
+			box-shadow: 0 10px 10px -8px #555;
+
+			z-index: 99;
+		}
+		
+		#navigation>div:first-child{
+			float:left;
+			font-weight: 1000;
+			font-size: x-large;
+			letter-spacing: 5px;
+		}
+		#navigation>div:last-child{
+			margin:0 50px;
+		}
+		#navigation>div:first-child + div , #navigation>div:last-child{
+			float:right;
+		}
+		#navigation>div:last-child>span{
+			color:#777;
+		}
+		#navigation>div:last-child>span:last-child{
+			color:#fff;
+		}
+		#navigation>div:last-child>span:hover{
+			color: #fff;
+		}
+		#navigation span{
+			padding:0 10px;
+			cursor:pointer;
+		}
+		#navigation>div:first-child + div > div{
+			float:right;
+			margin-top:5px;
+			border-left:7px solid  transparent;
+			border-right:7px solid  transparent;
+			border-top:10px solid #777;
+			width:0;
+			height: 0;
+		}
+		#navigation>div:first-child + div > div:hover{
+			
+			border-top:10px solid #fff;
+			
+		}
+
+		#mainBody{
+			box-shadow: 0 0 5px 0 #acacac; 
+			background-color: #fff;
+			width:80%;
+			margin-left: 10%;
+			margin-top: 7%;
+			padding: 10px;
+
+			/*height:1000px;*/
+		}
+		
+		
+
+		.pageNavigative{
+			text-align: center;
+		}
+		.pageNavigative>span:hover{
+			color:#3485FD;
+			cursor: pointer;
+		}
+		.pageNavigative>span:first-child{
+			margin-right:20px;
+		}
+		.pageNavigative>span:last-child{
+			margin-left:20px;
+		}
+
+
+		table{
+			width:100%;
+		}
+		td{
+			text-align: center;
+		}
+		tr:nth-child(even){
+			/*odd*/
+			background-color: #7c7c7c;
+		}
+		tr:not(:first-child):nth-child(even):hover{
+			background-color: #9c9c9c;
+		}
+		tr:not(:first-child):nth-child(odd):hover{
+			background-color: #ececec;
+		}
+
+		.toolBar{
+			padding:10px;
+		}
+		.toolBar>*{
+			display: inline;
+		}
+		.toolBar>div:nth-child(2){
+			margin-left: 20px;
+
+			color:#555;
+		}
+		.toolBar>div:nth-child(2)>span{
+			padding:0 10px;
+		}
+
+		.searchWrapper>input{
+			height:30px;
+			width:150px;
+		}
+		.searchWrapper>button{
+			height:36px;
+			width:52px;
+			background-color: #3485FD;
+			color:#fff;
+			border: solid 2px #3485FD;
+			margin-left: 5px;
+
+			border-radius: 5px;
+		}
+		.searchWrapper>button:hover{
+			box-shadow: 0 0 2px 0 #fff inset;
+			border: solid 1px #fff;
+
+		}
+		.searchWrapper>*{
+			float: right;
+		}
+	</style>
+</head>
+<body>
+<!-- 导航条 -->
+
+<div id="navigation">
+	<div >
+	<span>考试管理系统</span>
+		
+	</div>
+
+
+	<div>
+		<span>用户名</span>
+		<div></div>
+	</div>
+
+	<div>
+		<span>题库</span>
+		<span>试卷</span>
+		<span>成绩</span>
+	</div>
+	
+</div>
+
+<!-- 主体 -->
+<div id="mainBody">
+	<div class="toolBar">
+		<h1>噼里啪啦摸仙语九级考试</h1>
+		<div><span>考试限时：100分钟</span>  <span>出题人：张一鸣</span><span>试卷ID：12321</span> </div>
+		<div class="searchWrapper">
+			<button id="submit" >查&nbsp;询</button>
+			<input placeholder="请输入试卷ID查询成绩" type="text" id="testID" />
+		</div>
+	</div>
+	<hr/>
+
+	<table>
+		<tr>
+			<th>姓名</th>
+			<th>开始时间</th>
+			<th>测试用时</th>
+			<th>分数</th>
+		</tr>
+
+		<tr>
+			<td>
+				黎明
+			</td>
+			<td>
+				2019-1-1&nbsp;23:12:22
+			</td>
+			<td>
+				39分钟
+			</td>
+			<td>
+				88
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				黎明
+			</td>
+			<td>
+				2019-1-1&nbsp;23:12:22
+			</td>
+			<td>
+				39分钟
+			</td>
+			<td>
+				88
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				黎明
+			</td>
+			<td>
+				2019-1-1&nbsp;23:12:22
+			</td>
+			<td>
+				39分钟
+			</td>
+			<td>
+				88
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				黎明
+			</td>
+			<td>
+				2019-1-1&nbsp;23:12:22
+			</td>
+			<td>
+				39分钟
+			</td>
+			<td>
+				88
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				黎明
+			</td>
+			<td>
+				2019-1-1&nbsp;23:12:22
+			</td>
+			<td>
+				39分钟
+			</td>
+			<td>
+				88
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				黎明
+			</td>
+			<td>
+				2019-1-1&nbsp;23:12:22
+			</td>
+			<td>
+				39分钟
+			</td>
+			<td>
+				88
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				黎明
+			</td>
+			<td>
+				2019-1-1&nbsp;23:12:22
+			</td>
+			<td>
+				39分钟
+			</td>
+			<td>
+				88
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				黎明
+			</td>
+			<td>
+				2019-1-1&nbsp;23:12:22
+			</td>
+			<td>
+				39分钟
+			</td>
+			<td>
+				88
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				黎明
+			</td>
+			<td>
+				2019-1-1&nbsp;23:12:22
+			</td>
+			<td>
+				39分钟
+			</td>
+			<td>
+				88
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				黎明
+			</td>
+			<td>
+				2019-1-1&nbsp;23:12:22
+			</td>
+			<td>
+				39分钟
+			</td>
+			<td>
+				88
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				黎明
+			</td>
+			<td>
+				2019-1-1&nbsp;23:12:22
+			</td>
+			<td>
+				39分钟
+			</td>
+			<td>
+				88
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				黎明
+			</td>
+			<td>
+				2019-1-1&nbsp;23:12:22
+			</td>
+			<td>
+				39分钟
+			</td>
+			<td>
+				88
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				黎明
+			</td>
+			<td>
+				2019-1-1&nbsp;23:12:22
+			</td>
+			<td>
+				39分钟
+			</td>
+			<td>
+				88
+			</td>
+		</tr>
+	</table>
+	
+	<hr/>
+
+	<div class="pageNavigative">
+		<span>上一页</span>
+		<span>1</span>
+		...
+		<span>21</span>
+		<span>下一页</span>
+	</div>
+</div>
+
+</body>
+</html>

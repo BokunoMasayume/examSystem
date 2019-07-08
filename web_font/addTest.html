@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>新建试卷|考试管理系统</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		html,body{
+			padding: 0;
+			margin: 0;
+			height:100%;
+
+		}
+		
+		body{
+			/*background: round url(./src/bg3.jpg);*/
+			background-color: #d7d7d7;
+		}
+		#navigation:hover{
+			animation: 1s rainbow infinite alternate;
+		}
+		@keyframes rainbow{
+		  0% { background: #c00; }
+		  50% { background: orange; }
+		  100% { background: yellowgreen; }
+		}
+		#navigation{
+			/*width:100%;*/
+			/*background-color: #010131;*/
+			position: fixed;
+			top: 0;
+			left: 0;
+			/*bottom:0;*/
+			right:0;
+			/*width: 98%;*/
+
+			background-color: #000;
+			color:#fff;
+			padding: 15px 15px;
+			overflow: hidden;
+			box-shadow: 0 10px 10px -8px #555;
+
+			z-index: 99;
+		}
+		
+		#navigation>div:first-child{
+			float:left;
+			font-weight: 1000;
+			font-size: x-large;
+			letter-spacing: 5px;
+		}
+		#navigation>div:last-child{
+			margin:0 50px;
+		}
+		#navigation>div:first-child + div , #navigation>div:last-child{
+			float:right;
+		}
+		#navigation>div:last-child>span{
+			color:#777;
+		}
+		/*#navigation>div:last-child>span:first-child{
+			color:#fff;
+		}*/
+		#navigation>div:last-child>span:hover{
+			color: #fff;
+		}
+		#navigation span{
+			padding:0 10px;
+			cursor:pointer;
+		}
+		#navigation>div:first-child + div > div{
+			float:right;
+			margin-top:5px;
+			border-left:7px solid  transparent;
+			border-right:7px solid  transparent;
+			border-top:10px solid #777;
+			width:0;
+			height: 0;
+		}
+		#navigation>div:first-child + div > div:hover{
+			
+			border-top:10px solid #fff;
+			
+		}
+
+		#mainBody{
+			box-shadow: 0 0 5px 0 #acacac; 
+			background-color: #fff;
+			width:80%;
+			margin-left: 10%;
+			margin-top: 7%;
+			padding: 10px;
+
+			/*height:1000px;*/
+		}
+		
+		.formItem{
+			overflow: hidden;
+			padding:10px 30px;
+		}
+
+		label{
+			margin-left: 30px;
+		}
+
+		.optionItem{
+			position: relative;
+			/*background-color: #ff0;*/
+		}
+	
+
+		#title{
+			/*border: solid 2px #000;
+			border-radius: 10px;*/
+			box-shadow: 0 -15px 6px -15px #111 inset;
+
+			width:75%;
+			/*display: inline-block;*/
+			float:right;
+			margin-right: 10%;
+
+			padding:10px;
+		}
+		#title:focus{
+			/*border: solid 2px #ff0;*/
+			box-shadow: 0 -15px 6px -15px #3485FD inset;
+
+			outline: none;
+
+		}
+
+		
+
+		#optionWrapper{
+			/*box-shadow: 0 0 4px 0 #111 inset;*/
+			margin-top:10px;
+			float:right;
+			margin-right: 10%;
+			width: 80%;
+			padding: 5px 10px;
+		}
+		.optionItem{
+			padding: 10px 15px;
+			position: relative;
+
+			/*border: solid 2px #ff0;*/
+
+			overflow: hidden;
+
+		}
+
+		.close{
+			position: absolute;
+			top:12px;
+			right:30px;
+
+			/*width:10px;*/
+			height:15px;
+
+			border-left: solid 2px #3485FD; 
+			transform:rotate(45deg);
+		}
+		.close::after{
+			content: "";
+			position: absolute;
+			top:0px;
+			right:0px;
+
+			/*width:10px;*/
+			height:15px;
+
+			border-left: solid 2px #3485FD; 
+			transform:rotate(90deg);
+		}
+
+		.optionFuncWrapper{
+			position: relative;
+			height:80px;
+			overflow: hidden;
+
+			/*border: solid 2px #000;*/
+			margin-top: 30px;
+		}
+		.optionFuncWrapper>div{
+			/*transition: 300ms top;*/
+			transition: 300ms top cubic-bezier(.61,1.95,.51,.68);
+		}
+		.funcBlock{
+			/*border: solid 2px #000;*/
+
+			width:100%;
+			position: absolute;
+			top:0px;
+			left:0;
+
+		}
+		.move{
+			top:-80px;
+		}
+		.addBtnWrapper{
+			height:80px;
+
+		}
+		#addBtn{
+			margin-left:5%;
+			width:45%;
+			letter-spacing: 10px;
+			font-size: large;
+
+			background-color: #fff;
+			color:#3485FD;
+			border: solid 1px #3485FD;
+			border-radius: 5px;
+
+			cursor: pointer;
+
+			outline:none;
+
+		}
+		#addBtn:hover{
+			color:#fff;
+			background-color: #3485fd;
+		}
+
+		.addContentWrapper{
+			padding-left:30px;
+
+			position: relative;
+
+		}
+		#content{
+			display: inline-block;
+			width:50%;
+			max-height:65px;
+			overflow: auto;
+
+			border: solid 1px #ccc;
+			outline: none;
+
+			padding:6px;
+			border-radius: 4px;
+			z-index: 100;
+		}
+		#content::before{
+			content:"请输入题目ID";
+			color:#ddd;
+
+			position: absolute;
+			z-index:1;
+		}
+
+		#content:hover::before{
+			content:none;
+		}
+		#sureAdd,#cancelAdd{
+			position: absolute;
+
+
+			width:10%;
+			letter-spacing: 5px;
+			margin-left: 10px;
+
+			height:35px;
+
+			background-color: #fff;
+			color:#3485FD;
+			border: solid 1px #3485FD;
+			border-radius: 5px;
+
+			cursor: pointer;
+
+			outline:none;
+		}
+		#sureAdd:hover,#cancelAdd:hover{
+			color:#fff;
+			background-color: #3485fd;
+		}
+		#sureAdd{
+			top:0px;
+			right:30%;
+		}
+		#cancelAdd{
+			top:0px;
+			right:15%;
+		}
+
+		#finish{
+			background-color: #fff;
+			color:#3485FD;
+			border: solid 1px #3485FD;
+			border-radius: 5px;
+
+			cursor: pointer;
+
+			outline:none;
+
+			letter-spacing: 15px;
+			font-weight: bolder;
+			font-size: larger;
+
+			width:50%;
+			margin-left: 25%;
+		}
+		#finish:hover{
+			color:#fff;
+			background-color: #3485fd;
+		}
+
+		#startTime,#duration{
+			margin-left: 30px;
+			outline:none;
+
+			padding:8px;
+
+			border-radius: 10px;
+		}
+		#startTime:hover,#duration:hover{
+			border: solid 2px #3485FD;
+
+		}
+
+
+		.questItem{
+			float:right;
+			margin-right: 4%;
+
+			/*border: solid 2px #3485FD;*/
+			width:80%;
+		}
+
+		.score{
+			width:10%;
+			border-radius: 10px;
+
+			outline: none;
+			padding:5px;
+		}
+
+
+		.checkRight{
+			width:7px;
+			height: 12px;
+			border-top:solid 2px green ;
+			border-left:solid 2px green ;
+			transform: rotate(225deg);
+		}
+
+
+		.qTitle{
+			margin-left:4%;
+			margin-bottom: 10px;
+		}
+		.qOptionItem{
+			overflow: hidden;
+
+			margin:10px 0;
+			margin-left:10%;
+
+		}
+		.qOptionItem>div:first-child{
+			float:left;
+			width:7px;
+			height: 12px;
+			margin: 0px 10px;
+		}
+
+
+	</style>
+</head>
+<body>
+<!-- 导航条 -->
+
+<div id="navigation">
+	<div >
+	<span>考试管理系统</span>
+		
+	</div>
+
+
+	<div>
+		<span>用户名</span>
+		<div></div>
+	</div>
+
+	<div>
+		<span>题库</span>
+		<span>试卷</span>
+		<span>成绩</span>
+	</div>
+	
+</div>
+
+<!-- 主体 -->
+<div id="mainBody">
+	<div class="formItem">
+		<label for="title">
+			试卷名称
+		</label>
+		<div contenteditable="true"  id="title" >
+		</div>
+	</div>
+
+	<div class="formItem">
+		<label for="startTime">开始时间</label>
+		<input type="datetime-local" id="startTime"/>
+		
+	</div>
+
+	<div class="formItem">
+		<label for="duration">考试限时</label>
+		<input type="number" id="duration" />
+	</div>
+
+	
+
+	<div class="formItem">
+		<label> 题目</label>
+
+		<div id="optionWrapper">
+
+			<div class="optionItem">
+
+				<input type="text" class="score" placeholder="分值"/>
+
+				<div class="questItem">
+					<div class="qTitle">
+						“二十四史”编著使用的体例是()。
+					</div>
+					<div class="qOption">
+						<div class="qOptionItem">
+							<div></div>
+							<div>记纂体</div>
+						</div>
+						<div class="qOptionItem">
+							<div></div>
+							<div>编年体</div>
+						</div>
+						<div class="qOptionItem">
+							<div></div>
+							<div>小说</div>
+						</div>
+						<div class="qOptionItem">
+							<div class="checkRight"></div>
+							<div>纪传体</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="closeBox "></div>
+			</div>
+
+			<div class="optionItem">
+				
+				<input type="text" class="score" placeholder="分值"/>
+
+				<div class="questItem">
+					<div class="qTitle">
+						虚拟现实技术是一种运用计算机仿真系统创建多源信息融合的交互式三维动态实景以及动作仿真的技术，可以给使用者提供沉浸性、多感知性、交互性的互动体验，虚拟现实技术所构造的虚拟环境说明（   ） 
+					</div>
+					<div class="qOption">
+						<div class="qOptionItem">
+							<div></div>
+							<div>物质世界不再具有客观实在性</div>
+						</div>
+						<div class="qOptionItem">
+							<div class="checkRight"></div>
+							<div >物质世界的存在形式具有多样性</div>
+						</div>
+						<div class="qOptionItem">
+							<div></div>
+							<div>信息是独立于物质和意识的第三种存在状态</div>
+						</div>
+						<div class="qOptionItem">
+							<div class="checkRight"></div>
+							<div>人们可以通过实践创造出自然界原本不存在的现实状态 </div>
+						</div>
+					</div>
+				</div>
+				<div class="closeBox "></div>
+
+			</div>
+
+
+
+
+
+			<div class="optionFuncWrapper">
+				<div class="funcBlock">
+					<div class="addBtnWrapper">
+						<button id="addBtn">添加题目</button>
+					</div>
+					<div class="addContentWrapper">
+						<div  contenteditable="true" id="content" ></div>
+						<button id="sureAdd">确定</button>
+						<button id="cancelAdd">取消</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="formItem">
+		<button id="finish">完成</button>
+	</div>
+</div>
+
+
+
+
+<script type="text/javascript">
+	var addBtn = document.getElementById("addBtn");
+	var moveWrapper = document.getElementsByClassName("funcBlock")[0];
+	var cancelAdd = document.getElementById("cancelAdd");
+
+	let optionList = document.getElementsByClassName("optionItem");
+	addBtn.onclick =  function(){
+		moveWrapper.classList.add("move");
+	};
+
+	cancelAdd.onclick = function(){
+		moveWrapper.classList.remove("move");
+	}
+
+	Array.prototype.forEach.call(optionList , function(ele){
+		ele.onmouseenter = function(e){
+			let clo = e.target.getElementsByClassName("closeBox")[0];
+
+			// console.log(clo);
+			clo.classList.add("close");
+		}
+
+		ele.onmouseleave = function(e){
+			let clo = e.target.getElementsByClassName("closeBox")[0];
+			clo.classList.remove("close");
+		}
+	});
+</script>
+</body>
+</html>

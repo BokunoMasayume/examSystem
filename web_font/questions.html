@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>题库|考试管理系统</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		html,body{
+			padding: 0;
+			margin: 0;
+			height:100%;
+
+		}
+		
+		body{
+			/*background: round url(./src/bg3.jpg);*/
+			background-color: #d7d7d7;
+		}
+		#loading{
+			position: fixed;
+			top:0px;
+			left:0;
+			z-index: 97;
+			/*pointer-events: none;*/
+		}
+		#navigation{
+			/*width:100%;*/
+			/*background-color: #010131;*/
+			position: fixed;
+			top: 0;
+			left: 0;
+			/*bottom:0;*/
+			right:0;
+			/*width: 98%;*/
+
+			background-color: #000;
+			color:#fff;
+			padding: 15px 15px;
+			overflow: hidden;
+			box-shadow: 0 10px 10px -8px #555;
+
+			z-index: 99;
+		}
+		
+		#navigation>div:first-child{
+			float:left;
+			font-weight: 1000;
+			font-size: x-large;
+			letter-spacing: 5px;
+		}
+		#navigation>div:last-child{
+			margin:0 50px;
+		}
+		#navigation>div:first-child + div , #navigation>div:last-child{
+			float:right;
+		}
+		#navigation>div:last-child>span{
+			color:#777;
+		}
+		#navigation>div:last-child>span:first-child{
+			color:#fff;
+		}
+		#navigation>div:last-child>span:hover{
+			color: #fff;
+		}
+		#navigation span{
+			padding:0 10px;
+			cursor:pointer;
+		}
+		#navigation>div:first-child + div > div{
+			float:right;
+			margin-top:5px;
+			border-left:7px solid  transparent;
+			border-right:7px solid  transparent;
+			border-top:10px solid #777;
+			width:0;
+			height: 0;
+		}
+		#navigation>div:first-child + div > div:hover{
+			
+			border-top:10px solid #fff;
+			
+		}
+
+		#mainBody{
+			box-shadow: 0 0 5px 0 #acacac; 
+			background-color: #fff;
+			width:80%;
+			margin-left: 10%;
+			margin-top: 7%;
+			padding: 10px;
+
+			/*height:1000px;*/
+
+			/*clip-path: circle(0% at 10% 10%);*/
+		}
+
+		#mainBody{
+			/*animation: 1s 500ms circleShow  forwards cubic-bezier(.72,1.73,.5,.69);*/
+		}
+		@keyframes circleShow{
+			0% {clip-path: circle(0% at 10% 10%);}
+
+			100% {clip-path: circle(70% at 50% 50%);}
+		}
+
+		@keyframes insetShow{
+			0% {clip-path: inset(50%);}
+			100% {clip-path: inset(0%);}
+		}
+		#toolBar{
+			margin: 15px 5px;
+			overflow: hidden;
+		}
+		#toolBar>div{
+			float:right;
+			margin-right: 10px;
+
+			display: inline;
+			padding:5px;
+			color:#3485FD;
+			border: solid 2px #3485FD;
+			border-radius: 4px;
+			cursor: pointer;
+
+
+		}
+		#toolBar>div:hover{
+			background-color: #3485FD;
+			color:#fff;
+		}
+		#showSpace{
+			padding: 10px;
+		}
+		.quest{
+			padding:8px;
+			/*border: solid 2px #000;*/
+
+		}
+		.questHiddenWrapper{
+			position: relative;
+		}
+		.questHiddenWrapper>div:first-child{
+			position: relative;
+
+			/*border: solid 2px #f00;*/
+		}
+		.questHidden{
+			height:50px;
+			/*padding:8px;*/
+			overflow: hidden;
+			/*border: solid 2px #000;*/
+		}
+		.questShow{
+			height:auto;
+		}
+		.questHidden::after{
+			position: absolute;
+			content: "";
+			top:40px;
+			bottom: -10px;
+			left:-10px;
+			right:-10px;
+			background-color: #fff;
+			filter: blur(10px);
+
+		}
+		.showTriggle{
+			position:absolute;
+			bottom:0;
+			right:27px;
+			color:#3485FD;
+			/*border: solid 2px #f00;*/
+
+			cursor: pointer;
+		}
+		.showTriggle::after{
+			position :absolute;
+
+			width:10px;
+			height: 10px;
+			border-top:solid 2px #3485FD;
+			border-left:solid 2px #3485FD;
+			transform: rotate(225deg);
+			content: "";
+			bottom:7px;
+			left: 69px;
+
+			z-index:2;
+		}
+		.closeTriggle{
+			cursor: pointer;
+
+			position:absolute;
+			bottom:0;
+			right:27px;
+			color:#3485FD;
+		}
+		.closeTriggle::after{
+			position :absolute;
+
+			width:10px;
+			height: 10px;
+			border-top:solid 2px #3485FD;
+			border-left:solid 2px #3485FD;
+			transform: rotate(45deg);
+			content: "";
+			bottom:1px;
+			left: 69px;
+		}
+		.questMsg{
+			margin:10px;
+			color:#5c5c5c;
+		}
+		.questMsg>span{
+			padding:0 5px;
+		}
+		.title{
+			margin-left:4%;
+			margin-bottom: 10px;
+		}
+		.optionItem{
+			overflow: hidden;
+
+			margin:10px 0;
+			margin-left:10%;
+
+		}
+		.optionItem>div:first-child{
+			float:left;
+			width:7px;
+			height: 12px;
+			margin: 0px 10px;
+		}
+		.checkRight{
+			width:7px;
+			height: 12px;
+			border-top:solid 2px green ;
+			border-left:solid 2px green ;
+			transform: rotate(225deg);
+		}
+
+		.pageNavigative{
+			text-align: center;
+		}
+		.pageNavigative>span:hover{
+			color:#3485FD;
+			cursor: pointer;
+		}
+		.pageNavigative>span:first-child{
+			margin-right:20px;
+		}
+		.pageNavigative>span:last-child{
+			margin-left:20px;
+		}
+
+		
+	</style>
+</head>
+<body>
+
+	<canvas id="loading"></canvas>
+<!-- 导航条 -->
+
+<div id="navigation">
+	<div >
+	<span>考试管理系统</span>
+		
+	</div>
+
+
+	<div>
+		<span>用户名</span>
+		<div></div>
+	</div>
+
+	<div>
+		<span>题库</span>
+		<span>试卷</span>
+		<span>成绩</span>
+	</div>
+	
+</div>
+
+<!-- 主体 -->
+<div id="mainBody">
+	<div id="toolBar">
+		<div>新建题目</div>
+	</div>
+
+	<hr/>
+
+	<div id="showSpace">
+		<!-- one question -->
+		<div class="quest" data-id="123">
+			<div class="questHiddenWrapper">
+			<div class="questHidden">
+				
+			
+			<div class="title">
+				“二十四史”编著使用的体例是()。
+			</div>
+			<div class="option">
+				<div class="optionItem">
+					<div></div>
+					<div>记纂体</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>编年体</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>小说</div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>纪传体</div>
+				</div>
+			</div>
+
+
+			</div>
+
+			<div class="showTriggle">显示全部 </div>
+
+		</div>
+			<div class="questMsg">
+				<span>题型：单选</span>
+				<span>出题人：李小小</span>
+				<span>题目ID：1234</span>
+			</div>
+
+			<hr/>
+		</div>
+<!-- one question -->
+		<div class="quest" data-id="123">
+			<div class="questHiddenWrapper">
+			<div class="questShow">
+				
+			
+			<div class="title">
+				虚拟现实技术是一种运用计算机仿真系统创建多源信息融合的交互式三维动态实景以及动作仿真的技术，可以给使用者提供沉浸性、多感知性、交互性的互动体验，虚拟现实技术所构造的虚拟环境说明（   ） 
+			</div>
+			<div class="option">
+				<div class="optionItem">
+					<div></div>
+					<div>物质世界不再具有客观实在性 </div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>物质世界的存在形式具有多样性</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>信息是独立于物质和意识的第三种存在状态</div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>人们可以通过实践创造出自然界原本不存在的现实状态 
+
+</div>
+				</div>
+			</div>
+
+
+			</div>
+
+			<div class="closeTriggle">&nbsp;收&nbsp;&nbsp;&nbsp;起 &nbsp;&nbsp;</div>
+
+		</div>
+			<div class="questMsg">
+				<span>题型：多选</span>
+				<span>出题人：李小小</span>
+				<span>题目ID：1234</span>
+			</div>
+
+			<hr/>
+		</div>
+<!-- one question -->
+		<div class="quest" data-id="123">
+			<div class="questHiddenWrapper">
+			<div class="questHidden">
+				
+			
+			<div class="title">
+				“二十四史”编著使用的体例是()。
+			</div>
+			<div class="option">
+				<div class="optionItem">
+					<div></div>
+					<div>记纂体</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>编年体</div>
+				</div>
+				<div class="optionItem">
+					<div></div>
+					<div>小说</div>
+				</div>
+				<div class="optionItem">
+					<div class="checkRight"></div>
+					<div>纪传体</div>
+				</div>
+			</div>
+
+
+			</div>
+
+			<div class="showTriggle">显示全部 </div>
+
+		</div>
+			<div class="questMsg">
+				<span>题型：单选</span>
+				<span>出题人：李小小</span>
+				<span>题目ID：1234</span>
+			</div>
+
+			<hr/>
+		</div>
+
+	</div>
+
+	<div class="pageNavigative">
+		<span>上一页</span>
+		<span>1</span>
+		...
+		<span>21</span>
+		<span>下一页</span>
+	</div>
+</div>
+
+<script type="vertxShader" id="vert">
+	attribute vec2 a_position;
+
+	void main(){
+		gl_Position = vec4(a_position,0. , 1.);
+	}
+</script>
+<script type="fragmentShader" id="frag" src="./src/js/burn_in_hole.frag"></script>
+<script type="text/javascript" src="./src/js/cloth.js"></script>
+<script type="text/javascript" src = "./src/js/webGLutils.js"></script>
+<script type="text/javascript">
+	let images=[
+		{
+			name:"map",
+			src:"./src/bg3.jpg"
+		}
+	];
+	let loadCanvas = document.getElementById('loading');
+	loadCanvas.width=window.innerWidth;
+	loadCanvas.height = window.innerHeight ;
+	// let ctx = loadCanvas.getContext("2d");
+
+	let choose = "2d";
+	if(choose == "2d"){
+
+	let cl = new Cloth({
+		canvas:loadCanvas,
+		gravity:{x:0,y:500},
+		start:{x:0,y:0},
+		numcol:54,
+		numrow:23,
+		render_times:2,
+		tear_distance:300,
+		space:25,
+		renderType:2,
+		pand:{
+			x:1.02,
+			y:1.02
+		},
+		mouse_influence:50,
+		filltype:"glass",
+		doGrain:true
+	});
+
+	let myimg = new Image();
+
+	myimg.onload = function(){
+		cl.init();
+		cl.bindEvent();
+		cl.renderGrain(myimg);
+
+		function anim(){
+			cl.update();
+			cl.draw();
+			requestAnimationFrame(anim);
+		}
+
+		requestAnimationFrame(anim);
+
+	};
+
+
+	myimg.src = "./src/bg3.jpg";
+
+	}//if choose 2d
+
+	if(choose=="3d"){
+
+	let shaderRequest = new XMLHttpRequest();
+	let frag = document.getElementById("frag");
+	shaderRequest.open("GET" , frag.src);
+
+	shaderRequest.onreadystatechange = function(){
+		frag.innerHTML = shaderRequest.responseText;
+
+		let gl = loadCanvas.getContext("webgl");
+
+		let program = webglUtils.createProgramById(gl,"vert","frag");
+		gl.useProgram(program);
+		gl.viewport(0,0,loadCanvas.width ,loadCanvas.height);
+		webglUtils.setUniform(gl,program,"2f" ,"resolution",loadCanvas.width,loadCanvas.height);
+		
+
+		let timeUniformLocation = gl.getUniformLocation(program,"u_time");
+		let mouseUniformLocation = gl.getUniformLocation(program ,"u_mouse");
+		let positionBuffer = gl.createBuffer();
+		let positionAttrinLocation = gl.getAttribLocation(program,"a_position");
+		gl.bindBuffer(gl.ARRAY_BUFFER,positionBuffer);
+		gl.enableVertexAttribArray(positionAttrinLocation);
+		gl.vertexAttribPointer(positionAttrinLocation ,2,gl.FLOAT,false,0,0);
+		gl.bufferData(
+			gl.ARRAY_BUFFER,
+			new Float32Array([
+					-1,-1,
+					 1,-1,
+					 1, 1,
+					 1, 1,
+					-1,-1,
+					-1, 1
+				]),
+			gl.STATIC_DRAW
+		);
+
+		
+
+		webglUtils.loadImageList(images).then((imgList)=>{
+			let pervTime = Date.now();
+			webglUtils.createAndSetupTexture(gl,imgList["map"].img , 0);
+
+			function anim(){
+				let nextTime = Date.now();
+				// let timeDelta = nextTime - pervTime;
+				// pervTime = nextTime;
+				// console.log((nextTime-pervTime)/1000);
+				gl.uniform1f(timeUniformLocation , (nextTime-pervTime)/1000);
+				gl.drawArrays(gl.TRIANGLES , 0,6);
+				// gl.bufferData(
+				// 	gl.ARRAY_BUFFER,
+				// 	new Float32Array([
+				// 			-1,-1,
+				// 			 1,-1,
+				// 			 1, 1,
+				// 			 1, 1,
+				// 			-1,-1,
+				// 			-1, 1
+				// 		]),
+				// 	gl.STATIC_DRAW
+				// );
+				requestAnimationFrame(anim);
+			}
+			anim();
+		});
+
+		loadCanvas.onmousemove = function(e){
+			gl.uniform2f(mouseUniformLocation, e.clientX*2/window.innerWidth - 1 ,2 - e.clientY*2/window.innerHeight -1);
+		}
+
+	};
+	shaderRequest.send(null);
+
+	}//if choose 3d
+</script>
+</body>
+</html>

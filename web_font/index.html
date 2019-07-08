@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>登录|考试管理系统</title>
+	<meta charset="utf-8">
+
+	<style type="text/css">
+		html,body{
+			/*overflow: hidden;*/
+			padding: 0;
+			margin: 0;
+			height:99%;
+			/*border:  solid 2px #000;*/
+		}
+		body{
+			background-image:  url(./src/bg3.jpg);
+			background-size: cover;
+		}
+		#labelBar{
+			/*padding: 20px 20px;*/
+			font-size: x-large;
+			margin-bottom: 30px;
+			text-align: center;
+			color:gray;
+			font-weight: 500;
+		}
+		
+		.formItem{
+			padding: 5px 5%;
+			font-size: large;
+			/*position: relative;*/
+		}
+		.formItem>input{
+			width:70%;
+			height: 30px;
+			margin-left: 10%;
+		}
+		.formSubmit>button{
+			font-size: large;
+		}
+		#formWarpper{
+			position: relative;
+			top:30%;
+			left:35%;
+			height:auto;
+			width:30%;
+			padding: 40px 30px;
+			padding-bottom: 20px;
+			background-color: rgba(0,0,0,.7);
+			color:#fff;
+			border-radius: 10px;
+			/*border: solid 2px #f00;*/
+		}
+		.formSubmit{
+			padding: 5% 15px;
+		}
+		.formSubmit>button{
+			background-color: #20ADF3;
+			border: hidden;
+			color:#fff;
+			padding:5px 15px;
+			border-radius: 5px;
+			width:100%;
+
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<div id="formWarpper">
+	<div id="labelBar">考试管理系统</div>
+
+			<div class="formItem">
+				<label for="username">帐户</label>
+				<input type="text" name="username" id="username" placeholder="在此处输入"/>
+			</div>
+
+			<div class="formItem">
+				<label for="passwd">密码</label>
+				<input type="password" name="passwd" id="passwd" />
+			</div>
+
+			<div class="formSubmit">
+				<button  id="submit">登录</button>
+				
+			</div>
+		
+	</div>
+
+	<script type="text/javascript">
+		let username = document.getElementById("username");
+		let passwd = document.getElementById("passwd");
+		let submitBtn = document.getElementById("submit");
+
+		submitBtn.addEventListener("click" , function(e){
+			if(username.value!="" && passwd.value!=""){
+				let reqMsg = {};
+				reqMsg.username = username.value;
+				reqMsg.passwd = passwd.value;
+				let ajax = new XMLHttpRequest();
+
+				ajax.onreadystatechange = function(){
+					if(ajax.readyState==4 && ajax.status==200){
+						let msg = ajax.responseText;
+
+						console.log(msg);
+
+						msg = JSON.parse(msg);
+
+						if(msg.token!=0){
+							document.cookie = "username="+reqMsg.username+";";
+							//document.cookie = "passswd="+reqMsg.passwd+";";
+							document.cookie = "token="+msg.token+";";
+
+							document.location = "/home";
+						}
+						else{
+							alert("用户名或密码错误");
+						}
+					}
+				}//onreadystatechange
+
+				ajax.open('post','login');
+				ajax.send(JSON.stringify(reqMsg));
+			}else{
+				alert("用户名和密码不能为空");
+			}
+		});
+	</script>
+</body>
+</html>
