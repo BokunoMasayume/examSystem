@@ -62,6 +62,20 @@
 			
 		}
 
+		#navigation>div:first-child a{
+			text-decoration: none;
+			color:#fff;
+		}
+		#navigation>div:not(:first-child) a{
+			text-decoration: none;
+			color:#777;
+		}
+		#navigation>div:not(:first-child) a:hover{
+			
+			color:#fff;
+		}
+		
+
 		#mainBody{
 			/*position: relative;*/
 			/*overflow: hidden;*/
@@ -123,20 +137,20 @@
 <!-- 导航条 -->
 <div id="navigation">
 	<div >
-	<span>考试管理系统</span>
+	<span><a href="/">考试管理系统</a></span>
 		
 	</div>
 
 
-	<div>
-		<span>用户名</span>
+	<div >
+		<span id="usernameSpan">用户名</span>
 		<div></div>
 	</div>
 
 	<div>
-		<span>题库</span>
-		<span>试卷</span>
-		<span>成绩</span>
+		<span><a href="/questions">题库</a></span>
+		<span><a href="/exams">试卷</a></span>
+		<span><a href="scores">成绩</a></span>
 	</div>
 	
 </div>

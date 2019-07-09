@@ -4,6 +4,7 @@
 	<title>题库|考试管理系统</title>
 	<meta charset="utf-8">
 	<style type="text/css">
+
 		html,body{
 			padding: 0;
 			margin: 0;
@@ -15,6 +16,7 @@
 			/*background: round url(./src/bg3.jpg);*/
 			background-color: #d7d7d7;
 		}
+
 		#loading{
 			position: fixed;
 			top:0px;
@@ -56,9 +58,7 @@
 		#navigation>div:last-child>span{
 			color:#777;
 		}
-		#navigation>div:last-child>span:first-child{
-			color:#fff;
-		}
+		
 		#navigation>div:last-child>span:hover{
 			color: #fff;
 		}
@@ -80,13 +80,27 @@
 			border-top:10px solid #fff;
 			
 		}
-
+		#navigation>div:first-child a{
+			text-decoration: none;
+			color:#fff;
+		}
+		#navigation>div:not(:first-child) a{
+			text-decoration: none;
+			color:#777;
+		}
+		#navigation>div:not(:first-child) a:hover{
+			
+			color:#fff;
+		}
+		#navigation>div:last-child>span:first-child a{
+			color:#fff;
+		}
 		#mainBody{
 			box-shadow: 0 0 5px 0 #acacac; 
 			background-color: #fff;
 			width:80%;
 			margin-left: 10%;
-			margin-top: 7%;
+			margin-top: 9%;
 			padding: 10px;
 
 			/*height:1000px;*/
@@ -126,6 +140,13 @@
 		}
 		#toolBar>div:hover{
 			background-color: #3485FD;
+			color:#fff;
+		}
+		#toolBar a{
+			text-decoration: none;
+			color:#3485FD;
+		}
+		#toolBar a:hover{
 			color:#fff;
 		}
 		#showSpace{
@@ -252,31 +273,33 @@
 		.pageNavigative>span:last-child{
 			margin-left:20px;
 		}
-
+		.pageNavigative .active{
+			color:#3485FD;
+		}
 		
 	</style>
 </head>
 <body>
 
-	<canvas id="loading"></canvas>
+	<!-- <canvas id="loading"></canvas> -->
 <!-- 导航条 -->
 
 <div id="navigation">
 	<div >
-	<span>考试管理系统</span>
+	<span><a href="/">考试管理系统</a></span>
 		
 	</div>
 
 
-	<div>
-		<span>用户名</span>
+	<div >
+		<span id="usernameSpan">用户名</span>
 		<div></div>
 	</div>
 
 	<div>
-		<span>题库</span>
-		<span>试卷</span>
-		<span>成绩</span>
+		<span><a href="/questions">题库</a></span>
+		<span><a href="/exams">试卷</a></span>
+		<span><a href="scores">成绩</a></span>
 	</div>
 	
 </div>
@@ -284,14 +307,14 @@
 <!-- 主体 -->
 <div id="mainBody">
 	<div id="toolBar">
-		<div>新建题目</div>
+		<div><a href="/addQuest">新建题目</a></div>
 	</div>
 
 	<hr/>
 
 	<div id="showSpace">
 		<!-- one question -->
-		<div class="quest" data-id="123">
+		<!-- <div class="quest" data-id="123">
 			<div class="questHiddenWrapper">
 			<div class="questHidden">
 				
@@ -332,92 +355,7 @@
 
 			<hr/>
 		</div>
-<!-- one question -->
-		<div class="quest" data-id="123">
-			<div class="questHiddenWrapper">
-			<div class="questShow">
-				
-			
-			<div class="title">
-				虚拟现实技术是一种运用计算机仿真系统创建多源信息融合的交互式三维动态实景以及动作仿真的技术，可以给使用者提供沉浸性、多感知性、交互性的互动体验，虚拟现实技术所构造的虚拟环境说明（   ） 
-			</div>
-			<div class="option">
-				<div class="optionItem">
-					<div></div>
-					<div>物质世界不再具有客观实在性 </div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>物质世界的存在形式具有多样性</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>信息是独立于物质和意识的第三种存在状态</div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>人们可以通过实践创造出自然界原本不存在的现实状态 
-
-</div>
-				</div>
-			</div>
-
-
-			</div>
-
-			<div class="closeTriggle">&nbsp;收&nbsp;&nbsp;&nbsp;起 &nbsp;&nbsp;</div>
-
-		</div>
-			<div class="questMsg">
-				<span>题型：多选</span>
-				<span>出题人：李小小</span>
-				<span>题目ID：1234</span>
-			</div>
-
-			<hr/>
-		</div>
-<!-- one question -->
-		<div class="quest" data-id="123">
-			<div class="questHiddenWrapper">
-			<div class="questHidden">
-				
-			
-			<div class="title">
-				“二十四史”编著使用的体例是()。
-			</div>
-			<div class="option">
-				<div class="optionItem">
-					<div></div>
-					<div>记纂体</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>编年体</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>小说</div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>纪传体</div>
-				</div>
-			</div>
-
-
-			</div>
-
-			<div class="showTriggle">显示全部 </div>
-
-		</div>
-			<div class="questMsg">
-				<span>题型：单选</span>
-				<span>出题人：李小小</span>
-				<span>题目ID：1234</span>
-			</div>
-
-			<hr/>
-		</div>
+ -->
 
 	</div>
 
@@ -441,136 +379,407 @@
 <script type="text/javascript" src="./src/js/cloth.js"></script>
 <script type="text/javascript" src = "./src/js/webGLutils.js"></script>
 <script type="text/javascript">
-	let images=[
-		{
-			name:"map",
-			src:"./src/bg3.jpg"
-		}
-	];
-	let loadCanvas = document.getElementById('loading');
-	loadCanvas.width=window.innerWidth;
-	loadCanvas.height = window.innerHeight ;
-	// let ctx = loadCanvas.getContext("2d");
-
-	let choose = "2d";
-	if(choose == "2d"){
-
-	let cl = new Cloth({
-		canvas:loadCanvas,
-		gravity:{x:0,y:500},
-		start:{x:0,y:0},
-		numcol:54,
-		numrow:23,
-		render_times:2,
-		tear_distance:300,
-		space:25,
-		renderType:2,
-		pand:{
-			x:1.02,
-			y:1.02
-		},
-		mouse_influence:50,
-		filltype:"glass",
-		doGrain:true
-	});
-
-	let myimg = new Image();
-
-	myimg.onload = function(){
-		cl.init();
-		cl.bindEvent();
-		cl.renderGrain(myimg);
-
-		function anim(){
-			cl.update();
-			cl.draw();
-			requestAnimationFrame(anim);
-		}
-
-		requestAnimationFrame(anim);
-
+	let testData={
+		count:55,
+		questions:[]
 	};
 
-
-	myimg.src = "./src/bg3.jpg";
-
-	}//if choose 2d
-
-	if(choose=="3d"){
-
-	let shaderRequest = new XMLHttpRequest();
-	let frag = document.getElementById("frag");
-	shaderRequest.open("GET" , frag.src);
-
-	shaderRequest.onreadystatechange = function(){
-		frag.innerHTML = shaderRequest.responseText;
-
-		let gl = loadCanvas.getContext("webgl");
-
-		let program = webglUtils.createProgramById(gl,"vert","frag");
-		gl.useProgram(program);
-		gl.viewport(0,0,loadCanvas.width ,loadCanvas.height);
-		webglUtils.setUniform(gl,program,"2f" ,"resolution",loadCanvas.width,loadCanvas.height);
-		
-
-		let timeUniformLocation = gl.getUniformLocation(program,"u_time");
-		let mouseUniformLocation = gl.getUniformLocation(program ,"u_mouse");
-		let positionBuffer = gl.createBuffer();
-		let positionAttrinLocation = gl.getAttribLocation(program,"a_position");
-		gl.bindBuffer(gl.ARRAY_BUFFER,positionBuffer);
-		gl.enableVertexAttribArray(positionAttrinLocation);
-		gl.vertexAttribPointer(positionAttrinLocation ,2,gl.FLOAT,false,0,0);
-		gl.bufferData(
-			gl.ARRAY_BUFFER,
-			new Float32Array([
-					-1,-1,
-					 1,-1,
-					 1, 1,
-					 1, 1,
-					-1,-1,
-					-1, 1
-				]),
-			gl.STATIC_DRAW
-		);
-
-		
-
-		webglUtils.loadImageList(images).then((imgList)=>{
-			let pervTime = Date.now();
-			webglUtils.createAndSetupTexture(gl,imgList["map"].img , 0);
-
-			function anim(){
-				let nextTime = Date.now();
-				// let timeDelta = nextTime - pervTime;
-				// pervTime = nextTime;
-				// console.log((nextTime-pervTime)/1000);
-				gl.uniform1f(timeUniformLocation , (nextTime-pervTime)/1000);
-				gl.drawArrays(gl.TRIANGLES , 0,6);
-				// gl.bufferData(
-				// 	gl.ARRAY_BUFFER,
-				// 	new Float32Array([
-				// 			-1,-1,
-				// 			 1,-1,
-				// 			 1, 1,
-				// 			 1, 1,
-				// 			-1,-1,
-				// 			-1, 1
-				// 		]),
-				// 	gl.STATIC_DRAW
-				// );
-				requestAnimationFrame(anim);
+	let q1 = {
+		id:123,
+		uppername:"例化",
+		type:"单选",
+		title : "“二十四史”编著使用的体例是()。",
+		options:[
+			{
+				content:"记纂体",
+				isAnswer:false,
+				order:1,
+			},
+			{
+				content:"编年体",
+				isAnswer:false,
+				order:2,
+			},
+			{
+				content:"小说",
+				isAnswer:false,
+				order:3,
+			},
+			{
+				content:"纪传体",
+				isAnswer:true,
+				order:4,
 			}
-			anim();
+		]
+	};
+
+	testData.questions[0] = q1;
+
+
+	let pageIndex = 1;
+	const pageNum = 20;//questions number per page
+	let total = 0 ;//questions total number
+	let reqPage = 1;
+
+	/*
+	*ajax封装函数,请求并渲染页面
+	*url：请求的url
+	*method: 请求方式
+	*data : 请求数据
+	*/
+	function XHRrequester(url , method , data){
+		let ajax = new XMLHttpRequest();
+
+		ajax.onreadystatechange = function(e){
+			let target  = e.target;
+
+			if(target.readyState == 4 && target.status==200){
+				let msg = target.responseText;
+				console.log("responsemsg",msg);
+				msg = JSON.parse(msg);
+
+				pageIndex = reqPage;
+				total = msg.count;
+
+				let showSpace = document.getElementById("showSpace");
+				showSpace.innerHTML = "";
+
+				for(let i=0;i<msg.questions.length;i++){
+					showSpace.appendChild(createQuestDom(msg.questions[i]));
+
+				}
+				createPageDom(pageIndex , Math.ceil(total / pageNum));
+
+			}//success
+			else if(target.readyState == 4 && target.status!=200){
+				alert("error",target.status);
+			}//fail
+		}//onreadystatechange
+
+		if(method=="GET"){
+			let queryStr = "";
+			for(i in data){
+				queryStr += i + "=" + data[i].toString() + "&";
+			}
+
+			queryStr = queryStr.slice(0,-1);
+
+			url += "?"+queryStr;
+		}
+
+		ajax.open(method , url);
+		console.log("requestMsg" , data);
+		if(method=="GET")ajax.send(null);
+		if(method=="POST")ajax.send(JSON.stringify(data));
+	}
+
+	/*
+	*创建问题展示部分的dom，注册点击事件
+	*questData: json格式的quest数据
+	*/
+	function createQuestDom(questData){
+
+		function createDivByClass(classname){
+			let div = document.createElement("div");
+
+			div.classList.add(classname);
+			return div;
+		}
+
+		function addClassTriggle(e){
+		
+			let parent = e.target.parentNode;
+			parent.getElementsByTagName("div")[0].classList.forEach(function(data,index,arr){
+				if(data === "questHidden"){
+					arr.remove(data);
+					arr.add("questShow");
+				}
+				else if(data === "questShow"){
+					arr.remove(data);
+					arr.add("questHidden");
+				}
+			});
+
+			e.target.classList.forEach(function(data,index,arr){
+				if(data === "showTriggle"){
+					arr.remove(data);
+					arr.add("closeTriggle");
+					e.target.innerHTML = "&nbsp;&nbsp;收&nbsp;&nbsp;起&nbsp;&nbsp;";
+				}
+				else if(data === "closeTriggle"){
+						arr.remove(data);
+						arr.add("showTriggle");
+						e.target.innerHTML = "显示全部";
+				}
+
+			});
+			
+		}
+
+		let  quest = createDivByClass("quest");
+
+		/*
+		**first layer
+		*/
+		let questHiddenWrapper = createDivByClass("questHiddenWrapper");
+		quest.appendChild(questHiddenWrapper);
+
+
+		let questMsg = createDivByClass("questMsg")
+		quest.appendChild(questMsg);
+
+		quest.appendChild( document.createElement("hr") );
+
+
+		/*
+		* second layer
+		*/
+		let questHidden = createDivByClass("questHidden");
+		let showTriggle = createDivByClass("showTriggle");
+
+		showTriggle.addEventListener("click" , addClassTriggle , false);
+
+		showTriggle.innerHTML = "显示全部";
+		questHiddenWrapper.appendChild(questHidden);
+		questHiddenWrapper.appendChild(showTriggle);
+
+
+		questMsg.innerHTML = "<span>题型："+ questData.type+"</span><span>出题人："+questData.uppername +"</span><span>题目ID："+questData.id+"</span>";
+
+
+
+
+		/*
+		* third layer
+		*/
+		let title = createDivByClass("title");
+		title.innerText = questData.title;
+		let option = createDivByClass("option");
+
+		for(let i=0 ; i<questData.options.length;i++){
+			let optionItem = createDivByClass("optionItem");
+			let  optMsg = questData.options[i];
+
+			optionItem.innerHTML = "<div></div><div>"+optMsg.content+"</div>";
+
+			if(optMsg.isAnswer){
+				optionItem.getElementsByTagName("div")[0].classList.add("checkRight");
+			}
+
+			option.appendChild(optionItem);
+		}
+		questHidden.appendChild(title);
+		questHidden.appendChild(option);
+
+		return quest;
+
+	}
+
+
+
+	/*
+	*创建本页页码导航，注册点击事件
+	* pageIndex : 本页页码
+	* totalPage : 总页码
+	*/
+	function createPageDom(pageIndex,totalPage){
+		let pageWrapper = document.getElementsByClassName("pageNavigative")[0];
+		pageWrapper.innerHTML = "";
+
+		let innerString = "";
+		if(pageIndex !==1 )innerString += "<span>上一页</span>";
+		
+		if(pageIndex >3)innerString += "<span>1</span>";
+
+		if(pageIndex >4)innerString += "...";
+		for(let i=((pageIndex-2)<1?1:(pageIndex-2));i<=((pageIndex+2)>totalPage?totalPage:(pageIndex+2));i++){
+			if(i== pageIndex )innerString += "<span class=\"active\">"+i+"</span>";
+			else innerString += "<span>"+i+"</span>";
+		}
+		if(totalPage-pageIndex-2 > 1)innerString += "...";
+		if(totalPage - pageIndex -2 >0)innerString += "<span>"+totalPage+"</span>";
+		if(pageIndex !== totalPage)innerString += "<span>下一页</span>";
+
+		pageWrapper.innerHTML = innerString;
+
+		let children = pageWrapper.getElementsByTagName("span");
+
+		Array.prototype.forEach.call(children , function(item){
+			item.onclick = function(e){
+				let str = e.target.innerHTML;
+				reqPage = pageIndex;
+				if(str === "下一页"){
+					reqPage += 1;
+				}else if(str === "上一页"){
+					reqPage -= 1;
+				}else{
+					reqPage = parseInt(str);
+				}
+
+				XHRrequester("/api/search/questList" , "GET" , {
+					token: /token=([^;]+);/.exec(document.cookie)[1],
+					username: /username=([^;]+);/.exec(document.cookie)[1],
+					pn:reqPage,
+					ps:pageNum,
+					order:"desc"
+				});//XHR
+			};//onclick
 		});
 
-		loadCanvas.onmousemove = function(e){
-			gl.uniform2f(mouseUniformLocation, e.clientX*2/window.innerWidth - 1 ,2 - e.clientY*2/window.innerHeight -1);
-		}
 
-	};
-	shaderRequest.send(null);
+	}//createPageDom
 
-	}//if choose 3d
+	let isLogin = /token=([^;]+)[;]{0,1}/.exec(document.cookie) && /username=([^;]+)[;]{0,1}/.exec(document.cookie);
+
+
+	if(!isLogin)window.location.href="/login";
+
+	let userSpan = document.getElementById("usernameSpan");
+	userSpan.innerText = /username=([^;]+)[;]{0,1}/.exec(document.cookie)[1];
+
+	XHRrequester("/api/search/questList" , "GET" , {
+					token: /token=([^;]+);/.exec(document.cookie)[1],
+					username: /username=([^;]+);/.exec(document.cookie)[1],
+					pn:pageIndex,
+					ps:pageNum,
+					order:"desc"
+				});//XHR
+
+
+
+
+
+
+	// let images=[
+	// 	{
+	// 		name:"map",
+	// 		src:"./src/bg3.jpg"
+	// 	}
+	// ];
+	// let loadCanvas = document.getElementById('loading');
+	// loadCanvas.width=window.innerWidth;
+	// loadCanvas.height = window.innerHeight ;
+	// // let ctx = loadCanvas.getContext("2d");
+
+	// let choose = "2d";
+	// if(choose == "2d"){
+
+	// let cl = new Cloth({
+	// 	canvas:loadCanvas,
+	// 	gravity:{x:0,y:500},
+	// 	start:{x:0,y:0},
+	// 	numcol:54,
+	// 	numrow:23,
+	// 	render_times:2,
+	// 	tear_distance:300,
+	// 	space:25,
+	// 	renderType:2,
+	// 	pand:{
+	// 		x:1.02,
+	// 		y:1.02
+	// 	},
+	// 	mouse_influence:50,
+	// 	filltype:"glass",
+	// 	doGrain:true
+	// });
+
+	// let myimg = new Image();
+
+	// myimg.onload = function(){
+	// 	cl.init();
+	// 	cl.bindEvent();
+	// 	cl.renderGrain(myimg);
+
+	// 	function anim(){
+	// 		cl.update();
+	// 		cl.draw();
+	// 		requestAnimationFrame(anim);
+	// 	}
+
+	// 	requestAnimationFrame(anim);
+
+	// };
+
+
+	// myimg.src = "./src/bg3.jpg";
+
+	// }//if choose 2d
+
+	// if(choose=="3d"){
+
+	// let shaderRequest = new XMLHttpRequest();
+	// let frag = document.getElementById("frag");
+	// shaderRequest.open("GET" , frag.src);
+
+	// shaderRequest.onreadystatechange = function(){
+	// 	frag.innerHTML = shaderRequest.responseText;
+
+	// 	let gl = loadCanvas.getContext("webgl");
+
+	// 	let program = webglUtils.createProgramById(gl,"vert","frag");
+	// 	gl.useProgram(program);
+	// 	gl.viewport(0,0,loadCanvas.width ,loadCanvas.height);
+	// 	webglUtils.setUniform(gl,program,"2f" ,"resolution",loadCanvas.width,loadCanvas.height);
+		
+
+	// 	let timeUniformLocation = gl.getUniformLocation(program,"u_time");
+	// 	let mouseUniformLocation = gl.getUniformLocation(program ,"u_mouse");
+	// 	let positionBuffer = gl.createBuffer();
+	// 	let positionAttrinLocation = gl.getAttribLocation(program,"a_position");
+	// 	gl.bindBuffer(gl.ARRAY_BUFFER,positionBuffer);
+	// 	gl.enableVertexAttribArray(positionAttrinLocation);
+	// 	gl.vertexAttribPointer(positionAttrinLocation ,2,gl.FLOAT,false,0,0);
+	// 	gl.bufferData(
+	// 		gl.ARRAY_BUFFER,
+	// 		new Float32Array([
+	// 				-1,-1,
+	// 				 1,-1,
+	// 				 1, 1,
+	// 				 1, 1,
+	// 				-1,-1,
+	// 				-1, 1
+	// 			]),
+	// 		gl.STATIC_DRAW
+	// 	);
+
+		
+
+	// 	webglUtils.loadImageList(images).then((imgList)=>{
+	// 		let pervTime = Date.now();
+	// 		webglUtils.createAndSetupTexture(gl,imgList["map"].img , 0);
+
+	// 		function anim(){
+	// 			let nextTime = Date.now();
+	// 			// let timeDelta = nextTime - pervTime;
+	// 			// pervTime = nextTime;
+	// 			// console.log((nextTime-pervTime)/1000);
+	// 			gl.uniform1f(timeUniformLocation , (nextTime-pervTime)/1000);
+	// 			gl.drawArrays(gl.TRIANGLES , 0,6);
+	// 			// gl.bufferData(
+	// 			// 	gl.ARRAY_BUFFER,
+	// 			// 	new Float32Array([
+	// 			// 			-1,-1,
+	// 			// 			 1,-1,
+	// 			// 			 1, 1,
+	// 			// 			 1, 1,
+	// 			// 			-1,-1,
+	// 			// 			-1, 1
+	// 			// 		]),
+	// 			// 	gl.STATIC_DRAW
+	// 			// );
+	// 			requestAnimationFrame(anim);
+	// 		}
+	// 		anim();
+	// 	});
+
+	// 	loadCanvas.onmousemove = function(e){
+	// 		gl.uniform2f(mouseUniformLocation, e.clientX*2/window.innerWidth - 1 ,2 - e.clientY*2/window.innerHeight -1);
+	// 	}
+
+	// };
+	// shaderRequest.send(null);
+
+	// }//if choose 3d
 </script>
 </body>
 </html>

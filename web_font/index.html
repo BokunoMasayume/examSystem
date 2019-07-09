@@ -88,6 +88,13 @@
 	</div>
 
 	<script type="text/javascript">
+
+	let isLogin = /token=([^;]+)[;]{0,1}/.exec(document.cookie) && /username=([^;]+)[;]{0,1}/.exec(document.cookie);
+
+
+	if(isLogin)window.location.href="/";
+
+
 		let username = document.getElementById("username");
 		let passwd = document.getElementById("passwd");
 		let submitBtn = document.getElementById("submit");
@@ -108,11 +115,11 @@
 						msg = JSON.parse(msg);
 
 						if(msg.token!=0){
-							document.cookie = "username="+reqMsg.username+";";
+							document.cookie = ";username="+reqMsg.username;
 							//document.cookie = "passswd="+reqMsg.passwd+";";
-							document.cookie = "token="+msg.token+";";
+							document.cookie = ";token="+msg.token;
 
-							document.location = "/home";
+							document.location = "/";
 						}
 						else{
 							alert("用户名或密码错误");
@@ -120,7 +127,7 @@
 					}
 				}//onreadystatechange
 
-				ajax.open('post','login');
+				ajax.open('post','/api/login');
 				ajax.send(JSON.stringify(reqMsg));
 			}else{
 				alert("用户名和密码不能为空");
