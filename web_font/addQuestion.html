@@ -74,6 +74,19 @@
 			border-top:10px solid #fff;
 			
 		}
+		#navigation>div:first-child a{
+			text-decoration: none;
+			color:#fff;
+		}
+		#navigation>div:not(:first-child) a{
+			text-decoration: none;
+			color:#777;
+		}
+		#navigation>div:not(:first-child) a:hover{
+			
+			color:#fff;
+		}
+		
 
 		#mainBody{
 			box-shadow: 0 0 5px 0 #acacac; 
@@ -158,24 +171,29 @@
 			top:7px;
 			right:130px;
 
-			/*width:10px;*/
+			width:10px;
 			height:15px;
 
 			border-left: solid 2px #3485FD; 
 			transform:rotate(45deg);
+
+			cursor:pointer;
+			
 		}
+		
 		.close::after{
 			content: "";
 			position: absolute;
-			top:0px;
-			right:0px;
+			top:5px;
+			right:5px;
 
-			/*width:10px;*/
+			width:10px;
 			height:15px;
 
 			border-left: solid 2px #3485FD; 
 			transform:rotate(90deg);
 		}
+		
 
 		.optionFuncWrapper{
 			position: relative;
@@ -307,27 +325,46 @@
 			color:#fff;
 			background-color: #3485fd;
 		}
+		#logout{
+			position: fixed;
+			top:60px;
+			right:10px;
+			z-index: 109;
+			padding:15px 2px;
+
+			background-color: #fff;
+
+			display: none;
+		}
+		#logout span{
+			padding:0 12px;
+		}
+		#logout span:hover{
+			padding :0 12px;
+			background-color: #ccc;
+		}
 	</style>
 </head>
 <body>
 <!-- 导航条 -->
+<div id="logout"><span>登出</span></div>
 
 <div id="navigation">
 	<div >
-	<span>考试管理系统</span>
+	<span><a href="/">考试管理系统</a></span>
 		
 	</div>
 
 
-	<div>
-		<span>用户名</span>
-		<div></div>
+	<div >
+		<span id="usernameSpan">用户名</span>
+		<div id="logTriggle"></div>
 	</div>
 
 	<div>
-		<span>题库</span>
-		<span>试卷</span>
-		<span>成绩</span>
+		<span><a href="/questions">题库</a></span>
+		<span><a href="/exams">试卷</a></span>
+		<span><a href="scores">成绩</a></span>
 	</div>
 	
 </div>
@@ -356,7 +393,7 @@
 
 		<div id="optionWrapper">
 
-			<div class="optionItem">
+			<!-- <div class="optionItem">
 				<div class="checkwrapper">
 					<input type="radio" name="answer">
 				</div>
@@ -376,7 +413,7 @@
 
 				<div class="closeBox "></div>
 
-			</div>
+			</div> -->
 
 
 
@@ -407,11 +444,38 @@
 
 
 <script type="text/javascript">
+	let isLogin = /token=([^;]+)[;]{0,1}/.exec(document.cookie) && /username=([^;]+)[;]{0,1}/.exec(document.cookie);
+
+
+	if(!isLogin){
+		alert("请先登录！");
+		window.location.href="/login";
+	}
+
+	let userSpan = document.getElementById("usernameSpan");
+	userSpan.innerText = /username=([^;]+)[;]{0,1}/.exec(document.cookie)[1];
+
+
+	let logout = document.getElementById("logout");
+	document.getElementById("logTriggle").onclick = function(e){
+		if(logout.style.display==="none")logout.style.display="block";
+		else logout.style.display="none";
+	}
+	logout.onclick = function(){
+		let d = new Date();
+		document.cookie = "username=aa;expires="+d.toUTCString();
+		document.cookie = "token=qa;expires="+d.toUTCString();
+		window.location.reload();
+		
+	}
+
+
+
 	var addBtn = document.getElementById("addBtn");
 	var moveWrapper = document.getElementsByClassName("funcBlock")[0];
 	var cancelAdd = document.getElementById("cancelAdd");
 
-	let optionList = document.getElementsByClassName("optionItem");
+	
 	addBtn.onclick =  function(){
 		moveWrapper.classList.add("move");
 	};
@@ -420,19 +484,183 @@
 		moveWrapper.classList.remove("move");
 	}
 
-	Array.prototype.forEach.call(optionList , function(ele){
-		ele.onmouseover = function(e){
+	
+
+
+
+	let sureAdd = document.getElementById("sureAdd");
+	let questId = document.getElementById("content");
+	let finishBtn = document.getElementById("finish");
+
+	let optionWrapper = document.getElementById("optionWrapper");
+	let optionFuncWrapper = document.getElementsByClassName("optionFuncWrapper")[0];
+
+	let questType = document.getElementById("type");
+
+	let questTitle = document.getElementById("title");
+
+
+
+
+
+	/*
+	*ajax封装函数,请求并渲染页面
+	*url：请求的url
+	*method: 请求方式
+	*data : 请求数据
+	*callback: success 回调
+	*/
+	function XHRrequester(url , method , data , callback){
+		let ajax = new XMLHttpRequest();
+
+		ajax.onreadystatechange = function(e){
+			let target  = e.target;
+
+			if(target.readyState == 4 && target.status==200){
+				callback(e);
+
+			}//success
+			else if(target.readyState == 4 && target.status!=200){
+				alert("error",target.status);
+			}//fail
+		}//onreadystatechange
+
+		if(method=="GET"){
+			let queryStr = "";
+			for(i in data){
+				queryStr += i + "=" + data[i].toString() + "&";
+			}
+
+			queryStr = queryStr.slice(0,-1);
+
+			url += "?"+queryStr;
+		}
+
+		ajax.open(method , url);
+		console.log("requestMsg" , data);
+		if(method=="GET")ajax.send(null);
+		if(method=="POST")ajax.send(JSON.stringify(data));
+	}
+
+	function createOptItemDiv(content){
+		function createDivByClass(classname){
+			let div = document.createElement("div");
+
+			div.classList.add(classname);
+			return div;
+		}
+
+
+		let optionItem = createDivByClass("optionItem");
+
+		let checkwrapper = createDivByClass("checkwrapper");
+		let ty = 'radio';
+		if(questType.value === "多选")ty='checkbox';
+
+		checkwrapper.innerHTML = "<input type='"+ ty +"' name='answer'>";
+
+		optionItem.appendChild(checkwrapper);
+
+		let optionContent = createDivByClass("optionContent");
+		optionContent.innerText = content;
+
+		optionItem.appendChild(optionContent);
+
+		let closeBox = createDivByClass("closeBox");
+		optionItem.appendChild(closeBox);
+
+		closeBox.onclick = function(e){
+			optionWrapper.removeChild(e.target.parentNode) ;
+		};
+
+
+		optionItem.onmouseenter = function(e){
 			let clo = e.target.getElementsByClassName("closeBox")[0];
 
 			// console.log(clo);
 			clo.classList.add("close");
 		}
 
-		ele.onmouseout = function(e){
+		optionItem.onmouseleave = function(e){
 			let clo = e.target.getElementsByClassName("closeBox")[0];
 			clo.classList.remove("close");
 		}
-	});
+
+		return optionItem;
+
+	}
+
+	
+	sureAdd.onclick = function(){
+		if(/^\s*$/.test(questId.innerText)){
+			alert("不可为空");
+			return;
+		}
+		optionWrapper.insertBefore(createOptItemDiv(questId.innerText) , optionFuncWrapper);
+
+		questId.innerText = "";
+	}
+
+
+	questType.onchange = function(e){
+		let checkboxList = document.getElementsByClassName("checkwrapper");
+		if(questType.value === "多选"){
+			Array.prototype.forEach.call(checkboxList , function(item){
+				item.getElementsByTagName('input')[0].type = 'checkbox';
+			});//forEach
+		}
+		else{
+			Array.prototype.forEach.call(checkboxList , function(item){
+				item.getElementsByTagName('input')[0].type = 'radio';
+			});//forEach
+		}
+	}
+
+	finishBtn.onclick = function(){
+		if(!confirm("确定提交吗？"))return ;
+		let title = questTitle.innerText;
+
+		let type = questType.value;
+
+		let options = [];
+
+		let rightCount = 0;
+
+		Array.prototype.forEach.call(document.getElementsByClassName("optionItem") , function(item , index){
+			let q = {};
+			q.content = item.getElementsByClassName("optionContent")[0].innerText;
+			q.order = index+1;
+			q.isAnswer = item.getElementsByClassName("checkwrapper")[0].getElementsByTagName("input")[0].checked;
+
+			if(q.isAnswer)rightCount++;
+			options.push(q);
+		});//forEach
+
+		console.log(JSON.stringify(options));
+
+		if(!title || options.length<1 || (type==="单选" && rightCount>1)){
+			alert("存在不合法数据，请检查后提交");
+			return;
+		}
+
+		XHRrequester("/api/insert/quest","POST" , {
+			token:/token=([^;]+)[;]{0,1}/.exec(document.cookie)[1],
+			username : /username=([^;]+)[;]{0,1}/.exec(document.cookie)[1],
+			title : title,
+			upper : /username=([^;]+)[;]{0,1}/.exec(document.cookie)[1],
+			type:type,
+			options:options
+		},function(e){
+			alert("提交成功");
+			questTitle.innerText = "";
+			for(let i=document.getElementsByClassName("optionItem").length-1;i>=0;i--){
+				optionWrapper.removeChild(document.getElementsByClassName("optionItem")[i]) ;
+
+			}
+			
+		});//XHRrequester
+	}
+
 </script>
 </body>
 </html>

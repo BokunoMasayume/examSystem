@@ -154,6 +154,7 @@
 		}
 		.quest{
 			padding:8px;
+			position:relative;
 			/*border: solid 2px #000;*/
 
 		}
@@ -263,6 +264,9 @@
 		.pageNavigative{
 			text-align: center;
 		}
+		.pageNavigative span{
+			margin:0 3px;
+		}
 		.pageNavigative>span:hover{
 			color:#3485FD;
 			cursor: pointer;
@@ -276,13 +280,349 @@
 		.pageNavigative .active{
 			color:#3485FD;
 		}
+
+		.hove span{
+			
+			border:1px solid #3485FD;
+			border-radius:3px;
+			color:#3485FD;
+			letter-spacing:3px;
+			padding:3px 3px;
+			margin-right:5px;
+			cursor:pointer;
+		}
+		.hove {
+			position:absolute;
+			top:5%;
+			right:5%;
+			z-index:100;
+		}
+		.hove span:hover{
+			color:#fff;
+			background-color:#3485FD;
+		}
+
+		#updateExam{
+			position: fixed;
+			top:0px;
+			right:0px;
+			left:0px;
+			background-color: rgba(20,20,20,.4);
+			z-index:98;
+			bottom:0px;
+
+
+			padding-top:10%;
+
+			display: none;
+
+			overflow: scroll;
+		}
+		#updateExamBody{
+			background-color: #fff;
+			margin:0 10%;
+			border-radius: 5px;
+
+		}
+		#logout{
+			position: fixed;
+			top:60px;
+			right:10px;
+			z-index: 109;
+			padding:15px 2px;
+
+			background-color: #fff;
+
+			display: none;
+		}
+		#logout span{
+			padding:0 12px;
+		}
+		#logout span:hover{
+			padding :0 12px;
+			background-color: #ccc;
+		}
+	</style>
+	<style type="text/css">
+		.formItem{
+			overflow: hidden;
+			padding:10px 30px;
+		}
+
+		label{
+			margin-left: 30px;
+		}
+
+		.optionItem{
+			position: relative;
+			/*background-color: #ff0;*/
+		}
+	
+
+		#title{
+			/*border: solid 2px #000;
+			border-radius: 10px;*/
+			box-shadow: 0 -15px 6px -15px #111 inset;
+
+			width:70%;
+			/*display: inline-block;*/
+			float:right;
+			margin-right: 10%;
+
+			padding:10px;
+		}
+		#title:focus{
+			/*border: solid 2px #ff0;*/
+			box-shadow: 0 -15px 6px -15px #3485FD inset;
+
+			outline: none;
+
+		}
+
+		#type{
+			width:100px;
+			margin-left: 20px;
+			padding: 0 10px;
+
+			border-radius: 10px;
+		}
+		#type:focus{
+			outline: none;
+			border: solid 2px #3485FD;
+		}
+		#type>option:hover{
+			border-radius: 10px;
+			border: solid 1px #ff0;
+		}
+		.checkwrapper , .optionContent{
+			display: inline-block;
+		}
+
+		#optionWrapper{
+			/*box-shadow: 0 0 4px 0 #111 inset;*/
+			margin-top:10px;
+			float:right;
+			margin-right: 10%;
+			width: 80%;
+			padding: 5px 10px;
+		}
+		.optionItem{
+			padding: 10px 15px;
+			position: relative;
+		}
+
+		.close{
+			position: absolute;
+			top:7px;
+			right:130px;
+
+			width:10px;
+			height:15px;
+
+			border-left: solid 2px #3485FD; 
+			transform:rotate(45deg);
+
+			cursor:pointer;
+			
+		}
 		
+		.close::after{
+			content: "";
+			position: absolute;
+			top:5px;
+			right:5px;
+
+			width:10px;
+			height:15px;
+
+			border-left: solid 2px #3485FD; 
+			transform:rotate(90deg);
+		}
+		
+
+		.optionFuncWrapper{
+			position: relative;
+			height:80px;
+			overflow: hidden;
+
+			/*border: solid 2px #000;*/
+			margin-top: 30px;
+		}
+		.optionFuncWrapper>div{
+			/*transition: 300ms top ;*/
+			transition: 300ms top cubic-bezier(.61,1.95,.51,.68);
+
+
+		}
+		#navigation:hover{
+			animation: 1s rainbow infinite alternate;
+		}
+		@keyframes rainbow{
+		  0% { background: #c00; }
+		  50% { background: orange; }
+		  100% { background: yellowgreen; }
+		}
+		.funcBlock{
+			/*border: solid 2px #000;*/
+
+			width:100%;
+			position: absolute;
+			top:0px;
+			left:0;
+
+		}
+		.move{
+			top:-80px;
+		}
+		.addBtnWrapper{
+			height:80px;
+
+		}
+		#addBtn{
+			margin-left:5%;
+			width:45%;
+			letter-spacing: 10px;
+			font-size: large;
+
+			background-color: #fff;
+			color:#3485FD;
+			border: solid 1px #3485FD;
+			border-radius: 5px;
+
+			cursor: pointer;
+
+			outline:none;
+
+		}
+		#addBtn:hover{
+			color:#fff;
+			background-color: #3485fd;
+		}
+
+		.addContentWrapper{
+			padding-left:30px;
+
+			position: relative;
+
+		}
+		#content{
+			display: inline-block;
+			width:50%;
+			max-height:65px;
+			overflow: auto;
+
+			border: solid 1px #ccc;
+			outline: none;
+
+			padding:6px;
+			border-radius: 4px;
+		}
+		#sureAdd,#cancelAdd{
+			position: absolute;
+
+
+			width:10%;
+			letter-spacing: 5px;
+			margin-left: 10px;
+
+			height:35px;
+
+			background-color: #fff;
+			color:#3485FD;
+			border: solid 1px #3485FD;
+			border-radius: 5px;
+
+			cursor: pointer;
+
+			outline:none;
+		}
+		#sureAdd:hover,#cancelAdd:hover{
+			color:#fff;
+			background-color: #3485fd;
+		}
+		#sureAdd{
+			top:0px;
+			right:30%;
+		}
+		#cancelAdd{
+			top:0px;
+			right:15%;
+		}
+
+		#finish{
+			background-color: #fff;
+			color:#3485FD;
+			border: solid 1px #3485FD;
+			border-radius: 5px;
+
+			cursor: pointer;
+
+			outline:none;
+
+			letter-spacing: 15px;
+			font-weight: bolder;
+			font-size: larger;
+
+			width:50%;
+			margin-left: 25%;
+		}
+		#finish:hover{
+			color:#fff;
+			background-color: #3485fd;
+		}
 	</style>
 </head>
 <body>
 
+<div id="updateExam">
+	<div id="updateExamBody">
+		<div class="formItem">
+				<label for="title">
+					题目
+				</label>
+				<div contenteditable="true"  id="title" >
+				</div>
+			</div>
+
+			<div class="formItem">
+				<label for="type">题型</label>
+				<select id="type">
+					<option value="单选">单选</option>
+					<option value="多选">多选</option>
+					<option value="判断">判断</option>
+				</select>
+			</div>
+
+			<div class="formItem">
+				<label> 选项</label>
+
+				<div id="optionWrapper">
+
+					<div class="optionFuncWrapper">
+						<div class="funcBlock">
+							<div class="addBtnWrapper">
+								<button id="addBtn">添加选项</button>
+							</div>
+							<div class="addContentWrapper">
+								<div contenteditable="true" id="content" ></div>
+								<button id="sureAdd">确定</button>
+								<button id="cancelAdd">取消</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="formItem">
+				<button id="finish">完成</button>
+			</div>		
+	</div>
+</div>
+
 	<!-- <canvas id="loading"></canvas> -->
 <!-- 导航条 -->
+<div id="logout"><span>登出</span></div>
 
 <div id="navigation">
 	<div >
@@ -293,7 +633,7 @@
 
 	<div >
 		<span id="usernameSpan">用户名</span>
-		<div></div>
+		<div id="logTriggle"></div>
 	</div>
 
 	<div>
@@ -314,7 +654,8 @@
 
 	<div id="showSpace">
 		<!-- one question -->
-		<!-- <div class="quest" data-id="123">
+		<div class="quest" data-id="123">
+			<div class="hove"><span>更新</span><span>删除</span></div>
 			<div class="questHiddenWrapper">
 			<div class="questHidden">
 				
@@ -355,7 +696,7 @@
 
 			<hr/>
 		</div>
- -->
+
 
 	</div>
 
@@ -379,7 +720,7 @@
 <script type="text/javascript" src="./src/js/cloth.js"></script>
 <script type="text/javascript" src = "./src/js/webGLutils.js"></script>
 <script type="text/javascript">
-	let testData={
+(function(){	let testData={
 		count:55,
 		questions:[]
 	};
@@ -415,11 +756,64 @@
 
 	testData.questions[0] = q1;
 
-
-	let pageIndex = 1;
+	let tmp = window.location.hash.slice(1);
+	let pageIndex = parseInt(!tmp?1:parseInt(tmp));
 	const pageNum = 20;//questions number per page
 	let total = 0 ;//questions total number
 	let reqPage = 1;
+
+
+	function createOptItemDiv(option){
+		function createDivByClass(classname){
+			let div = document.createElement("div");
+
+			div.classList.add(classname);
+			return div;
+		}
+
+		let questType = document.getElementById("type");
+
+		let optionItem = createDivByClass("optionItem");
+
+		let checkwrapper = createDivByClass("checkwrapper");
+		let ty = 'radio';
+		if(questType === "多选")ty='checkbox';
+
+		checkwrapper.innerHTML = "<input type='"+ ty +"' name='answer'>";
+
+		checkwrapper.getElementsByTagName("input")[0].checked=option.isAnswer;
+
+		optionItem.appendChild(checkwrapper);
+
+		let optionContent = createDivByClass("optionContent");
+		optionContent.innerText = option.content;
+
+		optionItem.appendChild(optionContent);
+
+		let closeBox = createDivByClass("closeBox");
+		optionItem.appendChild(closeBox);
+
+		closeBox.onclick = function(e){
+			optionWrapper.removeChild(e.target.parentNode) ;
+		};
+
+
+		optionItem.onmouseenter = function(e){
+			let clo = e.target.getElementsByClassName("closeBox")[0];
+
+			// console.log(clo);
+			clo.classList.add("close");
+		}
+
+		optionItem.onmouseleave = function(e){
+			let clo = e.target.getElementsByClassName("closeBox")[0];
+			clo.classList.remove("close");
+		}
+
+		return optionItem;
+
+	}
+
 
 	/*
 	*ajax封装函数,请求并渲染页面
@@ -473,6 +867,48 @@
 		if(method=="POST")ajax.send(JSON.stringify(data));
 	}
 
+
+
+	/*
+	*ajax封装函数,请求并渲染页面
+	*url：请求的url
+	*method: 请求方式
+	*data : 请求数据
+	*callback: success 回调
+	*/
+	function XHRrequester2(url , method , data , callback){
+		let ajax = new XMLHttpRequest();
+
+		ajax.onreadystatechange = function(e){
+			let target  = e.target;
+
+			if(target.readyState == 4 && target.status==200){
+				callback(e);
+
+			}//success
+			else if(target.readyState == 4 && target.status!=200){
+				alert("error",target.status);
+			}//fail
+		}//onreadystatechange
+
+		if(method=="GET"){
+			let queryStr = "";
+			for(i in data){
+				queryStr += i + "=" + data[i].toString() + "&";
+			}
+
+			queryStr = queryStr.slice(0,-1);
+
+			url += "?"+queryStr;
+		}
+
+		ajax.open(method , url);
+		console.log("requestMsg" , data);
+		if(method=="GET")ajax.send(null);
+		if(method=="POST")ajax.send(JSON.stringify(data));
+	}
+
+
 	/*
 	*创建问题展示部分的dom，注册点击事件
 	*questData: json格式的quest数据
@@ -518,6 +954,70 @@
 
 		let  quest = createDivByClass("quest");
 
+		quest.onmouseenter = function(e){
+			e.target.getElementsByClassName("hove")[0].style.display = "block";
+		};
+		quest.onmouseleave = function(e){
+			e.target.getElementsByClassName("hove")[0].style.display = "none";
+		}
+
+
+		let hove = createDivByClass("hove");
+		hove.innerHTML = "<span>更新</span><span>删除</span>";
+		quest.appendChild(hove);
+		hove.style.display = "none";
+
+		let span =  hove.getElementsByTagName("span");
+		Array.prototype.forEach.call(span,function(item){
+
+			item.onclick = function(e){
+				let id = e.target.parentNode.parentNode.getElementsByClassName("questMsg")[0].getElementsByTagName("span")[2].innerText.slice(5);
+
+				if(e.target.innerText==="更新"){
+					console.log("更新");
+					document.getElementById("updateExam").style.display="block";
+
+					XHRrequester2("/api/search/quest","GET",{
+						token:/token=([^;]+)[;]{0,1}/.exec(document.cookie)[1],
+						username : /username=([^;]+)[;]{0,1}/.exec(document.cookie)[1],
+						id:id
+					},function(e){
+						let msg = JSON.parse(e.target.responseText);
+						console.log(msg);
+						document.getElementById("updateExam").myId = msg.id;
+
+						document.getElementById("title").innerText = msg.title;
+						document.getElementById("type").value = msg.type;
+
+						let optionWrapper = document.getElementById("optionWrapper");
+						let optionFuncWrapper = document.getElementsByClassName("optionFuncWrapper")[0];
+						for(let i=0;i<msg.options.length;i++){
+							let div = createOptItemDiv(msg.options[i]);
+							optionWrapper.insertBefore(div,optionFuncWrapper);
+
+
+						}//for
+
+					});
+				}
+				else{//删除
+					console.log("删除");
+
+					//闭包
+					function wrap(node){
+						return function(e){
+							alert("删除成功");
+							document.getElementById("showSpace").removeChild(node);
+						}
+					}
+					XHRrequester2("/api/delete/quest","GET",{
+						token: /token=([^;]+);/.exec(document.cookie)[1],
+						username: /username=([^;]+);/.exec(document.cookie)[1],
+						id:id
+					},wrap(e.target.parentNode.parentNode));
+				}
+			}
+		});//forEach
 		/*
 		**first layer
 		*/
@@ -616,6 +1116,8 @@
 					reqPage = parseInt(str);
 				}
 
+				window.location.hash = reqPage;
+
 				XHRrequester("/api/search/questList" , "GET" , {
 					token: /token=([^;]+);/.exec(document.cookie)[1],
 					username: /username=([^;]+);/.exec(document.cookie)[1],
@@ -632,10 +1134,27 @@
 	let isLogin = /token=([^;]+)[;]{0,1}/.exec(document.cookie) && /username=([^;]+)[;]{0,1}/.exec(document.cookie);
 
 
-	if(!isLogin)window.location.href="/login";
+	if(!isLogin){
+		alert("请先登录！");
+		window.location.href="/login";
+	}
 
 	let userSpan = document.getElementById("usernameSpan");
 	userSpan.innerText = /username=([^;]+)[;]{0,1}/.exec(document.cookie)[1];
+
+
+	let logout = document.getElementById("logout");
+	document.getElementById("logTriggle").onclick = function(e){
+		if(logout.style.display==="none")logout.style.display="block";
+		else logout.style.display="none";
+	}
+	logout.onclick = function(){
+		let d = new Date();
+		document.cookie = "username=aa;expires="+d.toUTCString();
+		document.cookie = "token=qa;expires="+d.toUTCString();
+
+		window.location.reload();
+	}
 
 	XHRrequester("/api/search/questList" , "GET" , {
 					token: /token=([^;]+);/.exec(document.cookie)[1],
@@ -661,7 +1180,7 @@
 	// loadCanvas.height = window.innerHeight ;
 	// // let ctx = loadCanvas.getContext("2d");
 
-	// let choose = "2d";
+	// let choose = "3d-";
 	// if(choose == "2d"){
 
 	// let cl = new Cloth({
@@ -702,6 +1221,21 @@
 
 
 	// myimg.src = "./src/bg3.jpg";
+
+
+
+
+
+	// setTimeout(function(){
+	// 	for(let y=0 ; y <= cl.numrow ;y++){
+	// 		for(let x=0;x <= cl.numcol ;x++ ){
+				
+	// 			cl.points[y][x].pin(null,null);
+	// 		}
+	// 	}
+	// 	},3000)
+
+
 
 	// }//if choose 2d
 
@@ -780,6 +1314,211 @@
 	// shaderRequest.send(null);
 
 	// }//if choose 3d
+
+
+})();	
+</script>
+
+<script type="text/javascript">
+;(function(){
+	var addBtn = document.getElementById("addBtn");
+	var moveWrapper = document.getElementsByClassName("funcBlock")[0];
+	var cancelAdd = document.getElementById("cancelAdd");
+
+	
+	addBtn.onclick =  function(){
+		moveWrapper.classList.add("move");
+	};
+
+	cancelAdd.onclick = function(){
+		moveWrapper.classList.remove("move");
+	}
+
+	
+
+
+
+	let sureAdd = document.getElementById("sureAdd");
+	let questId = document.getElementById("content");
+	let finishBtn = document.getElementById("finish");
+
+	let optionWrapper = document.getElementById("optionWrapper");
+	let optionFuncWrapper = document.getElementsByClassName("optionFuncWrapper")[0];
+
+	let questType = document.getElementById("type");
+
+	let questTitle = document.getElementById("title");
+
+
+
+
+
+	/*
+	*ajax封装函数,请求并渲染页面
+	*url：请求的url
+	*method: 请求方式
+	*data : 请求数据
+	*callback: success 回调
+	*/
+	function XHRrequester(url , method , data , callback){
+		let ajax = new XMLHttpRequest();
+
+		ajax.onreadystatechange = function(e){
+			let target  = e.target;
+
+			if(target.readyState == 4 && target.status==200){
+				callback(e);
+
+			}//success
+			else if(target.readyState == 4 && target.status!=200){
+				alert("error",target.status);
+				document.getElementById("updateExam").style.display = "none";
+
+			}//fail
+		}//onreadystatechange
+
+		if(method=="GET"){
+			let queryStr = "";
+			for(i in data){
+				queryStr += i + "=" + data[i].toString() + "&";
+			}
+
+			queryStr = queryStr.slice(0,-1);
+
+			url += "?"+queryStr;
+		}
+
+		ajax.open(method , url);
+		console.log("requestMsg" , data);
+		if(method=="GET")ajax.send(null);
+		if(method=="POST")ajax.send(JSON.stringify(data));
+	}
+
+	function createOptItemDiv(content){
+		function createDivByClass(classname){
+			let div = document.createElement("div");
+
+			div.classList.add(classname);
+			return div;
+		}
+
+
+		let optionItem = createDivByClass("optionItem");
+
+		let checkwrapper = createDivByClass("checkwrapper");
+		let ty = 'radio';
+		if(questType.value === "多选")ty='checkbox';
+
+		checkwrapper.innerHTML = "<input type='"+ ty +"' name='answer'>";
+
+		optionItem.appendChild(checkwrapper);
+
+		let optionContent = createDivByClass("optionContent");
+		optionContent.innerText = content;
+
+		optionItem.appendChild(optionContent);
+
+		let closeBox = createDivByClass("closeBox");
+		optionItem.appendChild(closeBox);
+
+		closeBox.onclick = function(e){
+			optionWrapper.removeChild(e.target.parentNode) ;
+		};
+
+
+		optionItem.onmouseenter = function(e){
+			let clo = e.target.getElementsByClassName("closeBox")[0];
+
+			// console.log(clo);
+			clo.classList.add("close");
+		}
+
+		optionItem.onmouseleave = function(e){
+			let clo = e.target.getElementsByClassName("closeBox")[0];
+			clo.classList.remove("close");
+		}
+
+		return optionItem;
+
+	}
+
+	
+	sureAdd.onclick = function(){
+		if(/^\s*$/.test(questId.innerText)){
+			alert("不可为空");
+			return;
+		}
+		optionWrapper.insertBefore(createOptItemDiv(questId.innerText) , optionFuncWrapper);
+
+		questId.innerText = "";
+	}
+
+
+	questType.onchange = function(e){
+		let checkboxList = document.getElementsByClassName("checkwrapper");
+		if(questType.value === "多选"){
+			Array.prototype.forEach.call(checkboxList , function(item){
+				item.getElementsByTagName('input')[0].type = 'checkbox';
+			});//forEach
+		}
+		else{
+			Array.prototype.forEach.call(checkboxList , function(item){
+				item.getElementsByTagName('input')[0].type = 'radio';
+			});//forEach
+		}
+	}
+
+	finishBtn.onclick = function(){
+		if(!confirm("确定提交吗？")){
+			document.getElementById("updateExam").style.display = "none";
+			return;
+		}
+		let title = questTitle.innerText;
+
+		let type = questType.value;
+
+		let options = [];
+
+		let rightCount = 0;
+
+		Array.prototype.forEach.call(document.getElementById("updateExamBody").getElementsByClassName("optionItem") , function(item , index){
+			let q = {};
+			q.content = item.getElementsByClassName("optionContent")[0].innerText;
+			q.order = index+1;
+			q.isAnswer = item.getElementsByClassName("checkwrapper")[0].getElementsByTagName("input")[0].checked;
+
+			if(q.isAnswer)rightCount++;
+			options.push(q);
+		});//forEach
+
+		console.log(JSON.stringify(options));
+
+		if(!title || options.length<1 || (type==="单选" && rightCount>1)){
+			alert("存在不合法数据，请检查后提交");
+			return;
+		}
+
+		XHRrequester("/api/update/quest","POST" , {
+			token:/token=([^;]+)[;]{0,1}/.exec(document.cookie)[1],
+			username : /username=([^;]+)[;]{0,1}/.exec(document.cookie)[1],
+			title : title,
+			id:document.getElementById("updateExam").myId,
+			upper : /username=([^;]+)[;]{0,1}/.exec(document.cookie)[1],
+			type:type,
+			options:options
+		},function(e){
+			alert("提交成功");
+			questTitle.innerText = "";
+			for(let i=document.getElementById("updateExam").getElementsByClassName("optionItem").length-1;i>=0;i--){
+				optionWrapper.removeChild(document.getElementById("updateExam").getElementsByClassName("optionItem")[i]) ;
+
+			}
+			document.getElementById("updateExam").style.display = "none";
+			
+		});//XHRrequester
+	}
+
+})();
 </script>
 </body>
 </html>

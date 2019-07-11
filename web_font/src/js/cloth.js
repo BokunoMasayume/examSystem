@@ -182,8 +182,8 @@
 		};
 
 		this.Point.prototype.pin = function(x,y){
-			this.pin_x = x || this.x;
-			this.pin_y = y || this.y;
+			this.pin_x = x ;
+			this.pin_y = y ;
 		};
 
 		this.Point.prototype.removeConstraint = function(constraint){

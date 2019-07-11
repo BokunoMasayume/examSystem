@@ -74,6 +74,22 @@
 			border-top:10px solid #fff;
 			
 		}
+		#navigation>div:first-child a{
+			text-decoration: none;
+			color:#fff;
+		}
+		#navigation>div:not(:first-child) a{
+			text-decoration: none;
+			color:#777;
+		}
+		#navigation>div:not(:first-child) a:hover{
+			
+			color:#fff;
+		}
+		#navigation>div:last-child span:last-child a{
+			color:#fff;
+
+		}
 
 		#mainBody{
 			box-shadow: 0 0 5px 0 #acacac; 
@@ -91,6 +107,9 @@
 		.pageNavigative{
 			text-align: center;
 		}
+		.pageNavigative span{
+			margin:0 3px;
+		}
 		.pageNavigative>span:hover{
 			color:#3485FD;
 			cursor: pointer;
@@ -100,6 +119,9 @@
 		}
 		.pageNavigative>span:last-child{
 			margin-left:20px;
+		}
+		.pageNavigative .active{
+			color:#3485FD;
 		}
 
 
@@ -138,7 +160,9 @@
 		.searchWrapper>input{
 			height:30px;
 			width:150px;
+			transition: height 1s;
 		}
+		
 		.searchWrapper>button{
 			height:36px;
 			width:52px;
@@ -157,36 +181,79 @@
 		.searchWrapper>*{
 			float: right;
 		}
+
+		#mask{
+			position: fixed;
+			top:0;
+			bottom: 0;
+			right: 0;
+			left:0;
+			background-color: #fff;
+		}
+		#temp{
+			position: absolute;
+			top:40%;
+			left:30%;
+			width:40%;
+			height:30px;
+			border-radius: 10px;
+
+			text-decoration: none;
+			outline: medium;
+		}
+		#logout{
+			position: fixed;
+			top:60px;
+			right:10px;
+			z-index: 109;
+			padding:15px 2px;
+
+			background-color: #fff;
+
+			display: none;
+		}
+		#logout span{
+			padding:0 12px;
+		}
+		#logout span:hover{
+			padding :0 12px;
+			background-color: #ccc;
+		}
 	</style>
 </head>
 <body>
 <!-- 导航条 -->
+<div id="logout"><span>登出</span></div>
 
 <div id="navigation">
 	<div >
-	<span>考试管理系统</span>
+	<span><a href="/">考试管理系统</a></span>
 		
 	</div>
 
 
-	<div>
-		<span>用户名</span>
-		<div></div>
+	<div >
+		<span id="usernameSpan">用户名</span>
+		<div id="logTriggle"></div>
 	</div>
 
 	<div>
-		<span>题库</span>
-		<span>试卷</span>
-		<span>成绩</span>
+		<span><a href="/questions">题库</a></span>
+		<span><a href="/exams">试卷</a></span>
+		<span><a href="scores">成绩</a></span>
 	</div>
 	
 </div>
 
+
+<div id="mask">
+	<input placeholder="请输入试卷ID查询成绩" type="text" id="temp" />
+</div>
 <!-- 主体 -->
 <div id="mainBody">
 	<div class="toolBar">
-		<h1>噼里啪啦摸仙语九级考试</h1>
-		<div><span>考试限时：100分钟</span>  <span>出题人：张一鸣</span><span>试卷ID：12321</span> </div>
+		<h1></h1>
+		<div class="examMsg"><span></span>  <span></span><span></span> </div>
 		<div class="searchWrapper">
 			<button id="submit" >查&nbsp;询</button>
 			<input placeholder="请输入试卷ID查询成绩" type="text" id="testID" />
@@ -195,219 +262,231 @@
 	<hr/>
 
 	<table>
-		<tr>
-			<th>姓名</th>
-			<th>开始时间</th>
-			<th>测试用时</th>
-			<th>分数</th>
-		</tr>
+		
 
-		<tr>
-			<td>
-				黎明
-			</td>
-			<td>
-				2019-1-1&nbsp;23:12:22
-			</td>
-			<td>
-				39分钟
-			</td>
-			<td>
-				88
-			</td>
-		</tr>
-
-		<tr>
-			<td>
-				黎明
-			</td>
-			<td>
-				2019-1-1&nbsp;23:12:22
-			</td>
-			<td>
-				39分钟
-			</td>
-			<td>
-				88
-			</td>
-		</tr>
-
-		<tr>
-			<td>
-				黎明
-			</td>
-			<td>
-				2019-1-1&nbsp;23:12:22
-			</td>
-			<td>
-				39分钟
-			</td>
-			<td>
-				88
-			</td>
-		</tr>
-
-		<tr>
-			<td>
-				黎明
-			</td>
-			<td>
-				2019-1-1&nbsp;23:12:22
-			</td>
-			<td>
-				39分钟
-			</td>
-			<td>
-				88
-			</td>
-		</tr>
-
-		<tr>
-			<td>
-				黎明
-			</td>
-			<td>
-				2019-1-1&nbsp;23:12:22
-			</td>
-			<td>
-				39分钟
-			</td>
-			<td>
-				88
-			</td>
-		</tr>
-
-		<tr>
-			<td>
-				黎明
-			</td>
-			<td>
-				2019-1-1&nbsp;23:12:22
-			</td>
-			<td>
-				39分钟
-			</td>
-			<td>
-				88
-			</td>
-		</tr>
-
-		<tr>
-			<td>
-				黎明
-			</td>
-			<td>
-				2019-1-1&nbsp;23:12:22
-			</td>
-			<td>
-				39分钟
-			</td>
-			<td>
-				88
-			</td>
-		</tr>
-
-		<tr>
-			<td>
-				黎明
-			</td>
-			<td>
-				2019-1-1&nbsp;23:12:22
-			</td>
-			<td>
-				39分钟
-			</td>
-			<td>
-				88
-			</td>
-		</tr>
-
-		<tr>
-			<td>
-				黎明
-			</td>
-			<td>
-				2019-1-1&nbsp;23:12:22
-			</td>
-			<td>
-				39分钟
-			</td>
-			<td>
-				88
-			</td>
-		</tr>
-
-		<tr>
-			<td>
-				黎明
-			</td>
-			<td>
-				2019-1-1&nbsp;23:12:22
-			</td>
-			<td>
-				39分钟
-			</td>
-			<td>
-				88
-			</td>
-		</tr>
-
-		<tr>
-			<td>
-				黎明
-			</td>
-			<td>
-				2019-1-1&nbsp;23:12:22
-			</td>
-			<td>
-				39分钟
-			</td>
-			<td>
-				88
-			</td>
-		</tr>
-
-		<tr>
-			<td>
-				黎明
-			</td>
-			<td>
-				2019-1-1&nbsp;23:12:22
-			</td>
-			<td>
-				39分钟
-			</td>
-			<td>
-				88
-			</td>
-		</tr>
-
-		<tr>
-			<td>
-				黎明
-			</td>
-			<td>
-				2019-1-1&nbsp;23:12:22
-			</td>
-			<td>
-				39分钟
-			</td>
-			<td>
-				88
-			</td>
-		</tr>
+		
 	</table>
 	
 	<hr/>
 
 	<div class="pageNavigative">
-		<span>上一页</span>
-		<span>1</span>
-		...
-		<span>21</span>
-		<span>下一页</span>
+		
 	</div>
 </div>
+<script type="text/javascript">
 
+
+	let isLogin = /token=([^;]+)[;]{0,1}/.exec(document.cookie) && /username=([^;]+)[;]{0,1}/.exec(document.cookie);
+
+
+	if(!isLogin){
+		alert("请先登录！");
+		window.location.href="/login";
+	}
+
+	let userSpan = document.getElementById("usernameSpan");
+	userSpan.innerText = /username=([^;]+)[;]{0,1}/.exec(document.cookie)[1];
+
+
+	let logout = document.getElementById("logout");
+	document.getElementById("logTriggle").onclick = function(e){
+		if(logout.style.display==="none")logout.style.display="block";
+		else logout.style.display="none";
+	}
+	logout.onclick = function(){
+		let d = new Date();
+		document.cookie = "username=aa;expires="+d.toUTCString();
+		document.cookie = "token=qa;expires="+d.toUTCString();
+		window.location.reload();
+		
+	}
+
+	let mask = document.getElementById("mask");
+	let temp = document.getElementById("temp");
+
+	temp.oninput = function(e){
+		let a = document.getElementById("testID");
+		a.value = e.target.value;
+		e.target.parentNode.style.display = "none";
+		a.focus();
+	}
+
+	document.getElementById("testID").oninput =  function(e){
+		if(e.target.value=="")mask.style.display = "block";
+	}
+
+	let tmp = window.location.hash.slice(1);
+	let pageIndex = parseInt(!tmp?1:parseInt(tmp));
+	const pageNum = 20;//questions number per page
+	let total = 0 ;//questions total number
+	let reqPage = 1;
+
+	/*
+	*ajax封装函数,请求并渲染页面
+	*url：请求的url
+	*method: 请求方式
+	*data : 请求数据
+	*callback: success 回调
+	*/
+	function XHRrequester(url , method , data , callback){
+		let ajax = new XMLHttpRequest();
+
+		ajax.onreadystatechange = function(e){
+			let target  = e.target;
+
+			if(target.readyState == 4 && target.status==200){
+				callback(e);
+
+			}//success
+			else if(target.readyState == 4 && target.status!=200){
+				alert("error",target.status);
+			}//fail
+		}//onreadystatechange
+
+		if(method=="GET"){
+			let queryStr = "";
+			for(i in data){
+				queryStr += i + "=" + data[i].toString() + "&";
+			}
+
+			queryStr = queryStr.slice(0,-1);
+
+			url += "?"+queryStr;
+		}
+
+		ajax.open(method , url);
+		console.log("requestMsg" , data);
+		if(method=="GET")ajax.send(null);
+		if(method=="POST")ajax.send(JSON.stringify(data));
+	}
+
+	/*
+	*创建本页页码导航，注册点击事件
+	* pageIndex : 本页页码
+	* totalPage : 总页码
+	*/
+	function createPageDom(pageIndex,totalPage){
+		let pageWrapper = document.getElementsByClassName("pageNavigative")[0];
+		pageWrapper.innerHTML = "";
+
+		let innerString = "";
+		if(pageIndex !==1 )innerString += "<span>上一页</span>";
+		
+		if(pageIndex >3)innerString += "<span>1</span>";
+
+		if(pageIndex >4)innerString += "...";
+		for(let i=((pageIndex-2)<1?1:(pageIndex-2));i<=((pageIndex+2)>totalPage?totalPage:(pageIndex+2));i++){
+			if(i== pageIndex )innerString += "<span class=\"active\">"+i+"</span>";
+			else innerString += "<span>"+i+"</span>";
+		}
+		if(totalPage-pageIndex-2 > 1)innerString += "...";
+		if(totalPage - pageIndex -2 >0)innerString += "<span>"+totalPage+"</span>";
+		if(pageIndex !== totalPage)innerString += "<span>下一页</span>";
+
+		pageWrapper.innerHTML = innerString;
+
+		let children = pageWrapper.getElementsByTagName("span");
+
+		Array.prototype.forEach.call(children , function(item){
+			item.onclick = function(e){
+				let str = e.target.innerHTML;
+				reqPage = pageIndex;
+				if(str === "下一页"){
+					reqPage += 1;
+				}else if(str === "上一页"){
+					reqPage -= 1;
+				}else{
+					reqPage = parseInt(str);
+				}
+
+				window.location.hash = reqPage;
+
+				XHRrequester("/api/search/score" , "GET" , {
+					token: /token=([^;]+);/.exec(document.cookie)[1],
+					username: /username=([^;]+);/.exec(document.cookie)[1],
+					pn:reqPage,
+					ps:pageNum,
+					order:"desc",
+					examid:document.getElementById("testID").innerText
+				},function(e){
+					pageIndex = reqPage;
+					total = msg.count;
+
+					let msg = JSON.parse(e.target.responseText);
+
+					renderMsg(msg);
+					createPageDom(pageIndex ,Math.ceil(total / pageNum) );
+
+				});//XHR
+			};//onclick
+		});
+
+
+	}//createPageDom
+
+	/*
+	*创建分时表格dom
+	*/
+	function renderMsg(scoreData){
+		let exammsg = document.getElementsByClassName("examMsg")[0];
+		exammsg.innerHTML = "<span>考试时限："+scoreData.duration+"分钟</span><span>出题人："+scoreData.upper+"</span><span>试卷ID："+scoreData.id+"</span>";
+
+		document.getElementsByTagName("h1")[0].innerText = scoreData.examTitle;
+
+		let tab = document.getElementsByTagName("table")[0];
+		tab.innerHTML = "<tr><th>姓名</th><th>开始时间</th><th>测试用时</th><th>分数</th></tr>";
+
+		for(let i=0;i<scoreData.students.length;i++){
+			let tr = document.createElement("tr");
+
+			let th1 = document.createElement("th");
+			let th2 = document.createElement("th");
+			let th3 = document.createElement("th");
+			let th4 = document.createElement("th");
+
+			th1.innerText = scoreData.students[i].name;
+			th2.innerText = scoreData.students[i].startTime;
+			th3.innerText = scoreData.students[i].duration;
+			th4.innerText = scoreData.students[i].score;
+
+			tr.appendChild(th1);
+			tr.appendChild(th2);
+			tr.appendChild(th3);
+			tr.appendChild(th4);
+
+			tab.appendChild(tr);
+
+		}
+
+	}
+
+
+	let submit = document.getElementById("submit");
+	submit.onclick = function(){
+		reqPage = 1;
+		XHRrequester("/api/search/score" , "GET" , {
+					token: /token=([^;]+);/.exec(document.cookie)[1],
+					username: /username=([^;]+);/.exec(document.cookie)[1],
+					pn:reqPage,
+					ps:pageNum,
+					order:"desc",
+					examid:document.getElementById("testID").innerText
+				},function(e){
+					pageIndex = reqPage;
+
+					let msg = JSON.parse(e.target.responseText);
+					total = msg.count;
+					
+					renderMsg(msg);
+					createPageDom(pageIndex ,Math.ceil(total / pageNum) );
+
+				});//XHR
+
+
+	}
+
+
+
+</script>
 </body>
 </html>

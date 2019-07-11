@@ -64,9 +64,11 @@
 
 			cursor: pointer;
 		}
+	
 	</style>
 </head>
 <body>
+
 	<div id="formWarpper">
 	<div id="labelBar">考试管理系统</div>
 
@@ -95,6 +97,9 @@
 	if(isLogin)window.location.href="/";
 
 
+
+
+
 		let username = document.getElementById("username");
 		let passwd = document.getElementById("passwd");
 		let submitBtn = document.getElementById("submit");
@@ -103,7 +108,7 @@
 			if(username.value!="" && passwd.value!=""){
 				let reqMsg = {};
 				reqMsg.username = username.value;
-				reqMsg.passwd = passwd.value;
+				reqMsg.password = passwd.value;
 				let ajax = new XMLHttpRequest();
 
 				ajax.onreadystatechange = function(){
@@ -115,9 +120,9 @@
 						msg = JSON.parse(msg);
 
 						if(msg.token!=0){
-							document.cookie = ";username="+reqMsg.username;
+							document.cookie = "username="+reqMsg.username;
 							//document.cookie = "passswd="+reqMsg.passwd+";";
-							document.cookie = ";token="+msg.token;
+							document.cookie = "token="+msg.token;
 
 							document.location = "/";
 						}
@@ -127,7 +132,7 @@
 					}
 				}//onreadystatechange
 
-				ajax.open('post','/api/login');
+				ajax.open('post','/api/app/login');
 				ajax.send(JSON.stringify(reqMsg));
 			}else{
 				alert("用户名和密码不能为空");

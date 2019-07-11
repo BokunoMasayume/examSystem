@@ -74,7 +74,21 @@
 			border-top:10px solid #fff;
 			
 		}
-
+		#navigation>div:first-child a{
+			text-decoration: none;
+			color:#fff;
+		}
+		#navigation>div:not(:first-child) a{
+			text-decoration: none;
+			color:#777;
+		}
+		#navigation>div:not(:first-child) a:hover{
+			
+			color:#fff;
+		}
+		#navigation>div:last-child>span:first-child + span a{
+			color:#fff;
+		}
 		#mainBody{
 			box-shadow: 0 0 5px 0 #acacac; 
 			background-color: #fff;
@@ -104,6 +118,13 @@
 		}
 		#toolBar>div:hover{
 			background-color: #3485FD;
+			color:#fff;
+		}
+		#toolBar a{
+			text-decoration: none;
+			color:#3485FD;
+		}
+		#toolBar a:hover{
 			color:#fff;
 		}
 		#showSpace{
@@ -151,6 +172,9 @@
 		.pageNavigative{
 			text-align: center;
 		}
+		.pageNavigative span{
+			margin:0 3px;
+		}
 		.pageNavigative>span:hover{
 			color:#3485FD;
 			cursor: pointer;
@@ -162,7 +186,9 @@
 			margin-left:20px;
 		}
 
-
+		.pageNavigative .active{
+			color:#3485FD;
+		}
 
 		.quest>hr{
 			width:90%;
@@ -179,6 +205,7 @@
 			display: inline-block;
 			width: auto;
 			text-align: center;
+			margin-right:5px;
 		}
 
 		.test{
@@ -244,35 +271,425 @@
 			bottom:1px;
 			left: 40px;
 		}
+		.hove span{
+			
+			border:1px solid #3485FD;
+			border-radius:3px;
+			color:#3485FD;
+			letter-spacing:3px;
+			padding:3px 3px;
+			margin-right:5px;
+			cursor:pointer;
+		}
+		.hove {
+			position:absolute;
+			top:10px;
+			right:5%;
+			z-index:100;
+		}
+		.hove span:hover{
+			color:#fff;
+			background-color:#3485FD;
+		}
+
+
+		#updateExam{
+			position: fixed;
+			top:0px;
+			right:0px;
+			left:0px;
+			background-color: rgba(20,20,20,.4);
+			z-index:98;
+			bottom:0px;
+
+
+			padding-top:10%;
+
+			display: none;
+
+			overflow: scroll;
+		}
+		#updateExamBody{
+			background-color: #fff;
+			margin:0 10%;
+			border-radius: 5px;
+
+		}
+		#logout{
+			position: fixed;
+			top:60px;
+			right:10px;
+			z-index: 109;
+			padding:15px 2px;
+
+			background-color: #fff;
+
+			display: none;
+		}
+		#logout span{
+			padding:0 12px;
+		}
+		#logout span:hover{
+			padding :0 12px;
+			background-color: #ccc;
+		}
+	</style>
+
+	<style type="text/css">
+		.formItem{
+			overflow: hidden;
+			padding:10px 30px;
+		}
+
+		label{
+			margin-left: 30px;
+		}
+
+		.optionItem{
+			position: relative;
+			/*background-color: #ff0;*/
+		}
+	
+
+		#title{
+			/*border: solid 2px #000;
+			border-radius: 10px;*/
+			box-shadow: 0 -15px 6px -15px #111 inset;
+
+			width:70%;
+			/*display: inline-block;*/
+			float:right;
+			margin-right: 10%;
+
+			padding:10px;
+		}
+		#title:focus{
+			/*border: solid 2px #ff0;*/
+			box-shadow: 0 -15px 6px -15px #3485FD inset;
+
+			outline: none;
+
+		}
+
+		
+
+		#optionWrapper{
+			/*box-shadow: 0 0 4px 0 #111 inset;*/
+			margin-top:10px;
+			float:right;
+			margin-right: 10%;
+			width: 80%;
+			padding: 5px 10px;
+		}
+		.optionItem{
+			padding: 10px 15px;
+			position: relative;
+
+			/*border: solid 2px #ff0;*/
+
+			overflow: hidden;
+
+		}
+
+		.close{
+			position: absolute;
+			top:12px;
+			right:30px;
+
+			width:10px;
+			height:15px;
+
+			border-left: solid 2px #3485FD; 
+			transform:rotate(45deg);
+
+			cursor:pointer;
+		}
+		.close::after{
+			content: "";
+			position: absolute;
+			top:5px;
+			right:5px;
+
+			width:10px;
+			height:15px;
+
+			border-left: solid 2px #3485FD; 
+			transform:rotate(90deg);
+		}
+
+		.optionFuncWrapper{
+			position: relative;
+			height:80px;
+			overflow: hidden;
+
+			/*border: solid 2px #000;*/
+			margin-top: 30px;
+		}
+		.optionFuncWrapper>div{
+			/*transition: 300ms top;*/
+			transition: 300ms top cubic-bezier(.61,1.95,.51,.68);
+		}
+		.funcBlock{
+			/*border: solid 2px #000;*/
+
+			width:100%;
+			position: absolute;
+			top:0px;
+			left:0;
+
+		}
+		.move{
+			top:-80px;
+		}
+		.addBtnWrapper{
+			height:80px;
+
+		}
+		#addBtn{
+			margin-left:5%;
+			width:45%;
+			letter-spacing: 10px;
+			font-size: large;
+
+			background-color: #fff;
+			color:#3485FD;
+			border: solid 1px #3485FD;
+			border-radius: 5px;
+
+			cursor: pointer;
+
+			outline:none;
+
+		}
+		#addBtn:hover{
+			color:#fff;
+			background-color: #3485fd;
+		}
+
+		.addContentWrapper{
+			padding-left:30px;
+
+			position: relative;
+
+		}
+		#content{
+			display: inline-block;
+			width:50%;
+			max-height:65px;
+			overflow: auto;
+
+			border: solid 1px #ccc;
+			outline: none;
+
+			padding:6px;
+			border-radius: 4px;
+			z-index: 100;
+		}
+		#content::before{
+			content:"请输入题目ID";
+			color:#ddd;
+
+			position: absolute;
+			z-index:1;
+		}
+
+		#content:hover::before{
+			content:none;
+		}
+		#sureAdd,#cancelAdd{
+			position: absolute;
+
+
+			width:10%;
+			letter-spacing: 5px;
+			margin-left: 10px;
+
+			height:35px;
+
+			background-color: #fff;
+			color:#3485FD;
+			border: solid 1px #3485FD;
+			border-radius: 5px;
+
+			cursor: pointer;
+
+			outline:none;
+		}
+		#sureAdd:hover,#cancelAdd:hover{
+			color:#fff;
+			background-color: #3485fd;
+		}
+		#sureAdd{
+			top:0px;
+			right:30%;
+		}
+		#cancelAdd{
+			top:0px;
+			right:15%;
+		}
+
+		#finish{
+			background-color: #fff;
+			color:#3485FD;
+			border: solid 1px #3485FD;
+			border-radius: 5px;
+
+			cursor: pointer;
+
+			outline:none;
+
+			letter-spacing: 15px;
+			font-weight: bolder;
+			font-size: larger;
+
+			width:50%;
+			margin-left: 25%;
+		}
+		#finish:hover{
+			color:#fff;
+			background-color: #3485fd;
+		}
+
+		#startTime,#duration{
+			margin-left: 30px;
+			outline:none;
+
+			padding:8px;
+
+			border-radius: 10px;
+		}
+		#startTime:hover,#duration:hover{
+			border: solid 2px #3485FD;
+
+		}
+
+
+		.questItem{
+			float:right;
+			margin-right: 4%;
+
+			/*border: solid 2px #3485FD;*/
+			width:80%;
+		}
+
+		.score{
+			width:10%;
+			border-radius: 10px;
+
+			outline: none;
+			padding:5px;
+		}
+
+
+		.checkRight{
+			width:7px;
+			height: 12px;
+			border-top:solid 2px green ;
+			border-left:solid 2px green ;
+			transform: rotate(225deg);
+		}
+
+
+		.qTitle{
+			margin-left:4%;
+			margin-bottom: 10px;
+		}
+		.qOptionItem{
+			overflow: hidden;
+
+			margin:10px 0;
+			margin-left:10%;
+
+		}
+		.qOptionItem>div:first-child{
+			float:left;
+			width:7px;
+			height: 12px;
+			margin: 0px 10px;
+		}
 	</style>
 </head>
 <body>
-<!-- 导航条 -->
+<div id="logout"><span>登出</span></div>
 
+<!-- 导航条 -->
 <div id="navigation">
 	<div >
-	<span>考试管理系统</span>
+	<span><a href="/">考试管理系统</a></span>
 		
 	</div>
 
 
-	<div>
-		<span>用户名</span>
-		<div></div>
+	<div >
+		<span id="usernameSpan">用户名</span>
+		<div id="logTriggle"></div>
 	</div>
 
 	<div>
-		<span>题库</span>
-		<span>试卷</span>
-		<span>成绩</span>
+		<span><a href="/questions">题库</a></span>
+		<span><a href="/exams">试卷</a></span>
+		<span><a href="/scores">成绩</a></span>
 	</div>
 	
+</div>
+
+
+<div id="updateExam">
+	<div id="updateExamBody">
+		<div class="formItem">
+			<label for="title">
+				试卷名称
+			</label>
+			<div contenteditable="true"  id="title" >
+			</div>
+		</div>
+
+		<!-- <div class="formItem">
+			<label for="startTime">开始时间</label>
+			<input type="datetime-local" id="startTime"/>
+			
+		</div> -->
+
+		<div class="formItem">
+			<label for="duration">考试限时</label>
+			<input type="number" id="duration" />
+		</div>
+
+		
+
+		<div class="formItem">
+			<label> 题目</label>
+
+			<div id="optionWrapper">
+
+				
+
+				<div class="optionFuncWrapper">
+					<div class="funcBlock">
+						<div class="addBtnWrapper">
+							<button id="addBtn">添加题目</button>
+						</div>
+						<div class="addContentWrapper">
+							<div  contenteditable="true" id="content" ></div>
+							<button id="sureAdd">确定</button>
+							<button id="cancelAdd">取消</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="formItem">
+			<button id="finish">完成</button>
+		</div>
+	</div>
 </div>
 
 <!-- 主体 -->
 <div id="mainBody">
 	<div id="toolBar">
-		<div>新建试卷</div>
+		<div><a href="/addExam">新建试卷</a></div>
 	</div>
 
 	<hr/>
@@ -284,603 +701,18 @@
 <!-- one shijuan  -->
 		
 
-	<div class="test testHidden">
-			<div id="triggleBtn" class="showBtn">
-				显示全部
-			</div>
-			<div class = "testTitle">
-				<h1>
-					噼里啪啦摸仙语九级考试
-				</h1>
-			</div>
-		
-<!-- one question -->
-		<div class="quest" data-id="123">
-				
-			
-			<div class="title">
-				<span class="questId">
-					ID:12231
-				</span>
-				<span class="questType">
-					多选
-				</span>
-				<span class="questScore">
-					（2分）
-				</span>虚拟现实技术是一种运用计算机仿真系统创建多源信息融合的交互式三维动态实景以及动作仿真的技术，可以给使用者提供沉浸性、多感知性、交互性的互动体验，虚拟现实技术所构造的虚拟环境说明（   ） 
-			</div>
-			<div class="option">
-				<div class="optionItem">
-					<div></div>
-					<div>物质世界不再具有客观实在性 </div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>物质世界的存在形式具有多样性</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>信息是独立于物质和意识的第三种存在状态</div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>人们可以通过实践创造出自然界原本不存在的现实状态 
-
-					</div>
-				</div>
-			</div>
-
-
-			
-
-			<hr/>
-		</div>
-<!-- one question -->
-		<div class="quest" data-id="123">
-			
-			<div class="title">
-				<span class="questId">
-					ID:131
-				</span>
-				<span class="questType">
-					单选
-				</span>
-				<span class="questScore">
-					（2分）
-				</span>“二十四史”编著使用的体例是()。
-			</div>
-			<div class="option">
-				<div class="optionItem">
-					<div></div>
-					<div>记纂体</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>编年体</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>小说</div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>纪传体</div>
-				</div>
-			</div>
-
-
-		
-			
-
-			<hr/>
-		</div>
-
-		<!-- one question -->
-		<div class="quest" data-id="123">
-			
-				
-			
-			<div class="title">
-				<span class="questId">
-					ID:12231
-				</span>
-				<span class="questType">
-					多选
-				</span>
-				<span class="questScore">
-					（2分）
-				</span>虚拟现实技术是一种运用计算机仿真系统创建多源信息融合的交互式三维动态实景以及动作仿真的技术，可以给使用者提供沉浸性、多感知性、交互性的互动体验，虚拟现实技术所构造的虚拟环境说明（   ） 
-			</div>
-			<div class="option">
-				<div class="optionItem">
-					<div></div>
-					<div>物质世界不再具有客观实在性 </div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>物质世界的存在形式具有多样性</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>信息是独立于物质和意识的第三种存在状态</div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>人们可以通过实践创造出自然界原本不存在的现实状态 
-
-</div>
-				</div>
-			</div>
-
-
-			
-
-			<hr/>
-		</div>
-<!-- one question -->
-		<div class="quest" data-id="123">
-		
-			
-			<div class="title">
-				<span class="questId">
-					ID:131
-				</span>
-				<span class="questType">
-					单选
-				</span>
-				<span class="questScore">
-					（2分）
-				</span>“二十四史”编著使用的体例是()。
-			</div>
-			<div class="option">
-				<div class="optionItem">
-					<div></div>
-					<div>记纂体</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>编年体</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>小说</div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>纪传体</div>
-				</div>
-			</div>
-
-
-			
-			
-
-			<hr/>
-		</div>
-
-			<div class="questMsg">
-				<span>开始时间：2019-2-22&nbsp;10:20:33</span><span>
-					限时：50分钟
-				</span>
-				<span>
-					满分：20分
-				</span>
-				<span>出题人：李小小</span>
-				<span>试卷ID：1234</span>
-			</div>
-
-		
-		
-	</div>
-	<!-- a test over -->
-
-
-
-	<!-- one shijuan  -->
-		
-
-	<div class="test">
-			<div id="triggleBtn" class="hiddenBtn">
+	<!--  <div class="test testHidden">
+			<div  class="hiddenBtn">
 				收起
 			</div>
 			<div class = "testTitle">
 				<h1>
-					噼里啪啦摸仙语四级考试
-				</h1>
-			</div>
-		
-<!-- one question -->
-		<div class="quest" data-id="123">
-				
-			
-			<div class="title">
-				<span class="questId">
-					ID:12231
-				</span>
-				<span class="questType">
-					多选
-				</span>
-				<span class="questScore">
-					（2分）
-				</span>虚拟现实技术是一种运用计算机仿真系统创建多源信息融合的交互式三维动态实景以及动作仿真的技术，可以给使用者提供沉浸性、多感知性、交互性的互动体验，虚拟现实技术所构造的虚拟环境说明（   ） 
-			</div>
-			<div class="option">
-				<div class="optionItem">
-					<div></div>
-					<div>物质世界不再具有客观实在性 </div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>物质世界的存在形式具有多样性</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>信息是独立于物质和意识的第三种存在状态</div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>人们可以通过实践创造出自然界原本不存在的现实状态 
-
-					</div>
-				</div>
-			</div>
-
-
-			
-
-			<hr/>
-		</div>
-<!-- one question -->
-		<div class="quest" data-id="123">
-			
-			<div class="title">
-				<span class="questId">
-					ID:131
-				</span>
-				<span class="questType">
-					单选
-				</span>
-				<span class="questScore">
-					（2分）
-				</span>“二十四史”编著使用的体例是()。
-			</div>
-			<div class="option">
-				<div class="optionItem">
-					<div></div>
-					<div>记纂体</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>编年体</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>小说</div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>纪传体</div>
-				</div>
-			</div>
-
-
-		
-			
-
-			<hr/>
-		</div>
-
-		<!-- one question -->
-		<div class="quest" data-id="123">
-			
-				
-			
-			<div class="title">
-				<span class="questId">
-					ID:12231
-				</span>
-				<span class="questType">
-					多选
-				</span>
-				<span class="questScore">
-					（2分）
-				</span>虚拟现实技术是一种运用计算机仿真系统创建多源信息融合的交互式三维动态实景以及动作仿真的技术，可以给使用者提供沉浸性、多感知性、交互性的互动体验，虚拟现实技术所构造的虚拟环境说明（   ） 
-			</div>
-			<div class="option">
-				<div class="optionItem">
-					<div></div>
-					<div>物质世界不再具有客观实在性 </div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>物质世界的存在形式具有多样性</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>信息是独立于物质和意识的第三种存在状态</div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>人们可以通过实践创造出自然界原本不存在的现实状态 
-
-</div>
-				</div>
-			</div>
-
-
-			
-
-			<hr/>
-		</div>
-<!-- one question -->
-		<div class="quest" data-id="123">
-		
-			
-			<div class="title">
-				<span class="questId">
-					ID:131
-				</span>
-				<span class="questType">
-					单选
-				</span>
-				<span class="questScore">
-					（2分）
-				</span>“二十四史”编著使用的体例是()。
-			</div>
-			<div class="option">
-				<div class="optionItem">
-					<div></div>
-					<div>记纂体</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>编年体</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>小说</div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>纪传体</div>
-				</div>
-			</div>
-
-
-			
-			
-
-			<hr/>
-		</div>
-
-			<div class="questMsg">
-				<span>开始时间：2019-2-22&nbsp;10:20:33</span><span>
-					限时：50分钟
-				</span>
-				<span>
-					满分：20分
-				</span>
-				<span>出题人：李小小</span>
-				<span>试卷ID：1234</span>
-			</div>
-
-		
-		
-	</div>
-	<!-- a test over -->
-
-
-
-	<!-- one shijuan  -->
-		
-
-	<div class="test testHidden">
-			<div id="triggleBtn" class="showBtn">
-				显示全部
-			</div>
-			<div class = "testTitle">
-				<h1>
-					噼里啪啦摸仙语八级考试
-				</h1>
-			</div>
-		
-<!-- one question -->
-		<div class="quest" data-id="123">
-				
-			
-			<div class="title">
-				<span class="questId">
-					ID:12231
-				</span>
-				<span class="questType">
-					多选
-				</span>
-				<span class="questScore">
-					（2分）
-				</span>虚拟现实技术是一种运用计算机仿真系统创建多源信息融合的交互式三维动态实景以及动作仿真的技术，可以给使用者提供沉浸性、多感知性、交互性的互动体验，虚拟现实技术所构造的虚拟环境说明（   ） 
-			</div>
-			<div class="option">
-				<div class="optionItem">
-					<div></div>
-					<div>物质世界不再具有客观实在性 </div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>物质世界的存在形式具有多样性</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>信息是独立于物质和意识的第三种存在状态</div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>人们可以通过实践创造出自然界原本不存在的现实状态 
-
-					</div>
-				</div>
-			</div>
-
-
-			
-
-			<hr/>
-		</div>
-<!-- one question -->
-		<div class="quest" data-id="123">
-			
-			<div class="title">
-				<span class="questId">
-					ID:131
-				</span>
-				<span class="questType">
-					单选
-				</span>
-				<span class="questScore">
-					（2分）
-				</span>“二十四史”编著使用的体例是()。
-			</div>
-			<div class="option">
-				<div class="optionItem">
-					<div></div>
-					<div>记纂体</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>编年体</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>小说</div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>纪传体</div>
-				</div>
-			</div>
-
-
-		
-			
-
-			<hr/>
-		</div>
-
-		<!-- one question -->
-		<div class="quest" data-id="123">
-			
-				
-			
-			<div class="title">
-				<span class="questId">
-					ID:12231
-				</span>
-				<span class="questType">
-					多选
-				</span>
-				<span class="questScore">
-					（2分）
-				</span>虚拟现实技术是一种运用计算机仿真系统创建多源信息融合的交互式三维动态实景以及动作仿真的技术，可以给使用者提供沉浸性、多感知性、交互性的互动体验，虚拟现实技术所构造的虚拟环境说明（   ） 
-			</div>
-			<div class="option">
-				<div class="optionItem">
-					<div></div>
-					<div>物质世界不再具有客观实在性 </div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>物质世界的存在形式具有多样性</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>信息是独立于物质和意识的第三种存在状态</div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>人们可以通过实践创造出自然界原本不存在的现实状态 
-
-</div>
-				</div>
-			</div>
-
-
-			
-
-			<hr/>
-		</div>
-<!-- one question -->
-		<div class="quest" data-id="123">
-		
-			
-			<div class="title">
-				<span class="questId">
-					ID:131
-				</span>
-				<span class="questType">
-					单选
-				</span>
-				<span class="questScore">
-					（2分）
-				</span>“二十四史”编著使用的体例是()。
-			</div>
-			<div class="option">
-				<div class="optionItem">
-					<div></div>
-					<div>记纂体</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>编年体</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>小说</div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>纪传体</div>
-				</div>
-			</div>
-
-
-			
-			
-
-			<hr/>
-		</div>
-
-			<div class="questMsg">
-				<span>开始时间：2019-2-22&nbsp;10:20:33</span><span>
-					限时：50分钟
-				</span>
-				<span>
-					满分：20分
-				</span>
-				<span>出题人：李小小</span>
-				<span>试卷ID：1234</span>
-			</div>
-
-		
-		
-	</div>
-	<!-- a test over -->
-
-
-
-<!-- one shijuan  -->
-		
-
-	<div class="test testHidden">
-			<div id="triggleBtn" class="showBtn">
-				显示全部
-			</div>
-			<div class = "testTitle">
-				<h1>
 					噼里啪啦摸仙语九级考试
 				</h1>
 			</div>
-		
+		 -->
 <!-- one question -->
-		<div class="quest" data-id="123">
+		<!-- <div class="quest" data-id="123">
 				
 			
 			<div class="title">
@@ -919,9 +751,9 @@
 			
 
 			<hr/>
-		</div>
+		</div> -->
 <!-- one question -->
-		<div class="quest" data-id="123">
+		<!-- <div class="quest" data-id="123">
 			
 			<div class="title">
 				<span class="questId">
@@ -958,10 +790,10 @@
 			
 
 			<hr/>
-		</div>
+		</div> -->
 
 		<!-- one question -->
-		<div class="quest" data-id="123">
+		<!-- <div class="quest" data-id="123">
 			
 				
 			
@@ -1001,49 +833,10 @@
 			
 
 			<hr/>
-		</div>
-<!-- one question -->
-		<div class="quest" data-id="123">
-		
-			
-			<div class="title">
-				<span class="questId">
-					ID:131
-				</span>
-				<span class="questType">
-					单选
-				</span>
-				<span class="questScore">
-					（2分）
-				</span>“二十四史”编著使用的体例是()。
-			</div>
-			<div class="option">
-				<div class="optionItem">
-					<div></div>
-					<div>记纂体</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>编年体</div>
-				</div>
-				<div class="optionItem">
-					<div></div>
-					<div>小说</div>
-				</div>
-				<div class="optionItem">
-					<div class="checkRight"></div>
-					<div>纪传体</div>
-				</div>
-			</div>
+		</div> -->
 
 
-			
-			
-
-			<hr/>
-		</div>
-
-			<div class="questMsg">
+<!-- 			<div class="questMsg">
 				<span>开始时间：2019-2-22&nbsp;10:20:33</span><span>
 					限时：50分钟
 				</span>
@@ -1056,8 +849,12 @@
 
 		
 		
-	</div>
+	</div>  -->
 	<!-- a test over -->
+
+
+
+	
 	
 </div>
 <!-- showSpace over -->
@@ -1070,5 +867,718 @@
 	</div>
 </div>
 
+
+<script type="vertxShader" id="vert">
+	attribute vec2 a_position;
+
+	void main(){
+		gl_Position = vec4(a_position,0. , 1.);
+	}
+</script>
+<script type="fragmentShader" id="frag" src="./src/js/burn_in_hole.frag"></script>
+<script type="text/javascript" src="./src/js/cloth.js"></script>
+<script type="text/javascript" src = "./src/js/webGLutils.js"></script>
+<script type="text/javascript">
+;(function(){
+	let testData = {
+		count:55,
+		exams:[]
+	}
+	let q1 = {
+		id:123,
+		uppername:"例化",
+		type:"单选",
+		title : "“二十四史”编著使用的体例是()。",
+		score: 2,
+		options:[
+			{
+				content:"记纂体",
+				isAnswer:false,
+				order:1,
+			},
+			{
+				content:"编年体",
+				isAnswer:false,
+				order:2,
+			},
+			{
+				content:"小说",
+				isAnswer:false,
+				order:3,
+			},
+			{
+				content:"纪传体",
+				isAnswer:true,
+				order:4,
+			}
+		]
+	};
+	var t1 = {
+		id:1234,
+		examTitle:"摸仙煲方言专业八级考试",
+		upper : "游乐王子",
+		startTime: "2019-12-11 12:22",
+		duration : 40,
+		score:10,
+		questions:[q1,q1,q1,q1,q1,q1,q1,q1,q1,q1]
+	}
+
+
+	let logout = document.getElementById("logout");
+	document.getElementById("logTriggle").onclick = function(e){
+		if(logout.style.display==="none")logout.style.display="block";
+		else logout.style.display="none";
+	}
+	logout.onclick = function(){
+		let d = new Date();
+		document.cookie = "username=aa;expires="+d.toUTCString();
+		document.cookie = "token=qa;expires="+d.toUTCString();
+		window.location.reload();
+		
+	}
+
+
+	let tmp = window.location.hash.slice(1);
+	let pageIndex = parseInt(!tmp?1:parseInt(tmp));
+	const pageNum =10;
+	let total = 0;
+	let reqPage =1 ;
+
+
+	function createQuestDiv(questData){
+		function createDivByClass(classname){
+			let div = document.createElement("div");
+
+			div.classList.add(classname);
+			return div;
+		}
+
+		let optionItem = createDivByClass("optionItem");
+		optionItem.myId = questData.id;
+
+		let score = document.createElement("input");
+		score.type="text";
+		score.classList.add("score");
+		score.placeholder="分值";
+
+		score.value = questData.score;
+
+		optionItem.appendChild(score);
+
+
+		let questItem = createDivByClass("questItem");
+
+		let qTitle = createDivByClass("qTitle");
+		qTitle.innerText = questData.title;
+		questItem.appendChild(qTitle);
+
+		let qOption = createDivByClass("qOption");
+		for(let i=0;i<questData.options.length;i++){
+			let qOptionItem = createDivByClass("qOptionItem");
+			if(questData.options[i].isAnswer){
+				qOptionItem.innerHTML = "<div class='checkRight'></div><div>"+questData.options[i].content+"</div>";
+			}else{
+				qOptionItem.innerHTML = "<div></div><div>"+questData.options[i].content+"</div>";
+			}
+			qOption.appendChild(qOptionItem);
+		}//for
+
+		questItem.appendChild(qOption);
+
+		optionItem.appendChild(questItem);
+
+		let closeBox = createDivByClass("closeBox");
+		optionItem.appendChild(closeBox);
+
+
+		closeBox.onclick = function(e){
+			optionWrapper.removeChild(e.target.parentNode) ;
+		};
+
+
+		optionItem.onmouseenter = function(e){
+			let clo = e.target.getElementsByClassName("closeBox")[0];
+
+			// console.log(clo);
+			clo.classList.add("close");
+		}
+
+		optionItem.onmouseleave = function(e){
+			let clo = e.target.getElementsByClassName("closeBox")[0];
+			clo.classList.remove("close");
+		}
+		return optionItem;
+	}
+
+
+	/*
+	*ajax封装函数,请求并渲染页面
+	*url：请求的url
+	*method: 请求方式
+	*data : 请求数据
+	*/
+	function XHRrequester(url , method , data){
+		let ajax = new XMLHttpRequest();
+
+		ajax.onreadystatechange = function(e){
+			let target  = e.target;
+
+			if(target.readyState == 4 && target.status==200){
+				let msg = target.responseText;
+				console.log("responsemsg",msg);
+				msg = JSON.parse(msg);
+
+				pageIndex = reqPage;
+				total = msg.count;
+
+				let showSpace = document.getElementById("showSpace");
+				showSpace.innerHTML = "";
+
+				for(let i=0;i<msg.exams.length;i++){
+					showSpace.appendChild(createExamDom(msg.exams[i]));
+
+				}
+				createPageDom(pageIndex , Math.ceil(total / pageNum));
+
+			}//success
+			else if(target.readyState == 4 && target.status!=200){
+				alert("error",target.status);
+			}//fail
+		}//onreadystatechange
+
+		if(method=="GET"){
+			let queryStr = "";
+			for(i in data){
+				queryStr += i + "=" + data[i].toString() + "&";
+			}
+
+			queryStr = queryStr.slice(0,-1);
+
+			url += "?"+queryStr;
+		}
+
+		ajax.open(method , url);
+		console.log("requestMsg" , data);
+		if(method=="GET")ajax.send(null);
+		if(method=="POST")ajax.send(JSON.stringify(data));
+	}
+
+	/*
+	*ajax封装函数,请求并渲染页面
+	*url：请求的url
+	*method: 请求方式
+	*data : 请求数据
+	*callback: success 回调
+	*/
+	function XHRrequester2(url , method , data , callback){
+		let ajax = new XMLHttpRequest();
+
+		ajax.onreadystatechange = function(e){
+			let target  = e.target;
+
+			if(target.readyState == 4 && target.status==200){
+				callback(e);
+
+			}//success
+			else if(target.readyState == 4 && target.status!=200){
+				alert("error",target.status);
+			}//fail
+		}//onreadystatechange
+
+		if(method=="GET"){
+			let queryStr = "";
+			for(i in data){
+				queryStr += i + "=" + data[i].toString() + "&";
+			}
+
+			queryStr = queryStr.slice(0,-1);
+
+			url += "?"+queryStr;
+		}
+
+		ajax.open(method , url);
+		console.log("requestMsg" , data);
+		if(method=="GET")ajax.send(null);
+		if(method=="POST")ajax.send(JSON.stringify(data));
+	}
+
+
+
+
+	/*
+	*创建试卷展示部分的DOM，并注册点击事件
+	*examData: json格式的exam数据
+	*/
+	function createExamDom(examData){
+		function createDivByClass(className){
+			let div = document.createElement("div");
+
+			div.classList.add(className);
+			return div;
+		}
+
+
+		function createQuestDom(questData){
+			let quest = createDivByClass("quest");
+
+			/*
+			*title
+			*/
+			let title = createDivByClass("title");
+			title.innerHTML = "<span class='questId'>ID:"+ questData.id +"</span><span class='questType'>"+ questData.type +"</span><span class='questScore'>（"+ questData.score + "分）</span>"+questData.title;
+			quest.appendChild(title);
+
+			/*
+			*optiion
+			*/
+			let option = createDivByClass("option");
+			for(let i=0;i<questData.options.length ; i++){
+				let optionItem = createDivByClass("optionItem");
+				optionItem.innerHTML = "<div></div><div>"+ questData.options[i].content +"</div>";
+
+				if(questData.options[i].isAnswer){
+					optionItem.getElementsByTagName("div")[0].classList.add("checkRight");
+				}
+				option.appendChild(optionItem);
+
+			}//for
+			quest.appendChild(option);
+
+			/*
+			*hr
+			*/
+			quest.appendChild(document.createElement("hr"));
+
+			return quest;
+
+		}
+
+
+		function addClassTriggle(e){
+			let parent = e.target.parentNode;
+
+			parent.classList.forEach(function(data,index,arr){
+				if(data === "testHidden"){
+					arr.remove(data);
+					arr.add("testShow");//no such a class
+				}
+				else if(data === "testShow"){
+					arr.remove(data);
+					arr.add("testHidden");
+				}
+			});//forEach
+
+			e.target.classList.forEach(function(data ,  index , arr){
+				if(data === "showBtn"){
+					arr.remove(data);
+					arr.add("hiddenBtn");
+					e.target.innerHTML = "收起";
+				}
+				else if(data === "hiddenBtn") {
+					arr.remove(data);
+					arr.add("showBtn");
+					e.target.innerHTML = "显示全部";
+				}
+			});//forEach
+		}
+
+
+		let test = createDivByClass("test");
+		test.classList.add("testHidden");
+
+		test.onmouseenter = function(e){
+			e.target.getElementsByClassName("hove")[0].style.display = "block";
+		};
+		test.onmouseleave = function(e){
+			e.target.getElementsByClassName("hove")[0].style.display = "none";
+		}
+		let hove = createDivByClass("hove");
+		hove.innerHTML = "<span>更新</span><span>删除</span>";
+		test.appendChild(hove);
+		hove.style.display = "none";
+
+		let span = hove.getElementsByTagName("span");
+		Array.prototype.forEach.call(span,function(item){
+
+			item.onclick = function(e){
+	
+				let id = e.target.parentNode.parentNode.getElementsByClassName("questMsg")[0].getElementsByTagName("span")[3].innerText.slice(5);
+
+				if(e.target.innerText==="更新"){
+					console.log("更新");
+					// window.location.href =  "/updateExam#"+id;
+					document.getElementById("updateExam").style.display = "block";
+
+					XHRrequester2("/api/search/exam" ,"GET",{
+						token:/token=([^;]+)[;]{0,1}/.exec(document.cookie)[1],
+						username : /username=([^;]+)[;]{0,1}/.exec(document.cookie)[1],
+						id:id
+					},function(e){
+						let msg = JSON.parse(e.target.responseText);
+						console.log(msg);
+						document.getElementById("updateExam").myId = msg.id;
+						document.getElementById("title").innerText = msg.examTitle;
+
+						document.getElementById("duration").value = msg.duration;
+						// document.getElementById("startTime").value = msg.startTime;
+
+						let optionWrapper = document.getElementById("optionWrapper");
+						let optionFuncWrapper = document.getElementsByClassName("optionFuncWrapper")[0];
+						for(let i=0;i<msg.questions.length;i++){
+							let div = createQuestDiv(msg.questions[i]);
+							optionWrapper.insertBefore(div,optionFuncWrapper);
+
+
+						}//for
+					});
+
+
+				}
+				else{//删除
+					console.log("删除");
+
+					//闭包
+					function wrap(node){
+						return function(e){
+							alert("删除成功");
+							document.getElementById("showSpace").removeChild(node);
+						}
+					}
+					XHRrequester2("/api/delete/exam","GET",{
+						token: /token=([^;]+);/.exec(document.cookie)[1],
+						username: /username=([^;]+);/.exec(document.cookie)[1],
+						id:id
+					},wrap(e.target.parentNode.parentNode));
+				}
+			}
+		});//forEach
+
+		/*
+		*triggle
+		*/
+		let showTriggle = createDivByClass("showBtn");
+		showTriggle.innerHTML = "显示全部";
+		test.appendChild(showTriggle);
+
+		//add click event listetner
+		showTriggle.addEventListener("click" , addClassTriggle , false);
+
+		/*
+		*title
+		*/
+		let testTitle = createDivByClass("testTitle");
+		testTitle.innerHTML = "<h1>"+ examData.examTitle +"</h1>";
+		test.appendChild(testTitle);
+
+		/*
+		*questions
+		*/
+		for(let i=0;i<examData.questions.length;i++){
+			let quest = createQuestDom(examData.questions[i]);
+
+			test.appendChild(quest);
+		}
+
+		/*
+		*exam message
+		*/
+		let examMsg = createDivByClass("questMsg");
+		examMsg.innerHTML = 
+			//"<span>开始时间："+  examData.startTime+
+			"</span><span>限时："+ examData.duration
+			+"分钟</span><span>满分："+examData.score
+			+"</span><span>出题人："+examData.upper
+			+"</span><span>试卷ID："+examData.id
+			+"</span>";
+
+		test.appendChild(examMsg);
+
+		return test;
+
+	}
+
+
+	/*
+	*创建页码导航并注册事件
+	*pageIndex:本页页码
+	*totalPage:总页码
+	*/
+	function createPageDom(pageIndex , totalPage){
+		let pageWrapper = document.getElementsByClassName("pageNavigative")[0];
+		pageWrapper.innerHTML = "";
+
+		let innerString = "";
+		if(pageIndex !==1 )innerString += "<span>上一页</span>";
+		
+		if(pageIndex >3)innerString += "<span>1</span>";
+
+		if(pageIndex >4)innerString += "...";
+		for(let i=((pageIndex-2)<1?1:(pageIndex-2));i<=((pageIndex+2)>totalPage?totalPage:(pageIndex+2));i++){
+			if(i== pageIndex )innerString += "<span class=\"active\">"+i+"</span>";
+			else innerString += "<span>"+i+"</span>";
+		}
+		if(totalPage-pageIndex-2 > 1)innerString += "...";
+		if(totalPage - pageIndex -2 >0)innerString += "<span>"+totalPage+"</span>";
+		if(pageIndex !== totalPage)innerString += "<span>下一页</span>";
+
+		pageWrapper.innerHTML = innerString;
+
+		let children = pageWrapper.getElementsByTagName("span");
+
+		Array.prototype.forEach.call(children , function(item){
+			item.onclick = function(e){
+				let str = e.target.innerHTML;
+				reqPage = pageIndex;
+				if(str === "下一页"){
+					reqPage += 1;
+				}else if(str === "上一页"){
+					reqPage -= 1;
+				}else{
+					reqPage = parseInt(str);
+				}
+
+				window.location.hash = reqPage;
+
+				XHRrequester("/api/search/examList" , "GET" , {
+					token: /token=([^;]+);/.exec(document.cookie)[1],
+					username: /username=([^;]+);/.exec(document.cookie)[1],
+					pn:reqPage,
+					ps:pageNum,
+					order:"desc"
+				});//XHR
+			};//onclick
+		});
+	}//createPageDom
+
+	let isLogin = /token=([^;]+)[;]{0,1}/.exec(document.cookie) && /username=([^;]+)[;]{0,1}/.exec(document.cookie);
+
+
+	if(!isLogin){
+		alert("请先登录！");
+		window.location.href="/login";
+	}
+	let userSpan = document.getElementById("usernameSpan");
+	userSpan.innerText = /username=([^;]+)[;]{0,1}/.exec(document.cookie)[1];
+
+	XHRrequester("/api/search/examList" , "GET" , {
+					token: /token=([^;]+);/.exec(document.cookie)[1],
+					username: /username=([^;]+);/.exec(document.cookie)[1],
+					pn:pageIndex,
+					ps:pageNum,
+					order:"desc"
+				});//XHR
+
+
+})();
+</script>
+
+<script type="text/javascript">
+(function(){
+	var addBtn = document.getElementById("addBtn");
+	var moveWrapper = document.getElementsByClassName("funcBlock")[0];
+	var cancelAdd = document.getElementById("cancelAdd");
+
+	let optionList = document.getElementsByClassName("optionItem");
+	addBtn.onclick =  function(){
+		moveWrapper.classList.add("move");
+	};
+
+	cancelAdd.onclick = function(){
+		moveWrapper.classList.remove("move");
+	}
+
+
+
+
+	let sureAdd = document.getElementById("sureAdd");
+	let finishBtn = document.getElementById("finish");
+	let examTitle = document.getElementById("title");
+	let startTime = document.getElementById("startTime");
+	let duration = document.getElementById("duration");
+	let questId = document.getElementById("content");
+
+	let optionWrapper = document.getElementById("optionWrapper");
+	let optionFuncWrapper = document.getElementsByClassName("optionFuncWrapper")[0];
+
+
+
+
+	/*
+	*ajax封装函数,请求并渲染页面
+	*url：请求的url
+	*method: 请求方式
+	*data : 请求数据
+	*callback: success 回调
+	*/
+	function XHRrequester(url , method , data , callback){
+		let ajax = new XMLHttpRequest();
+
+		ajax.onreadystatechange = function(e){
+			let target  = e.target;
+
+			if(target.readyState == 4 && target.status==200){
+				callback(e);
+
+			}//success
+			else if(target.readyState == 4 && target.status!=200){
+				alert("error",target.status);
+				document.getElementById("updateExam").style.display = "none";
+
+			}//fail
+		}//onreadystatechange
+
+		if(method=="GET"){
+			let queryStr = "";
+			for(i in data){
+				queryStr += i + "=" + data[i].toString() + "&";
+			}
+
+			queryStr = queryStr.slice(0,-1);
+
+			url += "?"+queryStr;
+		}
+
+		ajax.open(method , url);
+		console.log("requestMsg" , data);
+		if(method=="GET")ajax.send(null);
+		if(method=="POST")ajax.send(JSON.stringify(data));
+	}
+
+
+	function createQuestDiv(questData){
+		function createDivByClass(classname){
+			let div = document.createElement("div");
+
+			div.classList.add(classname);
+			return div;
+		}
+
+		let optionItem = createDivByClass("optionItem");
+		optionItem.myId = questData.id;
+
+		let score = document.createElement("input");
+		score.type="text";
+		score.classList.add("score");
+		score.placeholder="分值";
+
+		optionItem.appendChild(score);
+
+
+		let questItem = createDivByClass("questItem");
+
+		let qTitle = createDivByClass("qTitle");
+		qTitle.innerText = questData.title;
+		questItem.appendChild(qTitle);
+
+		let qOption = createDivByClass("qOption");
+		for(let i=0;i<questData.options.length;i++){
+			let qOptionItem = createDivByClass("qOptionItem");
+			if(questData.options[i].isAnswer){
+				qOptionItem.innerHTML = "<div class='checkRight'></div><div>"+questData.options[i].content+"</div>";
+			}else{
+				qOptionItem.innerHTML = "<div></div><div>"+questData.options[i].content+"</div>";
+			}
+			qOption.appendChild(qOptionItem);
+		}//for
+
+		questItem.appendChild(qOption);
+
+		optionItem.appendChild(questItem);
+
+		let closeBox = createDivByClass("closeBox");
+		optionItem.appendChild(closeBox);
+
+
+		closeBox.onclick = function(e){
+			optionWrapper.removeChild(e.target.parentNode) ;
+		};
+
+
+		optionItem.onmouseenter = function(e){
+			let clo = e.target.getElementsByClassName("closeBox")[0];
+
+			// console.log(clo);
+			clo.classList.add("close");
+		}
+
+		optionItem.onmouseleave = function(e){
+			let clo = e.target.getElementsByClassName("closeBox")[0];
+			clo.classList.remove("close");
+		}
+		return optionItem;
+	}
+
+	sureAdd.onclick =  function(){
+		if(/^\D*$/.test(questId.innerText)){
+			alert("题目ID需为数字");
+			return;
+		}
+
+		XHRrequester("/api/search/quest" , "GET" , {
+			token:/token=([^;]+)[;]{0,1}/.exec(document.cookie)[1],
+			username : /username=([^;]+)[;]{0,1}/.exec(document.cookie)[1],
+			id:parseInt(questId.innerText)
+		},function(e){
+			let questData = e.target.responseText;
+			questData = JSON.parse(questData);
+			console.log("responseText",questData);
+
+			optionWrapper.insertBefore(createQuestDiv(questData) , optionFuncWrapper);
+
+			questId.innerText = "";
+		});//XHR
+	};
+
+	finishBtn.onclick = function(){
+		if(!confirm("确定提交吗？")){
+			document.getElementById("updateExam").style.display = "none";
+			return;
+		}
+		let title = examTitle.innerText;
+		// let st = startTime.value;
+		let du = duration.value;
+		let questList = [];
+
+		let oiList = document.getElementById("updateExam").getElementsByClassName("optionItem");
+		for(let i=0;i<oiList.length;i++){
+			let qi = {};
+			qi.id =  oiList[i].myId;
+			qi.order = i+1;
+
+			let score = oiList[i].getElementsByClassName("score")[0].value;
+			if(!score){
+				alert("分值不能为空");
+				return;
+			}
+			qi.score = score;
+			questList.push(qi);
+		}//for
+
+		if(!title  || !du || questList.length<1){
+			alert("试卷格式不合规定");
+			return;
+		}
+
+		XHRrequester("/api/update/exam" , "POST" , {
+			token:/token=([^;]+)[;]{0,1}/.exec(document.cookie)[1],
+			username : /username=([^;]+)[;]{0,1}/.exec(document.cookie)[1],
+			title:title,
+			id:document.getElementById("updateExam").myId,
+			// startTime:st,
+			duration:du,
+			questions:questList
+		} , function(e){
+			alert("提交成功");
+			for(let i=optionWrapper.getElementsByClassName("optionItem").length-1;i>=0;i--){
+				optionWrapper.removeChild(optionWrapper.getElementsByClassName("optionItem")[i]);
+			}//for
+
+			examTitle.innerText = "";
+			document.getElementById("updateExam").style.display = "none";
+
+		});//xhr
+	}
+})();
+</script>
 </body>
 </html>

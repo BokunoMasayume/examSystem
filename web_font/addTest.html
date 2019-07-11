@@ -81,6 +81,18 @@
 			border-top:10px solid #fff;
 			
 		}
+		#navigation>div:first-child a{
+			text-decoration: none;
+			color:#fff;
+		}
+		#navigation>div:not(:first-child) a{
+			text-decoration: none;
+			color:#777;
+		}
+		#navigation>div:not(:first-child) a:hover{
+			
+			color:#fff;
+		}
 
 		#mainBody{
 			box-shadow: 0 0 5px 0 #acacac; 
@@ -153,19 +165,21 @@
 			top:12px;
 			right:30px;
 
-			/*width:10px;*/
+			width:10px;
 			height:15px;
 
 			border-left: solid 2px #3485FD; 
 			transform:rotate(45deg);
+
+			cursor:pointer;
 		}
 		.close::after{
 			content: "";
 			position: absolute;
-			top:0px;
-			right:0px;
+			top:5px;
+			right:5px;
 
-			/*width:10px;*/
+			width:10px;
 			height:15px;
 
 			border-left: solid 2px #3485FD; 
@@ -362,29 +376,47 @@
 			height: 12px;
 			margin: 0px 10px;
 		}
+		#logout{
+			position: fixed;
+			top:60px;
+			right:10px;
+			z-index: 109;
+			padding:15px 2px;
 
+			background-color: #fff;
+
+			display: none;
+		}
+		#logout span{
+			padding:0 12px;
+		}
+		#logout span:hover{
+			padding :0 12px;
+			background-color: #ccc;
+		}
 
 	</style>
 </head>
 <body>
 <!-- 导航条 -->
-
+<div id="logout"><span>登出</span></div>
+s
 <div id="navigation">
 	<div >
-	<span>考试管理系统</span>
+	<span><a href="/">考试管理系统</a></span>
 		
 	</div>
 
 
-	<div>
-		<span>用户名</span>
-		<div></div>
+	<div >
+		<span id="usernameSpan">用户名</span>
+		<div id="logTriggle"></div>
 	</div>
 
 	<div>
-		<span>题库</span>
-		<span>试卷</span>
-		<span>成绩</span>
+		<span><a href="/questions">题库</a></span>
+		<span><a href="/exams">试卷</a></span>
+		<span><a href="/scores">成绩</a></span>
 	</div>
 	
 </div>
@@ -399,11 +431,11 @@
 		</div>
 	</div>
 
-	<div class="formItem">
+	<!-- <div class="formItem">
 		<label for="startTime">开始时间</label>
 		<input type="datetime-local" id="startTime"/>
 		
-	</div>
+	</div> -->
 
 	<div class="formItem">
 		<label for="duration">考试限时</label>
@@ -417,7 +449,7 @@
 
 		<div id="optionWrapper">
 
-			<div class="optionItem">
+			<!-- <div class="optionItem">
 
 				<input type="text" class="score" placeholder="分值"/>
 
@@ -477,7 +509,7 @@
 				</div>
 				<div class="closeBox "></div>
 
-			</div>
+			</div> -->
 
 
 
@@ -508,6 +540,32 @@
 
 
 <script type="text/javascript">
+
+	let isLogin = /token=([^;]+)[;]{0,1}/.exec(document.cookie) && /username=([^;]+)[;]{0,1}/.exec(document.cookie);
+
+
+	if(!isLogin){
+		alert("请先登录！");
+		window.location.href="/login";
+	}
+
+	let userSpan = document.getElementById("usernameSpan");
+	userSpan.innerText = /username=([^;]+)[;]{0,1}/.exec(document.cookie)[1];
+
+
+	let logout = document.getElementById("logout");
+	document.getElementById("logTriggle").onclick = function(e){
+		if(logout.style.display==="none")logout.style.display="block";
+		else logout.style.display="none";
+	}
+	logout.onclick = function(){
+		let d = new Date();
+		document.cookie = "username=aa;expires="+d.toUTCString();
+		document.cookie = "token=qa;expires="+d.toUTCString();
+		window.location.reload();
+		
+	}
+
 	var addBtn = document.getElementById("addBtn");
 	var moveWrapper = document.getElementsByClassName("funcBlock")[0];
 	var cancelAdd = document.getElementById("cancelAdd");
@@ -521,19 +579,203 @@
 		moveWrapper.classList.remove("move");
 	}
 
-	Array.prototype.forEach.call(optionList , function(ele){
-		ele.onmouseenter = function(e){
+	// Array.prototype.forEach.call(optionList , function(ele){
+	// 	ele.onmouseenter = function(e){
+	// 		let clo = e.target.getElementsByClassName("closeBox")[0];
+
+	// 		// console.log(clo);
+	// 		clo.classList.add("close");
+	// 	}
+
+	// 	ele.onmouseleave = function(e){
+	// 		let clo = e.target.getElementsByClassName("closeBox")[0];
+	// 		clo.classList.remove("close");
+	// 	}
+	// });
+
+
+
+	let sureAdd = document.getElementById("sureAdd");
+	let finishBtn = document.getElementById("finish");
+	let examTitle = document.getElementById("title");
+	let startTime = document.getElementById("startTime");
+	let duration = document.getElementById("duration");
+	let questId = document.getElementById("content");
+
+	let optionWrapper = document.getElementById("optionWrapper");
+	let optionFuncWrapper = document.getElementsByClassName("optionFuncWrapper")[0];
+
+
+
+
+	/*
+	*ajax封装函数,请求并渲染页面
+	*url：请求的url
+	*method: 请求方式
+	*data : 请求数据
+	*callback: success 回调
+	*/
+	function XHRrequester(url , method , data , callback){
+		let ajax = new XMLHttpRequest();
+
+		ajax.onreadystatechange = function(e){
+			let target  = e.target;
+
+			if(target.readyState == 4 && target.status==200){
+				callback(e);
+
+			}//success
+			else if(target.readyState == 4 && target.status!=200){
+				alert("error",target.status);
+			}//fail
+		}//onreadystatechange
+
+		if(method=="GET"){
+			let queryStr = "";
+			for(i in data){
+				queryStr += i + "=" + data[i].toString() + "&";
+			}
+
+			queryStr = queryStr.slice(0,-1);
+
+			url += "?"+queryStr;
+		}
+
+		ajax.open(method , url);
+		console.log("requestMsg" , data);
+		if(method=="GET")ajax.send(null);
+		if(method=="POST")ajax.send(JSON.stringify(data));
+	}
+
+
+	function createQuestDiv(questData){
+		function createDivByClass(classname){
+			let div = document.createElement("div");
+
+			div.classList.add(classname);
+			return div;
+		}
+
+		let optionItem = createDivByClass("optionItem");
+		optionItem.myId = questData.id;
+
+		let score = document.createElement("input");
+		score.type="text";
+		score.classList.add("score");
+		score.placeholder="分值";
+
+		optionItem.appendChild(score);
+
+
+		let questItem = createDivByClass("questItem");
+
+		let qTitle = createDivByClass("qTitle");
+		qTitle.innerText = questData.title;
+		questItem.appendChild(qTitle);
+
+		let qOption = createDivByClass("qOption");
+		for(let i=0;i<questData.options.length;i++){
+			let qOptionItem = createDivByClass("qOptionItem");
+			if(questData.options[i].isAnswer){
+				qOptionItem.innerHTML = "<div class='checkRight'></div><div>"+questData.options[i].content+"</div>";
+			}else{
+				qOptionItem.innerHTML = "<div></div><div>"+questData.options[i].content+"</div>";
+			}
+			qOption.appendChild(qOptionItem);
+		}//for
+
+		questItem.appendChild(qOption);
+
+		optionItem.appendChild(questItem);
+
+		let closeBox = createDivByClass("closeBox");
+		optionItem.appendChild(closeBox);
+
+
+		closeBox.onclick = function(e){
+			optionWrapper.removeChild(e.target.parentNode) ;
+		};
+
+
+		optionItem.onmouseenter = function(e){
 			let clo = e.target.getElementsByClassName("closeBox")[0];
 
 			// console.log(clo);
 			clo.classList.add("close");
 		}
 
-		ele.onmouseleave = function(e){
+		optionItem.onmouseleave = function(e){
 			let clo = e.target.getElementsByClassName("closeBox")[0];
 			clo.classList.remove("close");
 		}
-	});
+		return optionItem;
+	}
+
+	sureAdd.onclick =  function(){
+		if(/^\D*$/.test(questId.innerText)){
+			alert("题目ID需为数字");
+			return;
+		}
+
+		XHRrequester("/api/search/quest" , "GET" , {
+			token:/token=([^;]+)[;]{0,1}/.exec(document.cookie)[1],
+			username : /username=([^;]+)[;]{0,1}/.exec(document.cookie)[1],
+			id:parseInt(questId.innerText)
+		},function(e){
+			let questData = e.target.responseText;
+			questData = JSON.parse(questData);
+			console.log("responseText",questData);
+
+			optionWrapper.insertBefore(createQuestDiv(questData) , optionFuncWrapper);
+
+			questId.innerText = "";
+		});//XHR
+	};
+
+	finishBtn.onclick = function(){
+		if(!confirm("确定提交吗？"))return;
+		let title = examTitle.innerText;
+		// let st = startTime.value;
+		let du = duration.value;
+		let questList = [];
+
+		let oiList = document.getElementsByClassName("optionItem");
+		for(let i=0;i<oiList.length;i++){
+			let qi = {};
+			qi.id =  oiList[i].myId;
+			qi.order = i+1;
+
+			let score = oiList[i].getElementsByClassName("score")[0].value;
+			if(!score){
+				alert("分值不能为空");
+				return;
+			}
+			qi.score = score;
+			questList.push(qi);
+		}//for
+
+		if(!title || !du || questList.length<1){
+			alert("试卷格式不合规定");
+			return;
+		}
+
+		XHRrequester("/api/insert/exam" , "POST" , {
+			token:/token=([^;]+)[;]{0,1}/.exec(document.cookie)[1],
+			username : /username=([^;]+)[;]{0,1}/.exec(document.cookie)[1],
+			title:title,
+			// startTime:st,
+			duration:du,
+			questions:questList
+		} , function(e){
+			alert("提交成功");
+			for(let i=document.getElementsByClassName("optionItem").length-1;i>=0;i--){
+				optionWrapper.removeChild(document.getElementsByClassName("optionItem")[i]);
+			}//for
+
+			examTitle.innerText = "";
+		});//xhr
+	}
+
 </script>
 </body>
 </html>
