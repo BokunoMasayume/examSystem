@@ -251,6 +251,6 @@ function getPostQuery(req){
 		return post
 	});
 }
-server.listen(8889);
+server.listen(8999);
 
-console.log("listening port 8888");
+console.log("listening port 8999");

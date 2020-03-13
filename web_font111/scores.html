@@ -402,8 +402,8 @@
 				window.location.hash = reqPage;
 
 				XHRrequester("/api/search/score" , "GET" , {
-					token: /token=([^;]+)/.exec(document.cookie)[1],
-					username: /username=([^;]+)/.exec(document.cookie)[1],
+					token: /token=([^;]+);/.exec(document.cookie)[1],
+					username: /username=([^;]+);/.exec(document.cookie)[1],
 					pn:reqPage,
 					ps:pageNum,
 					order:"desc",
@@ -465,8 +465,8 @@
 	submit.onclick = function(){
 		reqPage = 1;
 		XHRrequester("/api/search/score" , "GET" , {
-					token: /token=([^;]+)/.exec(document.cookie)[1],
-					username: /username=([^;]+)/.exec(document.cookie)[1],
+					token: /token=([^;]+);/.exec(document.cookie)[1],
+					username: /username=([^;]+);/.exec(document.cookie)[1],
 					pn:reqPage,
 					ps:pageNum,
 					order:"desc",

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>考试管理系统</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		html,body{
+			padding: 0;
+			margin: 0;
+			height:100%;
+
+		}
+		body{
+			background:  url(./src/bg3.jpg);
+			background-size: cover ;
+			/*background-attachment: fixed;*/
+			/*background-repeat: round;*/
+		}
+		#navigation{
+			/*width:100%;*/
+			/*background-color: #010131;*/
+			background-color: #000;
+			color:#fff;
+			padding: 10px 10px;
+			overflow: hidden;
+			box-shadow: 0 0 20px 4px #000;
+		}
+		#navigation>div:first-child{
+			float:left;
+			font-weight: 1000;
+			font-size: x-large;
+			letter-spacing: 5px;
+		}
+		#navigation>div:last-child{
+			margin:0 50px;
+		}
+		#navigation>div:first-child + div , #navigation>div:last-child{
+			float:right;
+		}
+		#navigation>div:last-child>span{
+			color:#777;
+		}
+		#navigation>div:last-child>span:hover{
+			color: #fff;
+		}
+		#navigation span{
+			padding:0 10px;
+			cursor:pointer;
+		}
+		#navigation>div:first-child + div > div{
+			float:right;
+			margin-top:5px;
+			border-left:7px solid  transparent;
+			border-right:7px solid  transparent;
+			border-top:10px solid #777;
+			width:0;
+			height: 0;
+		}
+		#navigation>div:first-child + div > div:hover{
+			
+			border-top:10px solid #fff;
+			
+		}
+
+		#navigation>div:first-child a{
+			text-decoration: none;
+			color:#fff;
+		}
+		#navigation>div:not(:first-child) a{
+			text-decoration: none;
+			color:#777;
+		}
+		#navigation>div:not(:first-child) a:hover{
+			
+			color:#fff;
+		}
+		
+		#navigation>div:first-child a{
+			text-decoration: none;
+			color:#fff;
+		}
+		#navigation>div:not(:first-child) a{
+			text-decoration: none;
+			color:#777;
+		}
+		#navigation>div:not(:first-child) a:hover{
+			
+			color:#fff;
+		}
+		
+		#mainBody{
+			/*position: relative;*/
+			/*overflow: hidden;*/
+			/*height:80%;*/
+		}
+		#mainBody>div:first-child{
+			position:absolute;
+			left:22%;
+			top:32%;
+			width:20%;
+			height:20%;
+
+
+
+		}
+		#mainBody>div:last-child{
+			position:absolute;
+			right:22%;
+			top:32%;
+			width:20%;
+			height:20%;
+
+		}
+		#mainBody>div{
+			cursor: pointer;
+			letter-spacing: 8px;
+			text-align: center;
+			font-weight: bolder;
+			font-size: xx-large;
+
+			display:table;
+
+			/*color:#777;
+			border: solid 4px rgba(119,119,119,.7);*/
+			color:#000;
+			border: solid 4px rgba(0,0,0,.7);
+
+			background-clip: padding-box;
+			/*padding 的外面*/
+
+			/*border: solid 4px #777;*/
+			/*border: solid 4px #3485FD;*/
+
+			/*border-radius: 10%;*/
+		}
+		#mainBody>div:hover{
+			background-color:rgba(0,0,0,.7);
+			/*opacity: .7;*/
+			color:#fff;
+			/*box-shadow: 0 0 15px 10px  #3485FD inset;*/
+		}
+		#mainBody>div>div{
+			display: table-cell;
+			vertical-align: middle;
+		}
+		#logout{
+			position: fixed;
+			top:60px;
+			right:10px;
+			z-index: 109;
+			padding:15px 2px;
+
+			background-color: #fff;
+
+			display: none;
+		}
+		#logout span{
+			padding:0 12px;
+		}
+		#logout span:hover{
+			padding :0 12px;
+			background-color: #ccc;
+		}
+	</style>
+</head>
+<body>
+<!-- 导航条 -->
+<div id="logout"><span>登出</span></div>
+
+<div id="navigation">
+	<div >
+	<span><a href="/">考试管理系统</a></span>
+		
+	</div>
+
+
+	<div >
+		<span id="usernameSpan">用户名</span>
+		<div id="logTriggle"></div>
+	</div>
+
+	<div>
+		<span><a href="/questions">题库</a></span>
+		<span><a href="/exams">试卷</a></span>
+		<span><a href="scores">成绩</a></span>
+	</div>
+	
+</div>
+
+<!-- 主体 -->
+<div id="mainBody">
+	<div>
+		<div id="addQuest">
+			添加试题
+		</div>
+	</div>
+
+	<div>
+		<div id="addExam">
+			添加试卷
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	
+	let isLogin = /token=([^;]+)[;]{0,1}/.exec(document.cookie) && /username=([^;]+)[;]{0,1}/.exec(document.cookie);
+
+
+	if(!isLogin){
+		alert("请先登录！");
+		window.location.href="/login";
+	}
+
+	let logout = document.getElementById("logout");
+	document.getElementById("logTriggle").onclick = function(e){
+		if(logout.style.display==="none")logout.style.display="block";
+		else logout.style.display="none";
+	}
+	logout.onclick = function(){
+		let d = new Date();
+		document.cookie = "username=aa;expires="+d.toUTCString();
+		document.cookie = "token=qa;expires="+d.toUTCString();
+		window.location.reload();
+		
+	}
+
+
+
+	document.getElementById("usernameSpan").innerHTML = /username=([^;]+)[;]{0,1}/.exec(document.cookie)[1]; 
+
+	document.getElementById("addQuest").onclick = function(){
+		window.location.href="/addQuest";
+	}
+	document.getElementById("addExam").onclick = function(){
+		window.location.href="/addExam";
+	}
+
+</script>
+</body>
+</html>

@@ -15,7 +15,13 @@
 			/*background: round url(./src/bg3.jpg);*/
 			background-color: #d7d7d7;
 		}
-		
+		#loading{
+			position: fixed;
+			top:0px;
+			left:0;
+			z-index: 98;
+			/*pointer-events: none;*/
+		}
 		#navigation{
 			/*width:100%;*/
 			/*background-color: #010131;*/
@@ -612,6 +618,9 @@
 <body>
 <div id="logout"><span>登出</span></div>
 
+
+<canvas id="loading"></canvas>
+
 <!-- 导航条 -->
 <div id="navigation">
 	<div >
@@ -879,6 +888,10 @@
 <script type="text/javascript" src="./src/js/cloth.js"></script>
 <script type="text/javascript" src = "./src/js/webGLutils.js"></script>
 <script type="text/javascript">
+			let myimg = new Image();
+
+			myimg.onload = function(){
+
 ;(function(){
 	let testData = {
 		count:55,
@@ -923,6 +936,89 @@
 		questions:[q1,q1,q1,q1,q1,q1,q1,q1,q1,q1]
 	}
 
+	/*
+	*加载动画
+	*/
+	function loadCloth(canvas){
+		this.canvas = canvas;
+		this.cancelToken = 0;
+
+		this.draw = function(){
+			this.canvas.style.display="block";
+			this.canvas.style.pointerEvents = "auto";
+
+			this.cl = new Cloth({
+				canvas:this.canvas,
+				gravity:{x:0,y:500},
+				start:{x:0,y:0},
+				numcol:54,
+				numrow:23,
+				render_times:2,
+				tear_distance:300,
+				space:Math.ceil(this.canvas.width/54)>Math.ceil(this.canvas.height/23)?Math.ceil(this.canvas.width/54):Math.ceil(this.canvas.height/23),
+				renderType:2,
+				pand:{
+					x:1.02,
+					y:1.02
+				},
+				mouse_influence:50,
+				filltype:"glass",
+				doGrain:true
+			});
+
+			let that = this;
+				that.cl.init();
+				that.cl.bindEvent();
+				that.cl.renderGrain(myimg);
+
+				function anim(){
+					that.cl.update();
+					that.cl.draw();
+					that.cancelToken = requestAnimationFrame(anim);
+				}
+
+				that.cancelToken = requestAnimationFrame(anim);
+
+			
+
+
+			
+		}
+
+		this.stop = function(){
+			let that = this;
+
+			this.canvas.style.pointerEvents = "none";
+
+			for(let y=0 ; y <= this.cl.numrow ;y++){
+				for(let x=0;x <= this.cl.numcol ;x+=2 ){
+					this.cl.points[y][x].pin(null,null);
+				}
+			}
+			setTimeout(function(that){
+				for(let y=0 ; y <= that.cl.numrow ;y++){
+					for(let x=1;x <= that.cl.numcol ;x+=2 ){
+						that.cl.points[y][x].pin(null,null);
+					}
+				}
+			},700,that);
+
+			setTimeout(function(that){
+				console.log("that",that);
+				window.cancelAnimationFrame(that.cancelToken) ;
+				that.canvas.style.display = "none";
+
+			}, 3000 , that);
+		}
+	}
+
+
+	let loadCanvas = document.getElementById('loading');
+	loadCanvas.width=window.innerWidth;
+	loadCanvas.height = window.innerHeight ;
+
+    let cloth = new loadCloth(loadCanvas);
+
 
 	let logout = document.getElementById("logout");
 	document.getElementById("logTriggle").onclick = function(e){
@@ -934,7 +1030,7 @@
 		document.cookie = "username=aa;expires="+d.toUTCString();
 		document.cookie = "token=qa;expires="+d.toUTCString();
 		window.location.reload();
-		
+
 	}
 
 
@@ -1022,6 +1118,8 @@
 
 		ajax.onreadystatechange = function(e){
 			let target  = e.target;
+
+			cloth.stop();
 
 			if(target.readyState == 4 && target.status==200){
 				let msg = target.responseText;
@@ -1339,9 +1437,13 @@
 
 				window.location.hash = reqPage;
 
+				window.cancelAnimationFrame(cloth.cancelToken);
+				cloth.draw();
+
+
 				XHRrequester("/api/search/examList" , "GET" , {
-					token: /token=([^;]+);/.exec(document.cookie)[1],
-					username: /username=([^;]+);/.exec(document.cookie)[1],
+					token: /token=([^;]+)/.exec(document.cookie)[1],
+					username: /username=([^;]+)/.exec(document.cookie)[1],
 					pn:reqPage,
 					ps:pageNum,
 					order:"desc"
@@ -1359,17 +1461,25 @@
 	}
 	let userSpan = document.getElementById("usernameSpan");
 	userSpan.innerText = /username=([^;]+)[;]{0,1}/.exec(document.cookie)[1];
-
+	cloth.draw();
 	XHRrequester("/api/search/examList" , "GET" , {
-					token: /token=([^;]+);/.exec(document.cookie)[1],
-					username: /username=([^;]+);/.exec(document.cookie)[1],
+					token: /token=([^;]+)/.exec(document.cookie)[1],
+					username: /username=([^;]+)/.exec(document.cookie)[1],
 					pn:pageIndex,
 					ps:pageNum,
 					order:"desc"
 				});//XHR
 
 
+
+
+
+
+
 })();
+
+}
+myimg.src = "./src/bg3.jpg";
 </script>
 
 <script type="text/javascript">

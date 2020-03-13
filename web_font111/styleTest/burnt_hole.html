@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>烧焦</title>
+	<style type='text/css'>
+		html,body{
+			padding: 0;
+			margin: 0;
+
+			height: 100%;
+			width: 100%;
+		}
+
+		#can{
+			filter: url(#spread2);
+		}
+		#svgwrapper{
+			display: none;
+		}
+	</style>
+</head>
+<body>
+<canvas id='can'></canvas>
+
+<div id='svgwrapper'><svg id='mysvg' xmlns='http://www.w3.org/2000/svg'><defs><filter id='spread' width='300%' height='300%' x='-100%' y='-100%'><feGaussianBlur in='SourceGraphic' stdDeviation='3' result='blur'></feGaussianBlur><feColorMatrix in='blur' type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 4 0' result='colorBlur'></feColorMatrix></filter></defs></svg></div>
+
+
+
+
+
+
+
+
+
+<svg  xmlns='http://www.w3.org/2000/svg' ><defs><filter id='spread2' width='300%' height='300%' x='-100%' y='-100%'><!-- <feGaussianBlur in='SourceGraphic' stdDeviation='14' result='blur'></feGaussianBlur><feColorMatrix in='blur' type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0' result='colorBlur'></feColorMatrix> --><feGaussianBlur in='colorBlur' stdDeviation='30' result='blur2'></feGaussianBlur><feColorMatrix in='blur2' type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 13 0' result='colorBlur2'></feColorMatrix></filter></defs></svg>
+<!-- <image id='svgimg' filter='url(#spread)' /> -->
+<script type='text/javascript'>
+	let canvas = document.getElementById('can');
+	canvas.width=window.innerWidth;
+	canvas.height=window.innerHeight;
+	let ctx  = canvas.getContext('2d');
+
+	// ctx.arc( 350 , 200 , 4 ,0 , Math.PI*2 , true);
+	// ctx.fill();
+
+	// ctx.arc( 450 , 140 , 2 ,0 , Math.PI*2 , true);
+	// ctx.fill();
+	// ctx.arc( 340 , 205 , 1 ,0 , Math.PI*2 , true);
+	// ctx.fill();
+
+
+	ctx.arc( 54 , 355 , .6 ,0 , Math.PI*2 , true);
+	ctx.fill();
+	ctx.arc( 50 , 360 , .5 ,0 , Math.PI*2 , true);
+	ctx.fill();
+	ctx.arc( 44 , 367 , .5 ,0 , Math.PI*2 , true);
+	ctx.fill();
+
+	let svg = document.getElementById("mysvg");
+
+	// let svgimg = document.getElementById('svgimg');
+	// svgimg.setAttribute('href' , canvas.toDataURL());
+	
+
+	function canvas2svg(canvasDom , svgDom){
+		let canvasMime = canvasDom.toDataURL();
+		let svgString = "<svg xmlns='http://www.w3.org/2000/svg' width='"+canvasDom.width+"' height='"+canvasDom.height+"'>"+ svgDom.innerHTML+"<image filter='url(#spread)' href='"+canvasMime+"' /></svg>";
+		let svgMime = new Blob([svgString] , {type:"image/svg+xml;charset=utf-8"});
+		// svgMime = svgMime.replace(/\"/g,"'");
+
+		let svgURL = window.URL.createObjectURL(svgMime);
+		// console.log(svgURL);
+
+		return svgURL;
+	}
+
+	function svg2canvas(canvas , ctx , svgURL){
+		let tempImg = new Image();
+		tempImg.onload = function(){
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			ctx.drawImage(tempImg ,0,0);
+		};
+		tempImg.src=svgURL;
+	}
+
+
+	// svg2canvas(ctx , canvas2svg(canvas , svg));
+	// var svgimg = document.getElementById('svgimg');
+	// svgimg.setAttribute( 'href',canvas.toDataURL());
+	let preURL;
+	function anim(){
+		if(preURL){
+		window.URL.revokeObjectURL(preURL);
+
+		}
+		preURL = canvas2svg(canvas , svg);
+		svg2canvas(canvas , ctx , preURL);
+		requestAnimationFrame(anim);
+	}
+
+	anim();
+	// requestAnimationFrame(anim);
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<div id='svgwrapper'><svg id='mysvg' xmlns='http://www.w3.org/2000/svg' width='600' height='400'><defs><filter id='spread' width='300%' height='300%' x='-100%' y='-100%'><feGaussianBlur in='SourceGraphic' stdDeviation='0' result='blur'></feGaussianBlur><feColorMatrix in='blur' type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 4 0' result='colorBlur'></feColorMatrix><feGaussianBlur in='colorBlur' stdDeviation='25' result='blur2'></feGaussianBlur><feColorMatrix in='blur2' type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 50 0' result='colorBlur2'></feColorMatrix></filter></defs></svg></div> -->
